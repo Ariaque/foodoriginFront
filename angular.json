@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "foodoriginFront"
+    }
+  },
+  "defaultProject": "foodoriginFront",
+  "cli": {
+    "analytics": "0f43a74b-1c76-4a76-92b7-50723d22d8ce"
+  }
 }
