@@ -16,7 +16,6 @@ import { HomeComponent } from './Composants/home/home.component';
 import { TopbarComponent } from './Composants/topbar/topbar.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { SignUpComponent } from './Composants/sign-up/sign-up.component';
-import { SignInComponent } from './Composants/sign-in/sign-in.component';
 
 
 @NgModule({
@@ -26,8 +25,7 @@ import { SignInComponent } from './Composants/sign-in/sign-in.component';
     AppComponent,
     HomeComponent,
     TopbarComponent,
-    SignUpComponent,
-    SignInComponent
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
