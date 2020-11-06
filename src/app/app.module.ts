@@ -17,12 +17,22 @@ import {MatIconModule} from '@angular/material/icon'
 
 
 
+import { HomeComponent } from './Composants/home/home.component';
+import { TopbarComponent } from './Composants/topbar/topbar.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { SignUpComponent } from './Composants/sign-up/sign-up.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+
     JoinComponent,
+    AppComponent,
+    HomeComponent,
+    TopbarComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +43,8 @@ import {MatIconModule} from '@angular/material/icon'
     MatButtonModule,
     MatCardModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
