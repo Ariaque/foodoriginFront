@@ -19,7 +19,7 @@ export class TopbarComponent implements OnInit {
         index: 0
       }, {
         label: 'Rejoindre',
-        link: './rejoindre',
+        link: './join',
         index: 1
       }, {
         label: 'Connexion',
