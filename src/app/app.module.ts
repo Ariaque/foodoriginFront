@@ -4,12 +4,17 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { JoinComponent } from './join/join.component';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon'
+
+
 
 
 import { HomeComponent } from './Composants/home/home.component';
@@ -22,6 +27,8 @@ import { SignUpComponent } from './Composants/sign-up/sign-up.component';
   declarations: [
     AppComponent,
     LoginComponent,
+
+    JoinComponent,
     AppComponent,
     HomeComponent,
     TopbarComponent,
@@ -36,6 +43,7 @@ import { SignUpComponent } from './Composants/sign-up/sign-up.component';
     MatButtonModule,
     MatCardModule,
     MatToolbarModule,
+    MatIconModule,
     MatTabsModule
   ],
   providers: [],
