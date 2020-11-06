@@ -1,0 +1,44 @@
+<div fxLayoutAlign="center center" fxFlexFill>
+    <mat-card fxFlex="25">
+      <mat-toolbar  class="toolbar"><h1>Inscription</h1></mat-toolbar>
+      <form fxLayoutAlign="stretch" fxLayout="column" class= "join.form">
+
+        <mat-form-field appearance = "standard" class = "example-full-width">
+          <input matInput placeholder="Nom d'utilisateur" required name="Nom d'utilisateur">
+          <mat-icon matSuffix>perm_identity</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance = "standard" class = "example-full-width">
+          <input matInput placeholder="Email" required name="email">
+          <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance = "standard" class = "example-full-width">
+          <input matInput  placeholder="Nom d'entreprise"  name="entreprise">
+          <mat-icon matSuffix>assignment_ind</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance = "standard" class = "example-full-width">
+          <input matInput  placeholder="Adresse" name="adresse">
+          <mat-icon matSuffix>home</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance = "standard" class = "example-full-width">
+          <input matInput  placeholder="SIRET" name="siret">
+        </mat-form-field>
+
+        <mat-form-field appearance = "standard" class = "example-full-width">
+          <input  matInput placeholder="Mot de passe" type="password" required minlength="6"name="password">
+          <mat-icon matSuffix>lock</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance = "standard" class = "example-full-width">
+            <input matInput  placeholder="Confirmer mot de passe"type="password" required minlength="6" name="repassword">
+            <mat-icon matSuffix>lock</mat-icon>
+          </mat-form-field>
+
+
+          <button mat-raised-button type="submit" class="style">S'inscrire</button>
+        </form>
+    </mat-card>
+</div>
