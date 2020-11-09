@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Transformateur} from "../classes/transformateur";
-import {Certification} from "../classes/certification";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Certification} from '../classes/certification';
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +16,9 @@ export class CertificationService {
 
   public findAll(): Observable<Certification[]> {
     return this.http.get<Certification[]>(this.certificationUrl + '/all');
+  }
+
+  public findById(id: number): Observable<Certification> {
+    return this.http.get<Certification>(this.certificationUrl + '/' + id);
   }
 }

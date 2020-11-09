@@ -15,7 +15,6 @@ const routes: Routes = [
   { path: 'accueil', component:  HomeComponent},
   { path: 'rejoindre', component:  SignUpComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'testLinkBack', component: TestLinkBackComponent},
 ];
 
 export const appRouting = RouterModule.forRoot(routes);

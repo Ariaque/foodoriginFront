@@ -6,16 +6,17 @@ import {Transformateur} from '../classes/transformateur';
 @Injectable({
   providedIn: 'root'
 })
-export class TransformateurService {
+export class InfosTransformateurService {
 
-  private transformateurUrl: string;
+  private infosTransformateurUrl: string;
 
   constructor(private http: HttpClient) {
-    this.transformateurUrl = '/api/transformateur';
+    this.infosTransformateurUrl = '/api/transformateur';
   }
 
   public findById(id: number): Observable<Transformateur> {
-    return this.http.get<Transformateur>(this.transformateurUrl + '/' + id);
+    return this.http.get<Transformateur>(this.infosTransformateurUrl + '/' + id);
   }
+
 
 }
