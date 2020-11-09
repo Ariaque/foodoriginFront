@@ -2,17 +2,25 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 25%;
-  height: 25%;
+  width: 30%;
+  height: 30%;
 }
 
 .left_img{
   display: block;
   margin-left: 0px;
   margin-right: auto;
-  width: 25%;
-  height: 25%;
+  width: 30%;
+  height: 30%;
 }
+
+.estamp_img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  height: 75%;
+   }
 
 div{
   z-index: -1;
