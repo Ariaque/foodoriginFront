@@ -21,6 +21,7 @@ import { HomeComponent } from './Composants/home/home.component';
 import { TopbarComponent } from './Composants/topbar/topbar.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { SignUpComponent } from './Composants/sign-up/sign-up.component';
+import { FormUserComponent } from './form-user/form-user.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { SignUpComponent } from './Composants/sign-up/sign-up.component';
     AppComponent,
     HomeComponent,
     TopbarComponent,
-    SignUpComponent
+    SignUpComponent,
+    FormUserComponent
   ],
   imports: [
     FormsModule,
