@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,8 +21,7 @@ import { HomeComponent } from './Composants/home/home.component';
 import { TopbarComponent } from './Composants/topbar/topbar.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { SignUpComponent } from './Composants/sign-up/sign-up.component';
-import { TestLinkBackComponent } from './Composants/test-link-back/test-link-back.component';
-import {HttpClientModule} from "@angular/common/http";
+import { FormUserComponent } from './form-user/form-user.component';
 
 
 @NgModule({
@@ -35,14 +34,13 @@ import {HttpClientModule} from "@angular/common/http";
     HomeComponent,
     TopbarComponent,
     SignUpComponent,
-    TestLinkBackComponent
+    FormUserComponent
   ],
   imports: [
     FormsModule,
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
-    HttpClientModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
