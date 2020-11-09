@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-user.component.css']
 })
 export class FormUserComponent implements OnInit {
-  libelle    = "";
+  label    = "";
   certificat = "";
   constructor() { }
 
