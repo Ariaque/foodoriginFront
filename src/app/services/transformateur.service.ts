@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Transformateur} from '../classes/transformateur';
@@ -14,7 +14,7 @@ export class TransformateurService {
     this.transformateurUrl = '/api/transformateur';
   }
 
-  public getTransformateur(id: string): Observable<Transformateur> {
+  public findById(id: number): Observable<Transformateur> {
     return this.http.get<Transformateur>(this.transformateurUrl + '/' + id);
   }
 

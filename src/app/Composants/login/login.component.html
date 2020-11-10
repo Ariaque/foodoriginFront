@@ -1,16 +1,21 @@
 <div fxLayoutAlign="center center" fxFlexFill class="main-div">
     <mat-card fxFlex="25">
-      <mat-toolbar  class="toolbar"><h1>Connexion</h1></mat-toolbar>
+
+      <mat-toolbar  class="mat-toolbar"><h1>Connexion</h1></mat-toolbar>
+
         <form fxLayoutAlign="stretch" fxLayout="column" class="login.form">
+
             <mat-form-field appearance = "standard">
-              <input matInput placeholder="Entrer le nom d'utilisateur" >
+              <mat-label>Nom d'utilisateur</mat-label>
+              <input matInput>
             </mat-form-field>
             <mat-form-field appearance = "standard">
-                <input matInput type="password" placeholder="Entrer le mot de passe" >
+              <mat-label>Mot de passe</mat-label>
+              <input matInput type="password" >
             </mat-form-field>
             <button mat-raised-button type="submit" class="style">Se connecter</button>
             <button mat-button>Mot De Passe Oublié?</button>
         </form>
-           
+
     </mat-card>
   </div>

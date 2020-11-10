@@ -17,4 +17,8 @@ export class LabelService {
   public findAll(): Observable<Label[]> {
     return this.http.get<Label[]>(this.labelUrl + '/all');
   }
+
+  public findById(id: number): Observable<Label> {
+    return this.http.get<Label>(this.labelUrl + '/' + id);
+  }
 }
