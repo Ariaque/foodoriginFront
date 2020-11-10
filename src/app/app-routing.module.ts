@@ -16,7 +16,6 @@ const routes: Routes = [
   {path: 'user', component: FormUserComponent},
 
 ];
-
 export const appRouting = RouterModule.forRoot(routes);
 
 @NgModule({
