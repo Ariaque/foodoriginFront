@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './Composants/home/home.component';
+import { HomeComponent } from './_components/home/home.component';
 
-import { LoginComponent } from './Composants/login/login.component';
-import { JoinComponent } from './Composants/join/join.component';
-import { FormUserComponent } from './Composants/form-user/form-user.component';
-//import {TestLinkBackComponent} from './Composants/test-link-back/test-link-back.component';
+import { LoginComponent } from './_components/login/login.component';
+import { JoinComponent } from './_components/join/join.component';
+import { FormUserComponent } from './_components/form-user/form-user.component';
+//import {TestLinkBackComponent} from './_components/test-link-back/test-link-back.component';
 
 
 const routes: Routes = [

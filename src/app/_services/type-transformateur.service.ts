@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {TypeTransformateur} from '../classes/type-transformateur';
+import {TypeTransformateur} from '../_classes/type-transformateur';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({

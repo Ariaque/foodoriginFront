@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Transformateur} from '../classes/transformateur';
+import {Transformateur} from '../_classes/transformateur';
 
 @Injectable({
   providedIn: 'root'
