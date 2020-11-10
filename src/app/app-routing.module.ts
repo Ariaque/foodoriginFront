@@ -15,7 +15,6 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'user', component: FormUserComponent},
 ];
-
 export const appRouting = RouterModule.forRoot(routes);
 
 @NgModule({
