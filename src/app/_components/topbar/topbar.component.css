@@ -46,3 +46,20 @@ p {
 .mat-tab-nav-bar.mat-primary .mat-ink-bar{
   background: #EFEFEF;
 }
+
+.topnav{
+  display: flex;
+  align-items: center;
+  /* push the nav to the right */
+  margin-left: auto;
+  /* move it a bit back away from the edge */
+  margin-right: 20px;
+}
+
+.left_img{
+  display: block;
+  margin-left: 0px;
+  margin-right: auto;
+  width: auto;
+  height: 100%;
+}

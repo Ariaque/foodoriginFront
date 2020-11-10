@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -11,8 +12,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
-import {HomeComponent} from './_components/home/home.component';
-import {TopbarComponent} from './_components/topbar/topbar.component';
+
+
+import { HomeComponent } from './_components/home/home.component';
+import { TopbarComponent } from './_components/topbar/topbar.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {FormUserComponent} from './_components/form-user/form-user.component';
 import {LoginComponent} from './_components/login/login.component';

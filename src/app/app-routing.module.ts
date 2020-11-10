@@ -16,7 +16,6 @@ const routes: Routes = [
   {path: 'user', component: FormUserComponent},
   {path: 'userValidation', component: UserValidationComponent},
 ];
-
 export const appRouting = RouterModule.forRoot(routes);
 
 @NgModule({
