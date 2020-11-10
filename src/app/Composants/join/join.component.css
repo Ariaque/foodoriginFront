@@ -1,4 +1,4 @@
-  .join.form{
+.join.form{
     min-width: 150px;
     max-width: 500px;
     width: 100%;}
@@ -13,6 +13,6 @@
 }
   .style {
     width: 200px;
-    margin-left: 45%;
+    margin-left: 43%;
     background-color: #F06449; 
   }

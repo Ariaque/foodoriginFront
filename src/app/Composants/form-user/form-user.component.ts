@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class FormUserComponent implements OnInit {
   label    = "";
   certificat = "";
+
   constructor() { }
 
   ngOnInit(): void {

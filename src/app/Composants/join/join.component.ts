@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./join.component.css']
 })
 export class JoinComponent implements OnInit {
-  type="";
+  type  =  "";
   constructor() { }
 
   ngOnInit(): void {
