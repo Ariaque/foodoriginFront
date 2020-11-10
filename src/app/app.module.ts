@@ -13,6 +13,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { HomeComponent } from './_components/home/home.component';
@@ -28,7 +29,6 @@ import { JoinComponent } from './_components/join/join.component';
   declarations: [
     AppComponent,
     LoginComponent,
-
     JoinComponent,
     AppComponent,
     HomeComponent,
@@ -48,6 +48,8 @@ import { JoinComponent } from './_components/join/join.component';
     MatToolbarModule,
     MatIconModule,
     MatTabsModule,
+    HttpClientModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
