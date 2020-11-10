@@ -30,6 +30,9 @@
             <option value="2"> ...</option>
             <option value="3 "> ...</option>
             </select>
+            <li *ngFor="let item of data">
+              {{item.libelle}}
+            </li>
          </div> 
          <button mat-raised-button type="submit" class="style">Envoyer</button>     
       </form>

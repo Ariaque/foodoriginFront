@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { from } from 'rxjs';
+import { LabelService } from '../../services/label.service'
 
 @Component({
   selector: 'app-form-user',
@@ -8,10 +10,15 @@ import { Component, OnInit } from '@angular/core';
 export class FormUserComponent implements OnInit {
   label    = "";
   certificat = "";
+  data : any;
 
-  constructor() { }
+  constructor(private postData:LabelService){}
 
   ngOnInit(): void {
+    this.postData.findAll().subscribe((result)=>{
+      console.warn(result)
+      this.data = result
+    })
   }
 
 }
