@@ -2,48 +2,69 @@ import {Role} from './role';
 
 export class User {
 
-  private _id: number;
-  private _username: string;
-  private _password: string;
-  private _roles: Role[];
+  private id: number;
+  private username: string;
+  private roles: Role[];
+  private isActivated: boolean;
+  private password: string;
+  private typeTransformateur: string;
 
-  constructor(id: number, username: string, password: string, roles: Role[]) {
-    this._id = id;
-    this._username = username;
-    this._password = password;
-    this._roles = roles;
+  constructor(id: number, username: string, roles: Role[], isActivated: boolean, password: string, typeTransformateur: string) {
+    this.id = id;
+    this.username = username;
+    this.roles = roles;
+    this.isActivated = isActivated;
+    this.password = password;
+    this.typeTransformateur = typeTransformateur;
+    console.log('is activated : ' + this.isActivated);
+  }
+
+  get getId(): number {
+    return this.id;
+  }
+
+  set setId(value: number) {
+    this.id = value;
+  }
+
+  get getUsername(): string {
+    return this.username;
+  }
+
+  set setUsername(value: string) {
+    this.username = value;
+  }
+
+  get getRoles(): Role[] {
+    return this.roles;
+  }
+
+  set setRoles(value: Role[]) {
+    this.roles = value;
+  }
+
+  get getIsActivated(): boolean {
+    return this.isActivated;
+  }
+
+  set setIsActivated(value: boolean) {
+    this.isActivated = value;
   }
 
 
-  get id(): number {
-    return this._id;
+  get getPassword(): string {
+    return this.password;
   }
 
-  set id(value: number) {
-    this._id = value;
+  set setPassword(value: string) {
+    this.password = value;
   }
 
-  get username(): string {
-    return this._username;
+  get getTypeTransformateur(): string {
+    return this.typeTransformateur;
   }
 
-  set username(value: string) {
-    this._username = value;
-  }
-
-  get password(): string {
-    return this._password;
-  }
-
-  set password(value: string) {
-    this._password = value;
-  }
-
-  get roles(): Role[] {
-    return this._roles;
-  }
-
-  set roles(value: Role[]) {
-    this._roles = value;
+  set setTypeTransformateur(value: string) {
+    this.typeTransformateur = value;
   }
 }

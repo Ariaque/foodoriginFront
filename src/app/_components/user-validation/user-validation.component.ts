@@ -13,7 +13,7 @@ import {MatTableDataSource} from '@angular/material/table';
 export class UserValidationComponent implements OnInit, AfterViewInit {
 
   usersSource: MatTableDataSource<User>;
-  displayedColumns: string[] = ['id', 'username', 'password', 'roles'];
+  displayedColumns: string[] = ['id', 'username', 'roles', 'actions'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -25,10 +25,10 @@ export class UserValidationComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.userService.findAll().subscribe(data => {
       this.usersSource = new MatTableDataSource<User>(data);
-      console.log(this.usersSource);
+      console.log('usersSource : ' + data);
+      console.log('usersSource : ' + this.usersSource);
       this.usersSource.paginator = this.paginator;
       this.usersSource.sort = this.sort;
-
     });
   }
 
@@ -41,4 +41,13 @@ export class UserValidationComponent implements OnInit, AfterViewInit {
     }
   }
 
+  activateUser(user: User): void {
+    const newUser = new User(user.getId, user.getUsername, null, true, user.getPassword, user.getTypeTransformateur);
+    this.userService.activateUser(newUser);
+  }
+
+  desactivateUser(user: User): void {
+    const newUser = new User(user.getId, user.getUsername, null, false, user.getPassword, user.getTypeTransformateur);
+    this.userService.desactivateUser(newUser);
+  }
 }
