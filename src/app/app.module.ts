@@ -14,12 +14,12 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 
 
-import { HomeComponent } from './Composants/home/home.component';
-import { TopbarComponent } from './Composants/topbar/topbar.component';
+import { HomeComponent } from './_components/home/home.component';
+import { TopbarComponent } from './_components/topbar/topbar.component';
 import {MatTabsModule} from '@angular/material/tabs';
-import { FormUserComponent } from './Composants/form-user/form-user.component';
-import { LoginComponent } from './Composants/login/login.component';
-import { JoinComponent } from './Composants/join/join.component';
+import { FormUserComponent } from './_components/form-user/form-user.component';
+import { LoginComponent } from './_components/login/login.component';
+import { JoinComponent } from './_components/join/join.component';
 
 
 
