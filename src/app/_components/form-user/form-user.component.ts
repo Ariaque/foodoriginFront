@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { from } from 'rxjs';
-import { LabelService } from '../../services/label.service'
+import { LabelService } from '../../_services/label.service'
 
 @Component({
   selector: 'app-form-user',
