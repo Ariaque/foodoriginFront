@@ -1,11 +1,11 @@
 .login.form{
     padding: 20px;
 }
-.toolbar {
+.mat-toolbar {
     width: 50%;
     margin: 0 auto;
-    background-color:white; 
+    background-color:white;
 }
 .style {
-    background-color: #F06449; 
+    background-color: #F06449;
   }
