@@ -1,0 +1,57 @@
+<div fxLayoutAlign="center center" fxFlexFill>
+    <mat-card fxFlex="50">
+      <mat-card-title class="title" >Inscription</mat-card-title>
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Email">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="password4">Mot de passe</label>
+            <input type="password" class="form-control" id="password" placeholder="mot de passe">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="confpassword">Confirmer mot de passe</label>
+            <input type="password" class="form-control" id="confpassword" placeholder="mot de passe">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="entreprise">Entreprise</label>
+            <input type="text" class="form-control" id="entreprise" placeholder="Entreprise">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="siret">Siret</label>
+            <input type="text" class="form-control" id="siret" placeholder="Siret">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="Address">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="ville">Ville</label>
+            <input type="text" class="form-control" id="ville">
+          </div>
+          <div class="form-group col-md-2">
+            <label for="cp">Code Postal</label>
+            <input type="text" class="form-control" id="cp">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+              <label for = "type">Type transformateur</label>
+              <select id ="type"  name = "type" [(ngModel)]="type" class="form-control" > 
+              <option value="1">Artisan</option>
+              <option value="2"> Transformateur</option>
+              <option value="3 "> Industriel</option>
+              </select>
+          </div>
+        </div>
+        <button mat-raised-button type="submit" class="style">S'inscrire</button>
+      </form>
+    </mat-card>
+</div>
+    

@@ -5,8 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { JoinComponent } from './join/join.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -17,11 +15,13 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 
 
-import { HomeComponent } from './Composants/home/home.component';
-import { TopbarComponent } from './Composants/topbar/topbar.component';
+import { HomeComponent } from './_components/home/home.component';
+import { TopbarComponent } from './_components/topbar/topbar.component';
 import {MatTabsModule} from '@angular/material/tabs';
-import { SignUpComponent } from './Composants/sign-up/sign-up.component';
-import { FormUserComponent } from './form-user/form-user.component';
+import { FormUserComponent } from './_components/form-user/form-user.component';
+import { LoginComponent } from './_components/login/login.component';
+import { JoinComponent } from './_components/join/join.component';
+
 
 
 @NgModule({
@@ -33,7 +33,6 @@ import { FormUserComponent } from './form-user/form-user.component';
     AppComponent,
     HomeComponent,
     TopbarComponent,
-    SignUpComponent,
     FormUserComponent
   ],
   imports: [

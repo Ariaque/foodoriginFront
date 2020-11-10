@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { JoinComponent } from './join/join.component';
+import { HomeComponent } from './_components/home/home.component';
 
-import { HomeComponent } from './Composants/home/home.component';
-import { SignUpComponent } from './Composants/sign-up/sign-up.component';
-import { FormUserComponent } from './form-user/form-user.component';
+import { LoginComponent } from './_components/login/login.component';
+import { JoinComponent } from './_components/join/join.component';
+import { FormUserComponent } from './_components/form-user/form-user.component';
+//import {TestLinkBackComponent} from './_components/test-link-back/test-link-back.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/accueil', pathMatch: 'full' },
   {path: 'join', component: JoinComponent},
   { path: 'accueil', component:  HomeComponent},
-  { path: 'rejoindre', component:  SignUpComponent},
   {path: 'login', component: LoginComponent},
   {path: 'user', component: FormUserComponent},
+
 ];
 export const appRouting = RouterModule.forRoot(routes);
 
