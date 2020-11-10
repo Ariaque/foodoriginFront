@@ -1,0 +1,23 @@
+.main-div{
+  z-index: -1;
+  position:relative;
+}
+
+.table-container {
+  height: 400px;
+  overflow: auto;
+}
+
+mat-table {
+  width: 100%;
+  display: inline-block;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}

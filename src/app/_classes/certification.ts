@@ -1,7 +1,7 @@
 export class Certification {
 
-  private _id: number;
-  private _libelle: string;
+  public _id: number;
+  public _libelle: string;
 
   constructor(id: number, libelle: string) {
     this._id = id;
