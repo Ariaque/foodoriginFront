@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div fxLayoutAlign="space-around center" fxFlexFill>
+    <mat-card fxFlex="30">
+      <mat-card-title class="title" >Information</mat-card-title>
+      <form>
+          <div class="form-group col-md-8">
+            <label for="entreprise">Nom d'entreprise</label>
+            <input type="text" class="form-control" id="entreprise" placeholder="Nom d'entreprise">
+          </div>
+          <div class="form-group col-md-8">
+            <label for="adresse">Adresse</label>
+            <input type="text" class="form-control" id="adresse" placeholder="Adresse">
+          </div>
+          <div class="form-group col-md-8">
+            <label for="contact">Contact</label>
+            <input type="text" class="form-control" id="contact" placeholder="Contact">
+          </div>  
+          <div class="form-group col-md-8">
+            <label for = "label">Label</label>
+            <select id ="label"  name = "label" [(ngModel)]="label" class="form-control" > 
+            <option value="1">...</option>
+            <option value="2"> ...</option>
+            <option value="3 "> ...</option>
+            </select>
+         </div>  
+         <div class="form-group col-md-8">
+            <label for = "certificat">Certification</label>
+            <select id ="certificat"  name = "certificat" [(ngModel)]="certificat" class="form-control" > 
+            <option value="1">...</option>
+            <option value="2"> ...</option>
+            <option value="3 "> ...</option>
+            </select>
+         </div>      
+      </form>
+    </mat-card>
+    <mat-card fxFlex="30">
+        <mat-card-title class="title" >Réseaux sociaux </mat-card-title>
+        <div class="form-group col-md-8" class="input-icone">
+            <i class="fa fa-facebook-square" aria-hidden="true" style="font-size:24px"></i>
+            <input type="text" class="form-control" id="facebook" placeholder="Lien Facebook">
+        </div>
+        <div  class="input-icone">
+            <i class="fa fa-twitter-square" aria-hidden="true" style="font-size:24px"></i>
+            <input type="text" class="form-control" id="twitter" placeholder="Lien Twitter">
+        </div>
+        <div  class="input-icone">
+            <i class="fa fa-instagram " aria-hidden="true" style="font-size:24px"></i>
+            <input type="text" class="form-control" id="instagram" placeholder="Lien Instagram">
+        </div>
+      </mat-card>
+</div>
+    
