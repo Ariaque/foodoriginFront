@@ -28,7 +28,7 @@ export class UserService {
         item.id,
         item.username,
         item.password,
-        item.roles,
+        item.role,
         item.transformateur,
         item.isActivated,
         item.typeTransformateur,

@@ -24,11 +24,7 @@
 
         <ng-container matColumnDef="roles">
           <mat-header-cell *matHeaderCellDef> Roles</mat-header-cell>
-          <mat-cell *matCellDef="let user">
-            <ng-container *ngFor="let role of user.roles">
-              {{role.name}}
-              <br/>
-            </ng-container>
+          <mat-cell *matCellDef="let user">{{user.role.name}}
           </mat-cell>
         </ng-container>
 
@@ -37,9 +33,9 @@
           <mat-cell *matCellDef="let user"> {{user.transformateur.raison_sociale}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="typeTransformateur">
-          <mat-header-cell *matHeaderCellDef> Type de transformateur</mat-header-cell>
-          <mat-cell *matCellDef="let user"> {{user.typeTransformateur}} </mat-cell>
+        <ng-container matColumnDef="typeTransformateur.libelle">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Type de transformateur</mat-header-cell>
+          <mat-cell *matCellDef="let user"> {{user.typeTransformateur.libelle}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">

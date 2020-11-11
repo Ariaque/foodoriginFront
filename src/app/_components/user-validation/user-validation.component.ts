@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../_services/user.service';
 import {User} from '../../_classes/user';
 import {MatPaginator} from '@angular/material/paginator';
@@ -13,7 +13,7 @@ import {MatTableDataSource} from '@angular/material/table';
 export class UserValidationComponent implements OnInit {
 
   usersSource: MatTableDataSource<User>;
-  displayedColumns: string[] = ['id', 'username', 'roles', 'transformateur.raison_sociale', 'typeTransformateur', 'actions'];
+  displayedColumns: string[] = ['id', 'username', 'roles', 'transformateur.raison_sociale', 'typeTransformateur.libelle', 'actions'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -38,7 +38,7 @@ export class UserValidationComponent implements OnInit {
   }
 
   activateUser(user: User, activation: boolean): void {
-    const newUser = new User(user.getId, user.getUsername, user.getPassword, user.getRoles, user.getTransformateur, activation, user.getTypeTransformateur);
+    const newUser = new User(user.getId, user.getUsername, user.getPassword, user.getRole, user.getTransformateur, activation, user.getTypeTransformateur);
     this.userService
       .userActivation(newUser)
       .subscribe(data => this.refreshDataSource());
