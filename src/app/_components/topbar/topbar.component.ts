@@ -25,6 +25,10 @@ export class TopbarComponent implements OnInit {
         label: 'Connexion',
         link: './login',
         index: 2
+      }, {
+        label: 'Gestion des comptes',
+        link: './userValidation',
+        index: 3
       },
     ];
   }

@@ -1,22 +1,24 @@
 import {Role} from './role';
+import {Transformateur} from './transformateur';
 
 export class User {
 
   private id: number;
   private username: string;
-  private roles: Role[];
-  private isActivated: boolean;
   private password: string;
+  private roles: Role[];
+  private transformateur: Transformateur;
+  private isActivated: boolean;
   private typeTransformateur: string;
 
-  constructor(id: number, username: string, roles: Role[], isActivated: boolean, password: string, typeTransformateur: string) {
+  constructor(id: number, username: string, password: string, roles: Role[], transformateur: Transformateur, isActivated: boolean, typeTransformateur: string) {
     this.id = id;
     this.username = username;
     this.roles = roles;
     this.isActivated = isActivated;
     this.password = password;
     this.typeTransformateur = typeTransformateur;
-    console.log('is activated : ' + this.isActivated);
+    this.transformateur = transformateur;
   }
 
   get getId(): number {
@@ -67,4 +69,13 @@ export class User {
   set setTypeTransformateur(value: string) {
     this.typeTransformateur = value;
   }
+
+  get getTransformateur(): Transformateur {
+    return this.transformateur;
+  }
+
+  set setTransformateur(value: Transformateur) {
+    this.transformateur = value;
+  }
+
 }

@@ -1,15 +1,11 @@
-import {Erole} from './erole.enum';
-
 export class Role {
 
-  private _id: number;
-  private _name: Erole;
-
-
-  constructor(id: number, name: Erole) {
+  constructor(id: number, name: string) {
     this._id = id;
     this._name = name;
   }
+
+  private _id: number;
 
   get id(): number {
     return this._id;
@@ -19,11 +15,13 @@ export class Role {
     this._id = value;
   }
 
-  get name(): Erole {
+  private _name: string;
+
+  get name(): string {
     return this._name;
   }
 
-  set name(value: Erole) {
+  set name(value: string) {
     this._name = value;
   }
 }
