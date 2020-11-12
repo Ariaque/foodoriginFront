@@ -1,4 +1,4 @@
-<div class="main-div" fxLayoutAlign="center center" fxFlexFill>
+<div fxLayoutAlign="center center" fxFlexFill>
     <mat-card fxFlex="50">
       <mat-card-title class="title" >Inscription</mat-card-title>
       <form>
@@ -8,7 +8,7 @@
             <input type="email" class="form-control" id="email" placeholder="Email">
           </div>
           <div class="form-group col-md-3">
-            <label for="password4">Mot de passe</label>
+            <label for="password">Mot de passe</label>
             <input type="password" class="form-control" id="password" placeholder="mot de passe">
           </div>
           <div class="form-group col-md-3">
@@ -30,6 +30,7 @@
           <div class="form-group col-md-6">
               <label for = "type">Type transformateur</label>
               <select id ="type"  name = "type" [(ngModel)]="type" class="form-control" >
+                <option></option>
                 <option *ngFor="let item of type">{{item.libelle}}</option>
               </select>
           </div>

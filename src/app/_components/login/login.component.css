@@ -9,8 +9,3 @@
 .style {
     background-color: #F06449;
   }
-
-.main-div{
-  z-index: -1;
-  position:relative;
-}
