@@ -22,12 +22,13 @@ export class AuthService {
     }, httpOptions);
   }
 
-  register(user, siret): Observable<any> {
+  register(user, selectedType, siret): Observable<any> {
+    console.log(user.siret);
     return this.http.post(AUTH_API + '/signup/' + siret, {
       username: user.username,
-      email: user.email,
       password: user.password,
-      role: 'user'
+      role: ['user'],
+      typeTransformateur: selectedType
     }, httpOptions);
   }
 }

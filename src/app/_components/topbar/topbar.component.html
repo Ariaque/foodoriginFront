@@ -4,12 +4,20 @@
   <img src="assets/images/logo.png" class="left_img">
 
   <nav mat-tab-nav-bar class="topnav">
-    <a mat-tab-link
-       *ngFor="let link of navLinks"
-       [routerLink]="link.link"
-       routerLinkActive #rla="routerLinkActive"
-       [active]="rla.isActive">
-      {{link.label}}
-    </a>
+<!--    <a mat-tab-link-->
+<!--       *ngFor="let link of navLinks"-->
+<!--       [routerLink]="link.link"-->
+<!--       routerLinkActive #rla="routerLinkActive"-->
+<!--       [active]="rla.isActive">-->
+<!--      {{link.label}}-->
+<!--    </a>-->
+
+    <a class="nav-link" [routerLink]="['/accueil']" >Accueil</a>
+    <a class="nav-link" [routerLink]="['/user']" >Mon espace</a>
+    <a class="nav-link" [routerLink]="['/userValidation']" >Gestion des comptes</a>
+    <a class="nav-link" [routerLink]="['/join']" >Rejoindre</a>
+    <a class="nav-link" [routerLink]="['/login']" >Connexion</a>
+    <a class="nav-link" [routerLink]="['/accueil']" >Déconnexion</a>
+    <a class="nav-link" [routerLink]="['/accueil']" >Profil</a>
   </nav>
 </div>
