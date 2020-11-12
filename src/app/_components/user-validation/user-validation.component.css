@@ -1,6 +1,8 @@
 .table-container {
   height: 400px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
@@ -19,4 +21,16 @@ mat-table {
 mat-cell {
   word-break: break-all;
   word-wrap: break-word;
+}
+
+@media(max-width: 600px) {
+  .mat-header-row {
+    display: none;
+  }
+
+  .mat-row {
+    flex-direction: column;
+    align-items: start;
+    padding: 8px 24px;
+  }
 }
