@@ -3,15 +3,15 @@
 
     <mat-toolbar  class="mat-toolbar"><h1>Connexion</h1></mat-toolbar>
 
-      <form fxLayoutAlign="stretch" fxLayout="column" class="login.form">
+      <form name="form" #f="ngForm" fxLayoutAlign="stretch" fxLayout="column" class="login.form" (ngSubmit)="f.form.valid && onSubmit()">
 
           <mat-form-field appearance = "standard">
             <mat-label>Email</mat-label>
-            <input matInput>
+            <input name="username" matInput [(ngModel)]="form.username"/>
           </mat-form-field>
           <mat-form-field appearance = "standard">
             <mat-label>Mot de passe</mat-label>
-            <input matInput type="password" >
+            <input name="password" matInput type="password" [(ngModel)]="form.password" />
           </mat-form-field>
           <button mat-raised-button type="submit" class="style">Se connecter</button>
           <button mat-button>Mot De Passe Oublié?</button>
