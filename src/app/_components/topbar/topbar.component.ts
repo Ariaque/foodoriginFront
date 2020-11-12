@@ -18,17 +18,27 @@ export class TopbarComponent implements OnInit {
         link: './accueil',
         index: 0
       }, {
+        label: 'Mon espace',
+        link: '',
+        index: 1
+      },
+      {
+        label: 'Gestion des comptes',
+        link: './userValidation',
+        index: 2
+      },
+      {
         label: 'Rejoindre',
         link: './join',
-        index: 1
+        index: 3
       }, {
         label: 'Connexion',
         link: './login',
-        index: 2
+        index: 4,
       }, {
-        label: 'Gestion des comptes',
+        label: 'Déconnexion',
         link: './userValidation',
-        index: 3
+        index: 5,
       },
     ];
   }
