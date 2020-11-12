@@ -1,50 +1,51 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div fxLayoutAlign="space-around center" fxFlexFill>
+  <mat-card fxFlex="30">
+    <mat-card-title class="title" >Informations générales</mat-card-title>
+    <form>
+      <div class="form-group col-md-12">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description" placeholder="Description" [(ngModel)]="description" [ngModelOptions]="{standalone:true}">
+      </div>
+      <div class="form-group col-md-8">
+        <label for="nombre_employes">Nombre d'employés </label>
+        <input type="number" [min]="1"  class="form-control" id="nombre_employes" placeholder="Nombre d'employés" [(ngModel)]="nbEmployes" [ngModelOptions]="{standalone:true}">
+      </div>
+      <div class="form-group col-md-12">
+        <label for="siteW">Site web</label>
+        <input type="text" class="form-control" id="siteW" placeholder="Url du site web" [(ngModel)]="lienSite" [ngModelOptions]="{standalone:true}">
+      </div>
+      <div class="form-group col-md-12">
+        <label for = "label">Label</label>
+        <mat-select id ="label"  name = "label" [(ngModel)]="selectedLabels" class="form-control" multiple>
+          <mat-option *ngFor="let label of this.labels" [value]="label">{{label.libelle}}</mat-option>
+        </mat-select>
+      </div>
+      <div class="form-group col-md-12">
+        <label for = "certificat">Certification</label>
+        <mat-select id ="certificat"  name = "certificat" [(ngModel)]="selectedCertificats" class="form-control" multiple>
+          <mat-option *ngFor="let certificat of this.certificats" [value]="certificat">{{certificat.libelle}}</mat-option>
+        </mat-select>
+      </div>
+    </form>
+  </mat-card>
     <mat-card fxFlex="30">
-      <mat-card-title class="title" >Information</mat-card-title>
       <form>
-          <div class="form-group col-md-12">
-            <label for="description">Description</label>
-            <input type="text" class="form-control" id="description" placeholder="Description">
-          </div>
-          <div class="form-group col-md-12">
-            <label for="nombre_employes">Nombre d'employés </label>
-            <input type="text" class="form-control" id="nombre_employes" placeholder="Nombre d'employés">
-          </div>
-          <div class="form-group col-md-8">
-            <label for="contact">Contact</label>
-            <input type="text" class="form-control" id="contact" placeholder="Contact">
-          </div>
-         <div class="form-group col-md-12">
-          <label for = "label">Label</label>
-          <mat-select id ="label"  name = "label" [(ngModel)]="selectedLabel" class="form-control" multiple>
-            <mat-option *ngFor="let item of label">{{item.libelle}}</mat-option>
-          </mat-select>
-         </div>
-         <div class="form-group col-md-12">
-          <label for = "certificat">Certification</label>
-          <mat-select id ="certificat"  name = "certificat" [(ngModel)]="selectedCertificat" class="form-control" multiple>
-          <mat-option *ngFor="let item of certificat">{{item.libelle}}</mat-option>
-          </mat-select>
-        </div>
-         <button mat-raised-button type="submit" class="style">Envoyer</button>
-      </form>
-    </mat-card>
-    <mat-card fxFlex="30">
         <mat-card-title class="title" >Réseaux sociaux </mat-card-title>
-        <div class="form-group col-md-8" class="input-icone">
+        <div class="input-icone">
             <i class="fa fa-facebook-square" aria-hidden="true" style="font-size:24px"></i>
-            <input type="text" class="form-control" id="facebook" placeholder="Lien Facebook">
+            <input type="text" class="form-control" id="facebook" placeholder="Lien Facebook" [(ngModel)]="lienFacebook" [ngModelOptions]="{standalone:true}">
         </div>
-        <div  class="input-icone">
+        <div class="input-icone">
             <i class="fa fa-twitter-square" aria-hidden="true" style="font-size:24px"></i>
-            <input type="text" class="form-control" id="twitter" placeholder="Lien Twitter">
+            <input type="text" class="form-control" id="twitter" placeholder="Lien Twitter" [(ngModel)]="lienTwitter" [ngModelOptions]="{standalone:true}">
         </div>
-        <div  class="input-icone">
+        <div class="input-icone">
             <i class="fa fa-instagram " aria-hidden="true" style="font-size:24px"></i>
-            <input type="text" class="form-control" id="instagram" placeholder="Lien Instagram">
+            <input type="text" class="form-control" id="instagram" placeholder="Lien Instagram" [(ngModel)]="lienInsta" [ngModelOptions]="{standalone:true}">
         </div>
-        <button mat-raised-button type="submit" class="style">Envoyer</button>
-      </mat-card>
+      </form>
+      <button mat-raised-button type="submit" class="style" (click)="saveInfos()">Envoyer</button>
+    </mat-card>
 </div>
 
