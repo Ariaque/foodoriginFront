@@ -3,7 +3,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 30%;
-  height: 30%;
+  min-height: 30%;
 }
 
 .left_img{
@@ -11,7 +11,7 @@
   margin-left: 0px;
   margin-right: auto;
   width: 30%;
-  height: 30%;
+  min-height: 30%;
 }
 
 .estamp_img{
@@ -19,7 +19,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 75%;
-  height: 75%;
+  min-height: 75%;
    }
 
 div{
