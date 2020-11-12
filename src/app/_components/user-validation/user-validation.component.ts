@@ -13,7 +13,7 @@ import {MatTableDataSource} from '@angular/material/table';
 export class UserValidationComponent implements OnInit {
 
   usersSource: MatTableDataSource<User>;
-  displayedColumns: string[] = ['id', 'username', 'roles', 'transformateur.raison_sociale', 'typeTransformateur.libelle', 'isActivated'];
+  displayedColumns: string[] = ['id', 'username', 'roles', 'transformateur.raison_sociale', 'typeTransformateur.libelle', 'isEnabled'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -58,8 +58,8 @@ export class UserValidationComponent implements OnInit {
         switch (property) {
           case 'transformateur.raison_sociale':
             return item.getTransformateur.raison_sociale;
-          case 'user.isActivated':
-            return item.getIsActivated;
+          case 'user.isEnabled':
+            return item.getIsEnabled;
           default:
             return item[property];
         }

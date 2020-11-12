@@ -31,7 +31,7 @@ describe('UserService', () => {
           password: 'hdhfdh52$ù',
           role: null,
           transformateur: null,
-          isActivated: false,
+          isEnabled: false,
           typeTransformateur: null,
         },
         {
@@ -40,7 +40,7 @@ describe('UserService', () => {
           password: 'fghfgh',
           role: null,
           transformateur: null,
-          isActivated: true,
+          isEnabled: true,
           typeTransformateur: {id: 1, libelle: 'typeTransfo'},
         },
       ];
@@ -52,7 +52,7 @@ describe('UserService', () => {
           expect(usersData[0].getPassword).toEqual('hdhfdh52$ù');
           expect(usersData[0].getRole).toEqual(null);
           expect(usersData[0].getTransformateur).toEqual(null);
-          expect(usersData[0].getIsActivated).toEqual(false);
+          expect(usersData[0].getIsEnabled).toEqual(false);
           expect(usersData[0].getTypeTransformateur).toEqual(null);
 
           expect(usersData[1].getId).toEqual(78);
@@ -60,7 +60,7 @@ describe('UserService', () => {
           expect(usersData[1].getPassword).toEqual('fghfgh');
           expect(usersData[1].getRole).toEqual(null);
           expect(usersData[1].getTransformateur).toEqual(null);
-          expect(usersData[1].getIsActivated).toEqual(true);
+          expect(usersData[1].getIsEnabled).toEqual(true);
           expect(usersData[1].getTypeTransformateur.id).toEqual(1);
           expect(usersData[1].getTypeTransformateur.libelle).toEqual('typeTransfo');
 
