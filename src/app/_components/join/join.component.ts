@@ -16,10 +16,12 @@ export class JoinComponent implements OnInit {
   errorMessage = '';
   siret = this.form.siret;
   type: TypeTransformateur[];
-  constructor(private authService: AuthService, private data: TypeTransformateurService) { }
+  selectedType: TypeTransformateur;
+
+  constructor(private authService: AuthService, private typeTransformateurService: TypeTransformateurService) { }
 
   ngOnInit(): void {
-    this.data.findAll().subscribe((result) => {
+    this.typeTransformateurService.findAll().subscribe((result) => {
       console.warn(result);
       this.type = result;
     });
