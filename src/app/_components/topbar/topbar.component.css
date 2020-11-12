@@ -64,3 +64,8 @@ p {
   width: auto;
   height: 100%;
 }
+
+body{
+  background-image: url("../../../assets/images/background.jpg");
+  background-attachment: fixed;
+}
