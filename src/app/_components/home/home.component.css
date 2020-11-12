@@ -22,11 +22,6 @@
   min-height: 50%;
    }
 
-div{
-  z-index: -1;
-  position:relative;
-}
-
 .main-div{
   margin-top:120px;
 }
