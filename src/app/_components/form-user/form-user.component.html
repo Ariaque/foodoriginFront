@@ -22,18 +22,15 @@
           <div class="form-group col-md-12">
             <label for = "label">Label</label>
             <select  id ="label"  name = "label" [(ngModel)]="label" class="form-control" >
-            <option *ngFor="let item of label">{{item.libelle}}</option>
+              <option></option>
+              <option *ngFor="let item of label">{{item.libelle}}</option>
             </select>
          </div>
          <div class="form-group col-md-12">
             <label for = "certificat">Certification</label>
-<<<<<<< HEAD
-            <select id ="certificat"  name = "certificat" [(ngModel)]="certificat" class="form-control" > 
-            <option></option>
-=======
             <select id ="certificat"  name = "certificat" [(ngModel)]="certificat" class="form-control" >
->>>>>>> fff176d9b26c4755aff5839c77925e6e07c7edd9
-            <option *ngFor="let item of certificat">{{item.libelle}}</option>
+              <option></option>
+              <option *ngFor="let item of certificat">{{item.libelle}}</option>
             </select>
          </div>
          <button mat-raised-button type="submit" class="style">Envoyer</button>
