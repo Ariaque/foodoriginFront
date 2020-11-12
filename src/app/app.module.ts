@@ -26,6 +26,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ForgotPasswordComponent } from './_components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     HomeComponent,
     TopbarComponent,
     FormUserComponent,
-    UserValidationComponent
+    UserValidationComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     FormsModule,
