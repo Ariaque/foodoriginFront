@@ -19,7 +19,7 @@ export class TopbarComponent implements OnInit {
         index: 0
       }, {
         label: 'Mon espace',
-        link: '',
+        link: './user',
         index: 1
       },
       {
