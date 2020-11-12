@@ -20,3 +20,8 @@ mat-cell {
   word-break: break-all;
   word-wrap: break-word;
 }
+
+.main-div{
+  z-index: -1;
+  position:relative;
+}
