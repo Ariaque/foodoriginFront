@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {LabelService} from '../../_services/label.service';
 import {CertificationService} from '../../_services/certification.service';
+import {Certification} from '../../_classes/certification';
+import {Label} from '../../_classes/label';
 
 @Component({
   selector: 'app-form-user',
@@ -9,8 +11,10 @@ import {CertificationService} from '../../_services/certification.service';
 })
 export class FormUserComponent implements OnInit {
 
-  certificat: any;
-  label: any;
+  certificat: Certification[];
+  label: Label[];
+  selectedLabel: Label;
+  selectedCertificat: Certification;
 
   constructor(private postData: LabelService, private api: CertificationService) {
   }

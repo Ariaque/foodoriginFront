@@ -17,14 +17,14 @@
           </div>
           <div class="form-group col-md-12">
             <label for = "label">Label</label>
-            <select  id ="label"  name = "label" [(ngModel)]="label" class="form-control" >
+            <select  id ="label"  name = "label" [(ngModel)]="selectedLabel" class="form-control" >
               <option></option>
               <option *ngFor="let item of label">{{item.libelle}}</option>
             </select>
          </div>
          <div class="form-group col-md-12">
             <label for = "certificat">Certification</label>
-            <select id ="certificat"  name = "certificat" [(ngModel)]="certificat" class="form-control" >
+            <select id ="certificat"  name = "certificat" [(ngModel)]="selectedCertificat" class="form-control" >
               <option></option>
               <option *ngFor="let item of certificat">{{item.libelle}}</option>
             </select>

@@ -29,7 +29,7 @@
         <div class="form-row">
           <div class="form-group col-md-6">
               <label for = "type">Type transformateur</label>
-              <select id ="type"  name = "type" [(ngModel)]="type" class="form-control" >
+              <select id ="type"  name = "type" [(ngModel)]="selectedType" class="form-control" >
                 <option></option>
                 <option *ngFor="let item of type">{{item.libelle}}</option>
               </select>
