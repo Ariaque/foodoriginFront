@@ -5,10 +5,10 @@
 }
 
 .input-icone input[type=text]{
-    width:100%; 
-    max-width:250px; 
+    width:100%;
+    max-width:250px;
     border:1px ;
-     outline:none; 
+     outline:none;
      padding:10%; box-sizing:border-box; }
 .input-icone{
     margin:8px 0; outline:none; padding:8px;
