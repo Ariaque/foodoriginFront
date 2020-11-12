@@ -13,7 +13,7 @@ import {MatTableDataSource} from '@angular/material/table';
 export class UserValidationComponent implements OnInit {
 
   usersSource: MatTableDataSource<User>;
-  displayedColumns: string[] = ['id', 'username', 'roles', 'transformateur.raison_sociale', 'typeTransformateur.libelle', 'actions'];
+  displayedColumns: string[] = ['id', 'username', 'roles', 'transformateur.raison_sociale', 'typeTransformateur.libelle', 'isActivated'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -22,11 +22,6 @@ export class UserValidationComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshDataSource();
-  }
-
-  // allows the sorting to work on nested property such as 'transformateur.raison_sociale'
-  getPropertyByPath(obj: User, pathString: string) {
-    return pathString.split('.').reduce((o, i) => o[i], obj);
   }
 
   applyFilter(event: Event): void {
@@ -58,8 +53,16 @@ export class UserValidationComponent implements OnInit {
       };
       this.usersSource.paginator = this.paginator;
       this.usersSource.sort = this.sort;
-      this.usersSource.sortingDataAccessor = (data, sortHeaderId: string) => {
-        return this.getPropertyByPath(data, sortHeaderId);
+      // allows the sorting to work on : nested property such as 'transformateur.raison_sociale', button "Activer"/"Désactiver"
+      this.usersSource.sortingDataAccessor = (item, property) => {
+        switch (property) {
+          case 'transformateur.raison_sociale':
+            return item.getTransformateur.raison_sociale;
+          case 'user.isActivated':
+            return item.getIsActivated;
+          default:
+            return item[property];
+        }
       };
       this.changeDetectorRefs.detectChanges();
     });
