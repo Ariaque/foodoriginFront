@@ -1,4 +1,4 @@
-<div fxLayoutAlign="center center" fxFlexFill>
+<div fxLayoutAlign="center center" fxFlexFill *ngIf="!topBarService.isConnected">
     <mat-card fxFlex="50">
       <mat-card-title class="title" >Inscription</mat-card-title>
       <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">

@@ -1,5 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
+import {TopbarService} from '../../_services/topbar.service';
+import {TokenStorageService} from '../../_services/token-storage.service';
 
 @Component({
   selector: 'app-topbar',
@@ -8,6 +10,20 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class TopbarComponent implements OnInit {
+
+  constructor(public router: Router, public topBarService: TopbarService, private tokenStorage: TokenStorageService) {
+  }
+
+  onClick(val: any): void {
+    console.log('here');
+    if (val.target.id === 'log_out_btn') {
+      this.tokenStorage.signOut();
+      console.log(this.tokenStorage.getToken());
+      this.topBarService.updateStatus();
+      this.router.navigate(['/accueil']);
+    }
+  }
+
 
   // navLinks: any[];
   // activeLinkIndex = -1;

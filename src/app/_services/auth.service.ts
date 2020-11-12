@@ -23,7 +23,6 @@ export class AuthService {
   }
 
   register(user, selectedType, siret): Observable<any> {
-    console.log(user.siret);
     return this.http.post(AUTH_API + '/signup/' + siret, {
       username: user.username,
       password: user.password,

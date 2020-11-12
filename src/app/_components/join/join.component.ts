@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TypeTransformateurService} from '../../_services/type-transformateur.service';
 import {AuthService} from '../../_services/auth.service';
 import {TypeTransformateurs} from '../../_classes/type-transformateurs';
+import {TopbarService} from '../../_services/topbar.service';
 
 @Component({
   selector: 'app-join',
@@ -19,7 +20,7 @@ export class JoinComponent implements OnInit {
   confPassword: string;
   selectedType: TypeTransformateurs;
 
-  constructor(private authService: AuthService, private typeTransformateurService: TypeTransformateurService) {
+  constructor(private authService: AuthService, private typeTransformateurService: TypeTransformateurService, public topBarService: TopbarService) {
   }
 
   ngOnInit(): void {

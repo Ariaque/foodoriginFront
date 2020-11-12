@@ -1,9 +1,9 @@
-<div fxLayoutAlign="center center" fxFlexFill>
+<div fxLayoutAlign="center center" fxFlexFill *ngIf="!topBarService.isConnected" >
   <mat-card fxFlex="25">
 
-    <mat-toolbar  class="mat-toolbar"><h1>Connexion</h1></mat-toolbar>
+    <mat-toolbar  class="mat-toolbar" ><h1>Connexion</h1></mat-toolbar>
 
-      <form name="form" #f="ngForm" fxLayoutAlign="stretch" fxLayout="column" class="login.form" (ngSubmit)="f.form.valid && onSubmit()">
+      <form name="form" #f="ngForm" fxLayoutAlign="stretch" fxLayout="column" class="login.form" (ngSubmit)="f.form.valid && onSubmit()" >
 
           <mat-form-field appearance = "standard">
             <mat-label>Email</mat-label>
