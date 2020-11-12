@@ -11,7 +11,7 @@ export class InfosTransformateurService {
   private infosTransformateurUrl: string;
 
   constructor(private http: HttpClient) {
-    this.infosTransformateurUrl = '/api/transformateur';
+    this.infosTransformateurUrl = '/api/infoTransformateur';
   }
 
   public findById(id: number): Observable<Transformateur> {

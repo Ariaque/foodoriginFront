@@ -22,4 +22,10 @@ describe('UserValidationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  class MockUserService {
+    isLoggedIn = true;
+    user = { name: 'Test User'};
+  }
+  it('#clicked() should toggle #isOn', () => {
+  });
 });
