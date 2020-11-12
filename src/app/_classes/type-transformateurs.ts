@@ -1,4 +1,4 @@
-export class TypeTransformateur {
+export class TypeTransformateurs {
 
   private _id: number;
   private _libelle: string;
