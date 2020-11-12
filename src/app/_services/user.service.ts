@@ -30,7 +30,7 @@ export class UserService {
         item.password,
         item.role,
         item.transformateur,
-        item.isActivated,
+        item.isEnabled,
         item.typeTransformateur,
       ))),
     );

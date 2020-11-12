@@ -1,6 +1,6 @@
 import {Role} from './role';
 import {Transformateur} from './transformateur';
-import {TypeTransformateur} from './type-transformateur';
+import {TypeTransformateurs} from './type-transformateurs';
 
 export class User {
 
@@ -9,14 +9,14 @@ export class User {
   private password: string;
   private role: Role;
   private transformateur: Transformateur;
-  private isActivated: boolean;
-  private typeTransformateur: TypeTransformateur;
+  private isEnabled: boolean;
+  private typeTransformateur: TypeTransformateurs;
 
-  constructor(id: number, username: string, password: string, role: Role, transformateur: Transformateur, isActivated: boolean, typeTransformateur: TypeTransformateur) {
+  constructor(id: number, username: string, password: string, role: Role, transformateur: Transformateur, isEnabled: boolean, typeTransformateur: TypeTransformateurs) {
     this.id = id;
     this.username = username;
     this.role = role;
-    this.isActivated = isActivated;
+    this.isEnabled = isEnabled;
     this.password = password;
     this.typeTransformateur = typeTransformateur;
     this.transformateur = transformateur;
@@ -46,12 +46,12 @@ export class User {
     this.role = value;
   }
 
-  get getIsActivated(): boolean {
-    return this.isActivated;
+  get getIsEnabled(): boolean {
+    return this.isEnabled;
   }
 
-  set setIsActivated(value: boolean) {
-    this.isActivated = value;
+  set setIsEnabled(value: boolean) {
+    this.isEnabled = value;
   }
 
 
@@ -63,11 +63,11 @@ export class User {
     this.password = value;
   }
 
-  get getTypeTransformateur(): TypeTransformateur {
+  get getTypeTransformateur(): TypeTransformateurs {
     return this.typeTransformateur;
   }
 
-  set setTypeTransformateur(value: TypeTransformateur) {
+  set setTypeTransformateur(value: TypeTransformateurs) {
     this.typeTransformateur = value;
   }
 

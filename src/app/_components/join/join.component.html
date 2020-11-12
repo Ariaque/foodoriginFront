@@ -1,38 +1,32 @@
-<div fxLayoutAlign="center center" fxFlexFill>
+<div fxLayoutAlign="center center" fxFlexFill *ngIf="!topBarService.isConnected">
     <mat-card fxFlex="50">
       <mat-card-title class="title" >Inscription</mat-card-title>
-      <form>
+      <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="Email">
+            <input type="email" class="form-control" id="email" placeholder="Email" name="username" [(ngModel)]="form.username">
           </div>
           <div class="form-group col-md-3">
             <label for="password">Mot de passe</label>
-            <input type="password" class="form-control" id="password" placeholder="mot de passe">
+            <input type="password" class="form-control" id="password" placeholder="mot de passe" name="password" [(ngModel)]="form.password">
           </div>
           <div class="form-group col-md-3">
             <label for="confpassword">Confirmer mot de passe</label>
-            <input type="password" class="form-control" id="confpassword" placeholder="mot de passe">
+            <input type="password" class="form-control" id="confpassword" placeholder="mot de passe" name="confPassword" [(ngModel)]="confPassword">
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="entreprise">Entreprise</label>
-            <input type="text" class="form-control" id="entreprise" placeholder="Entreprise">
-          </div>
           <div class="form-group col-md-6">
             <label for="siret">Siret</label>
-            <input type="text" class="form-control" id="siret" placeholder="Siret">
+            <input type="text" class="form-control" id="siret" placeholder="Siret" name="siret" [(ngModel)]="siret" (ngModelChange)="onTypeTransformateurSelected($event)">
           </div>
-        </div>
-        <div class="form-row">
           <div class="form-group col-md-6">
-              <label for = "type">Type transformateur</label>
-              <select id ="type"  name = "type" [(ngModel)]="selectedType" class="form-control" >
-                <option></option>
-                <option *ngFor="let item of type">{{item.libelle}}</option>
-              </select>
+            <label for = "type">Type transformateur</label>
+            <select id ="type"  name = "selectedType" [(ngModel)]="selectedType" class="form-control" >
+              <option></option>
+              <option *ngFor="let item of type">{{item.libelle}}</option>
+            </select>
           </div>
         </div>
         <button mat-raised-button type="submit" class="style">S'inscrire</button>

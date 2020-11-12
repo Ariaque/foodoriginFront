@@ -64,3 +64,17 @@ p {
   width: auto;
   height: 100%;
 }
+
+body{
+  background-image: url("../../../assets/images/background.jpg");
+  background-attachment: fixed;
+}
+
+a{
+  margin-top:25px;
+  color:#EBE9E9;
+}
+
+a:hover{
+  color:#D0CBCB;
+}

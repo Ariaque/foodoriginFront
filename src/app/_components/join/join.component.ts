@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { TypeTransformateurService } from '../../_services/type-transformateur.service';
-import { AuthService } from '../../_services/auth.service';
-import {TypeTransformateur} from '../../_classes/type-transformateur';
+import {Component, OnInit} from '@angular/core';
+import {TypeTransformateurService} from '../../_services/type-transformateur.service';
+import {AuthService} from '../../_services/auth.service';
+import {TypeTransformateurs} from '../../_classes/type-transformateurs';
+import {TopbarService} from '../../_services/topbar.service';
 
 @Component({
   selector: 'app-join',
@@ -14,23 +15,27 @@ export class JoinComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-  siret = this.form.siret;
-  type: TypeTransformateur[];
-  selectedType: TypeTransformateur;
+  type: TypeTransformateurs[];
+  siret: number;
+  confPassword: string;
+  selectedType: TypeTransformateurs;
 
-  constructor(private authService: AuthService, private typeTransformateurService: TypeTransformateurService) { }
+  constructor(private authService: AuthService, private typeTransformateurService: TypeTransformateurService, public topBarService: TopbarService) {
+  }
 
   ngOnInit(): void {
     this.typeTransformateurService.findAll().subscribe((result) => {
-      console.warn(result);
       this.type = result;
     });
   }
 
+  onTypeTransformateurSelected(val: any): void {
+    this.selectedType = val;
+  }
+
   onSubmit(): void {
-    this.authService.register(this.form, this.siret).subscribe(
+    this.authService.register(this.form, this.selectedType, this.siret).subscribe(
       data => {
-        console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
       },

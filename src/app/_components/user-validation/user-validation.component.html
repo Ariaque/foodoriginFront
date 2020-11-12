@@ -10,7 +10,7 @@
     </mat-form-field>
 
     <div class="table-container mat-elevation-z8">
-      <mat-table [dataSource]="usersSource" matSort>
+      <mat-table [dataSource]="usersSource" matSort matSortActive="id" matSortDirection="asc">
 
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Identifiant</mat-header-cell>
@@ -38,13 +38,13 @@
           <mat-cell *matCellDef="let user"> {{user.typeTransformateur.libelle}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="isActivated">
+        <ng-container matColumnDef="isEnabled">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Actions</mat-header-cell>
           <mat-cell *matCellDef="let user">
-            <button (click)="activateUser(user, true)" *ngIf="!(user.isActivated)" color="warn" mat-stroked-button>
+            <button (click)="activateUser(user, true)" *ngIf="!(user.isEnabled)" color="warn" mat-stroked-button>
               Activer
             </button>
-            <button (click)="activateUser(user, false)" *ngIf="user.isActivated" color="warn" mat-stroked-button>
+            <button (click)="activateUser(user, false)" *ngIf="user.isEnabled" color="warn" mat-stroked-button>
               Désactiver
             </button>
           </mat-cell>

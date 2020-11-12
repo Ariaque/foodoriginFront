@@ -6,6 +6,9 @@ import {LoginComponent} from './_components/login/login.component';
 import {JoinComponent} from './_components/join/join.component';
 import {FormUserComponent} from './_components/form-user/form-user.component';
 import {UserValidationComponent} from './_components/user-validation/user-validation.component';
+import {ForgotPasswordComponent} from './_components/forgot-password/forgot-password.component';
+import {ResetPasswordComponent} from './_components/reset-password/reset-password.component';
+
 
 
 const routes: Routes = [
@@ -15,6 +18,8 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'user', component: FormUserComponent},
   {path: 'userValidation', component: UserValidationComponent},
+  {path: 'forgotPassword', component: ForgotPasswordComponent},
+  {path: 'resetPassword', component: ResetPasswordComponent}
 ];
 export const appRouting = RouterModule.forRoot(routes);
 
