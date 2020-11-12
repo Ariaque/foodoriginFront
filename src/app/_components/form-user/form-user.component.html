@@ -15,20 +15,18 @@
             <label for="contact">Contact</label>
             <input type="text" class="form-control" id="contact" placeholder="Contact">
           </div>
-          <div class="form-group col-md-12">
-            <label for = "label">Label</label>
-            <select  id ="label"  name = "label" [(ngModel)]="selectedLabel" class="form-control" >
-              <option></option>
-              <option *ngFor="let item of label">{{item.libelle}}</option>
-            </select>
+         <div class="form-group col-md-12">
+          <label for = "label">Label</label>
+          <mat-select id ="label"  name = "label" [(ngModel)]="selectedLabel" class="form-control" multiple>
+            <mat-option *ngFor="let item of label">{{item.libelle}}</mat-option>
+          </mat-select>
          </div>
          <div class="form-group col-md-12">
-            <label for = "certificat">Certification</label>
-            <select id ="certificat"  name = "certificat" [(ngModel)]="selectedCertificat" class="form-control" >
-              <option></option>
-              <option *ngFor="let item of certificat">{{item.libelle}}</option>
-            </select>
-         </div>
+          <label for = "certificat">Certification</label>
+          <mat-select id ="certificat"  name = "certificat" [(ngModel)]="selectedCertificat" class="form-control" multiple>
+          <mat-option *ngFor="let item of certificat">{{item.libelle}}</mat-option>
+          </mat-select>
+        </div>
          <button mat-raised-button type="submit" class="style">Envoyer</button>
       </form>
     </mat-card>
