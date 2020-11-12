@@ -1,0 +1,22 @@
+.table-container {
+  height: 400px;
+  overflow: auto;
+}
+
+.title {
+  text-align: center;
+  margin: 0 auto;
+  padding: 5%;
+}
+
+mat-table {
+  width: 100%;
+  display: inline-block;
+  flex: 0 0 100px !important;
+  white-space: unset !important;
+}
+
+mat-cell {
+  word-break: break-all;
+  word-wrap: break-word;
+}
