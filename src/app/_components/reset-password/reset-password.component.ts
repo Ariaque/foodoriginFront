@@ -11,6 +11,12 @@ export class ResetPasswordComponent implements OnInit {
 
   type: TypeTransformateurs[];
   selectedType: TypeTransformateurs;
+  description: string;
+  nbEmployes: string;
+  lienSite: string;
+  siret: number;
+  newPassword: string;
+  password:string;
 
 
   constructor(private typeTransformateurService: TypeTransformateurService) {}
