@@ -7,11 +7,8 @@ import {InfosTransformateurService} from '../../_services/infos-transformateur.s
 import {InfosTransformateur} from '../../_classes/infosTransformateur';
 import {Transformateur} from '../../_classes/transformateur';
 import {TransformateurService} from '../../_services/transformateur.service';
-import {TokenStorageService} from "../../_services/token-storage.service";
-import {consoleTestResultHandler} from "tslint/lib/test";
-import {UserService} from "../../_services/user.service";
-import {User} from "../../_classes/user";
-import {NgForm} from "@angular/forms";
+import {TokenStorageService} from '../../_services/token-storage.service';
+import {UserService} from '../../_services/user.service';
 
 @Component({
   selector: 'app-form-user',
@@ -51,7 +48,8 @@ export class FormUserComponent implements OnInit {
     });
 }
   saveInfos(): void {
-    this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite, this.lienInsta, this.lienTwitter, this.lienFacebook, this.appartientGroupe, this.selectedLabels, this.selectedCertificats);
+    this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
+      this.lienInsta, this.lienTwitter, this.lienFacebook, this.appartientGroupe, this.selectedLabels, this.selectedCertificats);
     this.infosTService.saveInfosTransformateur(this.infos).subscribe(
       res => {
         alert ('Informations sauvegardées');
@@ -60,5 +58,12 @@ export class FormUserComponent implements OnInit {
         console.log('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
       }
     );
+  }
+  validate(ev: KeyboardEvent): void {
+    const digits: Array<string> = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const saisie = ev.key;
+    if (digits.indexOf(saisie) === -1) {
+      ev.preventDefault();
+    }
   }
 }

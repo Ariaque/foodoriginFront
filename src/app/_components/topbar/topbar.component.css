@@ -78,3 +78,7 @@ a{
 a:hover{
   color:#D0CBCB;
 }
+
+img:hover {
+  cursor: pointer;
+}
