@@ -14,7 +14,7 @@
             <input name="password" matInput type="password" [(ngModel)]="form.password" required/>
           </mat-form-field>
           <button mat-raised-button type="submit" class="style">Se connecter</button>
-          <button mat-button>Mot De Passe Oublié?</button>
+          <button mat-button type="button" (click)="changementDePage()">Mot De Passe Oublié?</button>
       </form>
   </mat-card>
 </div>
