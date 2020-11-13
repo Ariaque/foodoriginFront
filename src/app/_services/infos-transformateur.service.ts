@@ -24,8 +24,8 @@ export class InfosTransformateurService {
     return this.http.get<InfosTransformateur>(this.infosTransformateurUrl + '/' + id);
   }
 
-  public saveInfosTransformateur(infosT: InfosTransformateur): Observable<any> {
-    return this.http.post(this.infosTransformateurUrl, {
+  public saveInfosTransformateur(infosT: InfosTransformateur): Observable<InfosTransformateur> {
+    return this.http.post<InfosTransformateur>(this.infosTransformateurUrl, {
       transformateur: infosT.fk_transformateur,
       description: infosT.description,
       nombre_employes: infosT.nombre_employes,

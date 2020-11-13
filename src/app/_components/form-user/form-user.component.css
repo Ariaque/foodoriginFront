@@ -5,14 +5,33 @@
 }
 
 .input-icone input[type=text]{
-    width:100%;
-    max-width:250px;
-    border:1px ;
-     outline:none;
-     padding:10%; box-sizing:border-box; }
+  width:100%;
+  outline:none;
+  padding-left:10%;
+  box-sizing:border-box;
+}
 .input-icone{
-    margin:8px 0; outline:none; padding:8px;
-    position:relative; }
+  margin:8px 0;
+  outline:none;
+  padding:8px;
+  position:relative;
+}
 
 .input-icone i{
-    position:absolute; left:0; top:15px; padding:15px 10px;  }
+  position:absolute;
+  padding-top: 7px;
+  padding-left: 5px;
+}
+
+.padding-block {
+  padding-left: 15px;
+}
+
+.no-padding {
+  padding-top: 0px;
+  margin-top: 0px
+}
+
+.icone-size {
+  font-size:24px
+}

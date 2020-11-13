@@ -7,6 +7,11 @@ import {InfosTransformateurService} from '../../_services/infos-transformateur.s
 import {InfosTransformateur} from '../../_classes/infosTransformateur';
 import {Transformateur} from '../../_classes/transformateur';
 import {TransformateurService} from '../../_services/transformateur.service';
+import {TokenStorageService} from "../../_services/token-storage.service";
+import {consoleTestResultHandler} from "tslint/lib/test";
+import {UserService} from "../../_services/user.service";
+import {User} from "../../_classes/user";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-form-user',
@@ -29,7 +34,9 @@ export class FormUserComponent implements OnInit {
   transformateur: Transformateur;
   appartientGroupe: boolean;
 
-  constructor(private labelService: LabelService, private certifService: CertificationService, private infosTService: InfosTransformateurService, private transformateurService: TransformateurService) {
+  constructor(private labelService: LabelService, private certifService: CertificationService,
+              private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
+              private tokenService: TokenStorageService, private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -39,17 +46,19 @@ export class FormUserComponent implements OnInit {
     this.certifService.findAll().subscribe((result) => {
       this.certificats = result;
     });
-    this.transformateurService.findById(1).subscribe(res => {
-      this.transformateur = res;
+    this.userService.findUserByName(this.tokenService.getUser().username).subscribe((res: any) => {
+      this.transformateur = res.transformateur;
     });
-  }
+}
   saveInfos(): void {
-    this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite, this.lienInsta, this.lienTwitter, this.lienFacebook, false, this.selectedLabels, this.selectedCertificats);
+    this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite, this.lienInsta, this.lienTwitter, this.lienFacebook, this.appartientGroupe, this.selectedLabels, this.selectedCertificats);
     this.infosTService.saveInfosTransformateur(this.infos).subscribe(
       res => {
-        console.log('Infos sauvegardées');
+        alert ('Informations sauvegardées');
+      },
+      err => {
+        console.log('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
       }
     );
   }
-
 }
