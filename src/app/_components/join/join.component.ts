@@ -7,7 +7,7 @@ import {TopbarService} from '../../_services/topbar.service';
 @Component({
   selector: 'app-join',
   templateUrl: './join.component.html',
-  styleUrls: ['./join.component.css']
+  styleUrls: ['./join.component.css'],
 })
 export class JoinComponent implements OnInit {
 
