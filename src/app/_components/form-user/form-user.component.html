@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<div fxLayoutAlign="space-around center" fxFlexFill>
+<div class="main-div" fxLayoutAlign="space-around center" fxFlexFill>
   <mat-card fxFlex="30">
     <mat-card-title class="title" >Informations générales</mat-card-title>
     <form #infosForm="ngForm" (ngSubmit)="infosForm.resetForm()">
@@ -52,7 +52,7 @@
             <input type="text" class="form-control" id="instagram" placeholder="Lien Instagram" [(ngModel)]="lienInsta" [ngModelOptions]="{standalone:true}">
         </div>
       </form>
-      <button mat-raised-button type="submit" class="style" (click)="saveInfos()">Envoyer</button>
+      <button mat-raised-button type="submit" class="style" (click)="saveInfos()" color="warn" mat-stroked-button>Envoyer</button>
     </mat-card>
 </div>
 
