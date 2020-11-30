@@ -1,6 +1,11 @@
+import {Transformateur} from './transformateur';
+import {Label} from './label';
+import {Certification} from './certification';
+
 export class InfosTransformateur {
 
   private _id: number;
+  private _fk_transformateur: Transformateur;
   private _description: string;
   private _nombre_employes: string;
   private _url_site: string;
@@ -8,9 +13,11 @@ export class InfosTransformateur {
   private _url_twitter: string;
   private _url_instagram: string;
   private _appartient_groupe: boolean;
+  private _labels: Label[];
+  private _certifications: Certification[];
 
-  constructor(id: number, description: string, nombre_employes: string, url_site: string, url_facebook: string, url_twitter: string, url_instagram: string, appartient_groupe: boolean) {
-    this._id = id;
+  constructor(transformateur: Transformateur, description: string, nombre_employes: string, url_site: string, url_facebook: string, url_twitter: string, url_instagram: string, appartient_groupe: boolean, labels: Label[], certifications: Certification[] ) {
+    this._fk_transformateur = transformateur;
     this._description = description;
     this._nombre_employes = nombre_employes;
     this._url_site = url_site;
@@ -18,8 +25,9 @@ export class InfosTransformateur {
     this._url_twitter = url_twitter;
     this._url_instagram = url_instagram;
     this._appartient_groupe = appartient_groupe;
+    this._labels = labels;
+    this._certifications = certifications;
   }
-
 
   get id(): number {
     return this._id;
@@ -27,6 +35,14 @@ export class InfosTransformateur {
 
   set id(value: number) {
     this._id = value;
+  }
+
+  get fk_transformateur(): Transformateur {
+    return this._fk_transformateur;
+  }
+
+  set fk_transformateur(value: Transformateur) {
+    this._fk_transformateur = this.fk_transformateur;
   }
 
   get description(): string {
@@ -83,5 +99,21 @@ export class InfosTransformateur {
 
   set appartient_groupe(value: boolean) {
     this._appartient_groupe = value;
+  }
+
+  get labels(): Label[] {
+    return this._labels;
+  }
+
+  set labels(value: Label[]) {
+    this._labels = value;
+  }
+
+  get certifications(): Certification[] {
+    return this._certifications;
+  }
+
+  set certifications(value: Certification[]) {
+    this._certifications = value;
   }
 }

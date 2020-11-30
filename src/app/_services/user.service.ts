@@ -47,4 +47,8 @@ export class UserService {
       );
   }
 
+  public findUserByName(name): Observable<User> {
+    return this.http.get<User>(this.userUrl + '/' + name);
+  }
+
 }

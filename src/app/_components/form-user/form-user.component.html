@@ -1,45 +1,58 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<div fxLayoutAlign="space-around center" fxFlexFill>
+<div class="main-div" fxLayoutAlign="space-around center" fxFlexFill>
+  <mat-card fxFlex="30">
+    <mat-card-title class="title" >Informations générales</mat-card-title>
+    <form #infosForm="ngForm" (ngSubmit)="infosForm.resetForm()">
+      <div class="form-group col-md-12">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" placeholder="Saisissez la présentation de votre entreprise" lang="fr" style="resize: none" rows="3" [(ngModel)]="description" [ngModelOptions]="{standalone:true}">
+        </textarea>
+      </div>
+      <div class="form-group col-md-8">
+        <label for="nombre_employes">Nombre d'employés </label>
+        <input type="number" [min]="1"  class="form-control" id="nombre_employes" placeholder="Nombre d'employés" [(ngModel)]="nbEmployes" [ngModelOptions]="{standalone:true}" (keypress)="validate($event)">
+      </div>
+      <div>
+        <label for="siteW" class="padding-block">Site web </label>
+      </div>
+      <div class="input-icone padding-block no-padding">
+        <i class="fa fa-globe icone-size" aria-hidden="true"></i>
+        <input type="text" class="form-control" id="siteW" placeholder="Url du site web" [(ngModel)]="lienSite" [ngModelOptions]="{standalone:true}">
+      </div>
+      <div class="form-group col-md-12">
+        <mat-checkbox class="example-margin" [(ngModel)]="appartientGroupe" [ngModelOptions]="{standalone:true}">Appartient à un groupe</mat-checkbox>
+      </div>
+      <div class="form-group col-md-12">
+        <label for = "label">Labels </label>
+        <mat-select id ="label"  name = "label" [(ngModel)]="selectedLabels" class="form-control" placeholder="Choisissez vos labels" multiple>
+          <mat-option *ngFor="let label of this.labels" [value]="label">{{label.libelle}}</mat-option>
+        </mat-select>
+      </div>
+      <div class="form-group col-md-12">
+        <label for = "certificat">Certifications </label>
+        <mat-select id ="certificat"  name = "certificat" [(ngModel)]="selectedCertificats" class="form-control" placeholder="Choisissez vos certifications" multiple>
+          <mat-option *ngFor="let certificat of this.certificats" [value]="certificat">{{certificat.libelle}}</mat-option>
+        </mat-select>
+      </div>
+    </form>
+  </mat-card>
     <mat-card fxFlex="30">
-      <mat-card-title class="title" >Information</mat-card-title>
-      <form>
-          <div class="form-group col-md-12">
-            <label for="description">Description</label>
-            <input type="text" class="form-control" id="description" placeholder="Description">
-          </div>
-          <div class="form-group col-md-12">
-            <label for="nombre_employes">Nombre d'employés </label>
-            <input type="text" class="form-control" id="nombre_employes" placeholder="Nombre d'employés">
-          </div>
-         <div class="form-group col-md-12">
-          <label for = "label">Label</label>
-          <mat-select id ="label"  name = "label" [(ngModel)]="selectedLabel" class="form-control" multiple>
-            <mat-option *ngFor="let item of label">{{item.libelle}}</mat-option>
-          </mat-select>
-         </div>
-         <div class="form-group col-md-12">
-          <label for = "certificat">Certification</label>
-          <mat-select id ="certificat"  name = "certificat" [(ngModel)]="selectedCertificat" class="form-control" multiple>
-          <mat-option *ngFor="let item of certificat">{{item.libelle}}</mat-option>
-          </mat-select>
+      <form #rsForm="ngForm" (ngSubmit)="rsForm.resetForm()">
+        <mat-card-title class="title" >Réseaux sociaux </mat-card-title>
+        <div class="input-icone">
+            <i class="fa fa-facebook-square icone-size" aria-hidden="true"></i>
+            <input type="text" class="form-control" id="facebook" placeholder="Lien Facebook" [(ngModel)]="lienFacebook" [ngModelOptions]="{standalone:true}">
+        </div>
+        <div class="input-icone">
+            <i class="fa fa-twitter-square icone-size" aria-hidden="true"></i>
+            <input type="text" class="form-control" id="twitter" placeholder="Lien Twitter" [(ngModel)]="lienTwitter" [ngModelOptions]="{standalone:true}">
+        </div>
+        <div class="input-icone">
+            <i class="fa fa-instagram icone-size" aria-hidden="true"></i>
+            <input type="text" class="form-control" id="instagram" placeholder="Lien Instagram" [(ngModel)]="lienInsta" [ngModelOptions]="{standalone:true}">
         </div>
       </form>
+      <button mat-raised-button type="submit" class="style" (click)="saveInfos()" color="warn" mat-stroked-button>Envoyer</button>
     </mat-card>
-    <mat-card fxFlex="30">
-        <mat-card-title class="title" >Réseaux sociaux </mat-card-title>
-        <div class="form-group col-md-8" class="input-icone">
-            <i class="fa fa-facebook-square" aria-hidden="true" style="font-size:24px"></i>
-            <input type="text" class="form-control" id="facebook" placeholder="Lien Facebook">
-        </div>
-        <div  class="input-icone">
-            <i class="fa fa-twitter-square" aria-hidden="true" style="font-size:24px"></i>
-            <input type="text" class="form-control" id="twitter" placeholder="Lien Twitter">
-        </div>
-        <div  class="input-icone">
-            <i class="fa fa-instagram " aria-hidden="true" style="font-size:24px"></i>
-            <input type="text" class="form-control" id="instagram" placeholder="Lien Instagram">
-        </div>
-        <button mat-raised-button type="submit" color="warn" mat-stroked-button>Envoyer</button>
-      </mat-card>
 </div>
 
