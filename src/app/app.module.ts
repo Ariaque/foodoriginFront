@@ -40,7 +40,7 @@ import { ResetPasswordComponent } from './_components/reset-password/reset-passw
     FormUserComponent,
     UserValidationComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
   ],
   imports: [
     FormsModule,
