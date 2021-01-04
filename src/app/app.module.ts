@@ -41,7 +41,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     FormUserComponent,
     UserValidationComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
   ],
     imports: [
         FormsModule,
