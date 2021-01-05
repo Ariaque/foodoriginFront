@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -28,7 +28,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ForgotPasswordComponent } from './_components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
-import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatSortModule,
         MatPaginatorModule,
         MatSelectModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        ReactiveFormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

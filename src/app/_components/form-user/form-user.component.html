@@ -1,4 +1,5 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      xmlns="http://www.w3.org/1999/html">
 <div class="main-div" fxLayoutAlign="space-around center" fxFlexFill>
   <mat-card fxFlex="30">
     <mat-card-title class="title" >Informations générales</mat-card-title>
@@ -36,23 +37,54 @@
       </div>
     </form>
   </mat-card>
-    <mat-card fxFlex="30">
-      <form #rsForm="ngForm" (ngSubmit)="rsForm.resetForm()">
-        <mat-card-title class="title" >Réseaux sociaux </mat-card-title>
-        <div class="input-icone">
-            <i class="fa fa-facebook-square icone-size" aria-hidden="true"></i>
-            <input type="text" class="form-control" id="facebook" placeholder="Lien Facebook" [(ngModel)]="lienFacebook" [ngModelOptions]="{standalone:true}">
-        </div>
-        <div class="input-icone">
-            <i class="fa fa-twitter-square icone-size" aria-hidden="true"></i>
-            <input type="text" class="form-control" id="twitter" placeholder="Lien Twitter" [(ngModel)]="lienTwitter" [ngModelOptions]="{standalone:true}">
-        </div>
-        <div class="input-icone">
-            <i class="fa fa-instagram icone-size" aria-hidden="true"></i>
-            <input type="text" class="form-control" id="instagram" placeholder="Lien Instagram" [(ngModel)]="lienInsta" [ngModelOptions]="{standalone:true}">
-        </div>
-      </form>
-      <button mat-raised-button type="submit" class="style" (click)="saveInfos()" color="warn" mat-stroked-button>Envoyer</button>
-    </mat-card>
+  <mat-card fxFlex="30">
+    <form #rsForm="ngForm" (ngSubmit)="rsForm.resetForm()">
+      <mat-card-title class="title" >Réseaux sociaux </mat-card-title>
+      <div class="input-icone">
+        <i class="fa fa-facebook-square icone-size" aria-hidden="true"></i>
+        <input type="text" class="form-control" id="facebook" placeholder="Lien Facebook" [(ngModel)]="lienFacebook" [ngModelOptions]="{standalone:true}">
+      </div>
+      <div class="input-icone">
+        <i class="fa fa-twitter-square icone-size" aria-hidden="true"></i>
+        <input type="text" class="form-control" id="twitter" placeholder="Lien Twitter" [(ngModel)]="lienTwitter" [ngModelOptions]="{standalone:true}">
+      </div>
+      <div class="input-icone">
+        <i class="fa fa-instagram icone-size" aria-hidden="true"></i>
+        <input type="text" class="form-control" id="instagram" placeholder="Lien Instagram" [(ngModel)]="lienInsta" [ngModelOptions]="{standalone:true}">
+      </div>
+    </form>
+  </mat-card>
 </div>
 
+
+<div class="main-div" fxLayoutAlign="space-around center" fxFlexFill>
+  <mat-card fxFlex="30">
+    <mat-card-title class="title" >Gestion des médias</mat-card-title>
+    <h3> Images </h3>
+    <form #imagesForm="ngForm">
+      <input type="file" (change)="onFileChanged($event)" #fileInput>
+      <button (click)="onUpload()"> Upload </button>
+    </form>
+    <h3> Vidéos </h3>
+    <form [formGroup]="urlVideoForm">
+      <button type="button" (click)="addUrl()" class="btn btn-primary" style="float: right"> Ajouter URL </button>
+      <table class="table borderless" formArrayName="urls">
+        <tr *ngFor="let url of urls().controls |slice:0:limit; let i = index" [formGroupName]="i">
+          <td class="center-element">
+            <label> Url: </label>
+            <input type="text" formControlName="libelle">
+          </td>
+          <td class="center-element">
+            <button (click)="removeUrl(i)" class="btn btn-danger" > Supprimer </button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </mat-card>
+  <mat-card fxFlex="30">
+    <form #rsForm="ngForm" (ngSubmit)="rsForm.resetForm()">
+      <mat-card-title class="title"> Agriculteurs/Fermes Partenaires </mat-card-title>
+    </form>
+    <button mat-raised-button type="submit" class="style" (click)="saveInfos()" color="warn" mat-stroked-button>Envoyer</button>
+  </mat-card>
+</div>

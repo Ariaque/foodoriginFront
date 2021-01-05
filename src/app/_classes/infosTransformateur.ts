@@ -1,6 +1,7 @@
 import {Transformateur} from './transformateur';
 import {Label} from './label';
 import {Certification} from './certification';
+import {UrlVideo} from './url-video';
 
 export class InfosTransformateur {
 
@@ -15,8 +16,9 @@ export class InfosTransformateur {
   private _appartient_groupe: boolean;
   private _labels: Label[];
   private _certifications: Certification[];
+  private _urls: UrlVideo[];
 
-  constructor(transformateur: Transformateur, description: string, nombre_employes: string, url_site: string, url_facebook: string, url_twitter: string, url_instagram: string, appartient_groupe: boolean, labels: Label[], certifications: Certification[] ) {
+  constructor(transformateur: Transformateur, description: string, nombre_employes: string, url_site: string, url_facebook: string, url_twitter: string, url_instagram: string, appartient_groupe: boolean, labels: Label[], certifications: Certification[], urls: UrlVideo[] ) {
     this._fk_transformateur = transformateur;
     this._description = description;
     this._nombre_employes = nombre_employes;
@@ -27,6 +29,7 @@ export class InfosTransformateur {
     this._appartient_groupe = appartient_groupe;
     this._labels = labels;
     this._certifications = certifications;
+    this._urls = urls;
   }
 
   get id(): number {
@@ -115,5 +118,11 @@ export class InfosTransformateur {
 
   set certifications(value: Certification[]) {
     this._certifications = value;
+  }
+  get urls(): UrlVideo[] {
+    return this._urls;
+  }
+  set urls(value: UrlVideo[]) {
+    this._urls = value;
   }
 }
