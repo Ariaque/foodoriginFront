@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Transformateur} from '../_classes/transformateur';
 import {InfosTransformateur} from '../_classes/infosTransformateur';
 
 const httpOptions = {
@@ -24,7 +23,8 @@ export class InfosTransformateurService {
     return this.http.get<InfosTransformateur>(this.infosTransformateurUrl + '/' + id);
   }
 
-  public saveInfosTransformateur(infosT: InfosTransformateur): Observable<InfosTransformateur> {
+  public saveInfosTransformateur(infosT: InfosTransformateur): any{
+    console.log(infosT.urls);
     return this.http.post<InfosTransformateur>(this.infosTransformateurUrl, {
       transformateur: infosT.fk_transformateur,
       description: infosT.description,
@@ -35,7 +35,8 @@ export class InfosTransformateurService {
       url_instagram: infosT.url_instagram,
       appartient_groupe: infosT.appartient_groupe,
       labels: infosT.labels,
-      certifications: infosT.certifications
+      certifications: infosT.certifications,
+      urls: infosT.urls
     }, httpOptions);
   }
 

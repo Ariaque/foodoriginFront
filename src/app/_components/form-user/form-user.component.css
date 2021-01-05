@@ -38,3 +38,11 @@
 .main-div {
   margin-top: 120px;
 }
+
+.borderless td, .borderless th {
+  border: none;
+}
+
+.center-element{
+  text-align: center;
+}

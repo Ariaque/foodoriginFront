@@ -9,7 +9,6 @@ export class Label {
     this._libelle = libelle;
   }
 
-
   get id(): number {
     return this._id;
   }
