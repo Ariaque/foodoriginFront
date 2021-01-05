@@ -51,4 +51,8 @@ export class LoginComponent implements OnInit {
     window.location.reload();
   }
 
+  loadPasswordForgottenPage(): void {
+    this.router.navigate(['/forgotPassword']);
+  }
+
 }
