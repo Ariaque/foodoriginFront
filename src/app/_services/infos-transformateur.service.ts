@@ -20,11 +20,10 @@ export class InfosTransformateurService {
   }
 
   public findById(id: number): Observable<InfosTransformateur> {
-    return this.http.get<InfosTransformateur>(this.infosTransformateurUrl + '/' + id);
+    return this.http.get<InfosTransformateur>(this.infosTransformateurUrl + '/transformateur/' + id);
   }
 
-  public saveInfosTransformateur(infosT: InfosTransformateur): any{
-    console.log(infosT.urls);
+  public saveInfosTransformateur(infosT: InfosTransformateur): Observable<InfosTransformateur>{
     return this.http.post<InfosTransformateur>(this.infosTransformateurUrl, {
       transformateur: infosT.fk_transformateur,
       description: infosT.description,
@@ -40,6 +39,7 @@ export class InfosTransformateurService {
     }, httpOptions);
   }
 
-
-
+  public addImageTransformateur(image: FormData, id: number): any {
+   return this.http.post(this.infosTransformateurUrl + '/images/' + id, image, {responseType: 'text'});
+  }
 }

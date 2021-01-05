@@ -34,8 +34,7 @@ export class FormUserComponent implements OnInit {
   appartientGroupe: boolean;
   urlVideoForm: FormGroup;
   urlVideos: UrlVideo[];
-  limit: 15;
-  selectedFile: File;
+  selectedFile: FileList;
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
@@ -57,15 +56,16 @@ export class FormUserComponent implements OnInit {
     });
 }
   saveInfos(): void {
-     this.createUrlList (this.urlVideoForm.value.urls);
-     this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
+    this.onUpload();
+    this.createUrlList (this.urlVideoForm.value.urls);
+    this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
        this.lienInsta, this.lienTwitter, this.lienFacebook, this.appartientGroupe, this.selectedLabels, this.selectedCertificats, this.urlVideos);
-     this.infosTService.saveInfosTransformateur(this.infos).subscribe(
+    this.infosTService.saveInfosTransformateur(this.infos).subscribe(
       res => {
         alert ('Informations sauvegardées');
       },
       err => {
-        console.log('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
+        alert ('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
       }
     );
   }
@@ -99,10 +99,37 @@ export class FormUserComponent implements OnInit {
     this.urls().removeAt(i);
   }
   onFileChanged(event): void {
-    this.selectedFile = event.target.files[0];
+    const files = event.target.files;
+    let isImage = true;
+
+    for (let i = 0; i < files.length; i++) {
+      if (files.item(i).type.match('image.*')) {
+        continue;
+      } else {
+        isImage = false;
+        alert('Une image transmise a un format incorrect');
+        break;
+      }
+    }
+    if (isImage){
+      this.selectedFile = files;
+    }
+    else {
+      this.selectedFile = undefined;
+    }
   }
   onUpload(): void{
-    const uploadData = new FormData();
-    uploadData.append('myFile', this.selectedFile, this.selectedFile.name);
+    for (let i = 0; i < this.selectedFile.length; i++) {
+      const uploadData = new FormData();
+      uploadData.append('myFile', this.selectedFile[i], this.selectedFile[i].name);
+      this.infosTService.addImageTransformateur(uploadData, this.transformateur.id).subscribe(
+        res => {
+          alert ('Image sauvegardée');
+        },
+        err => {
+          alert ('Une erreur s\'est produite lors de l\'enregistrement, la taille de l\'image ne doit pas dépasser 500KB');
+        }
+      );
+    }
   }
 }
