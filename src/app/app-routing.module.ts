@@ -8,6 +8,7 @@ import {FormUserComponent} from './_components/form-user/form-user.component';
 import {UserValidationComponent} from './_components/user-validation/user-validation.component';
 import {ForgotPasswordComponent} from './_components/forgot-password/forgot-password.component';
 import {ResetPasswordComponent} from './_components/reset-password/reset-password.component';
+import {EmailSendingConfirmationComponent} from './_components/email-sending-confirmation/email-sending-confirmation.component';
 
 
 
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'user', component: FormUserComponent},
   {path: 'userValidation', component: UserValidationComponent},
   {path: 'forgotPassword', component: ForgotPasswordComponent},
-  {path: 'resetPassword', component: ResetPasswordComponent}
+  {path: 'resetPassword', component: ResetPasswordComponent},
+  {path: 'emailSent', component: EmailSendingConfirmationComponent}
 ];
 export const appRouting = RouterModule.forRoot(routes);
 

@@ -15,8 +15,8 @@ export class ResetPasswordComponent implements OnInit {
   nbEmployes: string;
   lienSite: string;
   siret: number;
+  newPasswordConfirmation: string;
   newPassword: string;
-  password:string;
 
 
   constructor(private typeTransformateurService: TypeTransformateurService) {}
