@@ -29,7 +29,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ForgotPasswordComponent } from './_components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { EmailSendingConfirmationComponent } from './_components/email-sending-confirmation/email-sending-confirmation.component';
+import { SuccessPagecomponent } from './_components/success-page/success-pagecomponent';
+import { ErrorPageComponent } from './_components/error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { EmailSendingConfirmationComponent } from './_components/email-sending-c
     UserValidationComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    EmailSendingConfirmationComponent,
+    SuccessPagecomponent,
+    ErrorPageComponent,
   ],
     imports: [
         FormsModule,
