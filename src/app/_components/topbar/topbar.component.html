@@ -13,7 +13,7 @@
 <!--    </a>-->
 
     <a class="nav-link" id="home_btn" [routerLink]="['/accueil']" >Accueil</a>
-    <a class="nav-link" id="company_space_btn" [routerLink]="['/user']" *ngIf="!topBarService.isAdmin && topBarService.isConnected" >Mon espace</a>
+    <a class="nav-link" id="company_space_btn" [routerLink]="['/user']" *ngIf="!topBarService.isAdmin && topBarService.isConnected" >Espace entreprise</a>
     <a class="nav-link" id="account_management_btn" [routerLink]="['/userValidation']" *ngIf="topBarService.isAdmin && topBarService.isConnected">Gestion des comptes</a>
     <a class="nav-link" id="join_btn" [routerLink]="['/join']" *ngIf="!topBarService.isConnected">Rejoindre</a>
     <a class="nav-link" id = "profile_btn" [routerLink]="['/accueil']" *ngIf="topBarService.isConnected">Profil</a>
