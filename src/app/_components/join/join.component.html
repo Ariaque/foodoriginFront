@@ -7,7 +7,7 @@
             <label for="email">Email*</label>
             <input formControlName="username" [ngClass]="{'form-control': true,
             'is-invalid': !username.valid && username.touched,
-            'is-valid': username.valid}"  type="email" class="form-control" id="email" placeholder="Email" name="username" [(ngModel)]="form.username" [ngModelOptions]="{standalone: true}" >
+            'is-valid': username.valid}"  type="email" class="form-control" id="email" placeholder="Email" name="username" [(ngModel)]="form.username">
             <small *ngIf="username.errors?.required && username.touched" class="form-text custom-invalid-feedback">Champ requis</small>
             <small *ngIf="username.errors?.email && username.touched" class="form-text custom-invalid-feedback">Entrez l'adresse e-mail dans un format correct: nom@exemple.com</small>
           </div>
@@ -23,8 +23,10 @@
             <input formControlName="confPassword"
             [ngClass]="{'is-invalid': confiPassword.errors && confiPassword.touched}"
             type="password" class="form-control" id="confpassword" placeholder="mot de passe" name="confPassword" [(ngModel)]="confPassword">
-            <small *ngIf="confiPassword.hasError('passwordMismatch')" class="form-text custom-invalid-feedback">Le mot de passe ne correspond pas</small>
-            <small *ngIf="confiPassword.hasError('required')" class="form-text custom-invalid-feedback">La confirmation mot de passe est requise</small>
+            <small *ngIf="confiPassword.hasError('passwordMismatch')" class="form-text custom-invalid-feedback">Les mots de passe
+              ne correspondent pas</small>
+            <small *ngIf="confiPassword.hasError('required')" class="form-text custom-invalid-feedback">La confirmation du mot
+              de passe est requise</small>
           </div>
         </div>
         <div class="form-row">

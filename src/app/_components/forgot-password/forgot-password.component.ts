@@ -18,10 +18,10 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.email);
-    this.sendResetPassordEmailService.sendEmail(this.email).subscribe();
-    this.router.navigate(['/emailSent']);
+    this.sendResetPassordEmailService.sendEmail(this.email).subscribe(success => {
+      if (success){
+        this.router.navigate(['/success'], { queryParams: { title: 'Vérifiez vos mails !', text: 'Vérifiez vos mails (et vos spams !) un mail pour réinitialiser votre mot de passe vous a été envoyé !' } });
+      }});
   }
-
 
 }

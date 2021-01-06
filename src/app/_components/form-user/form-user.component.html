@@ -11,7 +11,7 @@
       </div>
       <div class="form-group col-md-8">
         <label for="nombre_employes">Nombre d'employés </label>
-        <input type="number" [min]="1"  class="form-control" id="nombre_employes" placeholder="Nombre d'employés" [(ngModel)]="nbEmployes" [ngModelOptions]="{standalone:true}" (keypress)="validate($event)">
+        <input type="number" [min]="1"  class="form-control" id="nombre_employes" [(ngModel)]="nbEmployes" [ngModelOptions]="{standalone:true}" (keypress)="validate($event)">
       </div>
       <div>
         <label for="siteW" class="padding-block">Site web </label>

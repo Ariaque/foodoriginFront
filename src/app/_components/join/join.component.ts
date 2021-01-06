@@ -4,7 +4,7 @@ import {AuthService} from '../../_services/auth.service';
 import {TypeTransformateurs} from '../../_classes/type-transformateurs';
 import {TopbarService} from '../../_services/topbar.service';
 import {CustomValidationService} from '../../_services/custom-validation.service';
-import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-join',
@@ -22,9 +22,9 @@ export class JoinComponent implements OnInit {
   confPassword: string;
   selectedType: TypeTransformateurs;
   @Input()
-  myForm: FormGroup
+  myForm: FormGroup;
 
-  constructor(private _fb: FormBuilder,private customValidator: CustomValidationService, private authService: AuthService, private typeTransformateurService: TypeTransformateurService, public topBarService: TopbarService) {
+  constructor(private _fb: FormBuilder, private customValidator: CustomValidationService, private authService: AuthService, private typeTransformateurService: TypeTransformateurService, public topBarService: TopbarService) {
   }
 
   ngOnInit(): void {
@@ -37,7 +37,7 @@ export class JoinComponent implements OnInit {
       password: [null, Validators.required],
       confPassword: [null, Validators.required],
     }, {
-      validator: this.customValidator.passwordMatchValidator("password","confPassword")
+      validator: this.customValidator.passwordMatchValidator('password', 'confPassword')
     });
   }
 
@@ -58,19 +58,19 @@ export class JoinComponent implements OnInit {
     );
   }
 
-  get numSiret(){
-    const  temp = <FormGroup>this.myForm.controls.siret;
+  get numSiret(): FormGroup{
+    const  temp = this.myForm.controls.siret as FormGroup;
     return temp;
   }
 
-  get username() {
+  get username(): AbstractControl {
     return this.myForm.get('username');
   }
 
-  get password() {
+  get password(): AbstractControl {
     return this.myForm.get('password');
   }
-  get confiPassword() {
+  get confiPassword(): AbstractControl {
     return this.myForm.get('confPassword');
   }
 

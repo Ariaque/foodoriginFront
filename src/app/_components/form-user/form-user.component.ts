@@ -53,6 +53,7 @@ export class FormUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.nbEmployes = '1';
     this.labelService.findAll().subscribe((result) => {
       this.labels = result;
     });
