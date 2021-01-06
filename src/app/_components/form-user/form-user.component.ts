@@ -9,8 +9,9 @@ import {Transformateur} from '../../_classes/transformateur';
 import {TransformateurService} from '../../_services/transformateur.service';
 import {TokenStorageService} from '../../_services/token-storage.service';
 import {UserService} from '../../_services/user.service';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UrlVideo} from '../../_classes/url-video';
+import {FermePartenaire} from '../../_classes/ferme-partenaire';
 
 @Component({
   selector: 'app-form-user',
@@ -32,15 +33,22 @@ export class FormUserComponent implements OnInit {
   infos: InfosTransformateur;
   transformateur: Transformateur;
   appartientGroupe: boolean;
+  siretGroupe: string;
   urlVideoForm: FormGroup;
   urlVideos: UrlVideo[];
+  fermeForm: FormGroup;
+  fermesP: FermePartenaire[];
   selectedFile: FileList;
+  infosForm: FormGroup;
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
               private tokenService: TokenStorageService, private userService: UserService, private formBuilder: FormBuilder) {
     this.urlVideoForm = this.formBuilder.group({
       urls: this.formBuilder.array([])
+    });
+    this.fermeForm = this.formBuilder.group({
+      fermes: this.formBuilder.array([])
     });
   }
 
@@ -56,10 +64,12 @@ export class FormUserComponent implements OnInit {
     });
 }
   saveInfos(): void {
+    this.createFermeList (this.fermeForm.value.fermes);
     this.onUpload();
     this.createUrlList (this.urlVideoForm.value.urls);
     this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
-       this.lienInsta, this.lienTwitter, this.lienFacebook, this.appartientGroupe, this.selectedLabels, this.selectedCertificats, this.urlVideos);
+       this.lienInsta, this.lienTwitter, this.lienFacebook, this.appartientGroupe, this.siretGroupe, this.selectedLabels,
+       this.selectedCertificats, this.urlVideos, this.fermesP);
     this.infosTService.saveInfosTransformateur(this.infos).subscribe(
       res => {
         alert ('Informations sauvegardées');
@@ -68,6 +78,15 @@ export class FormUserComponent implements OnInit {
         alert ('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
       }
     );
+  }
+  createFermeList(fermeList): void {
+    this.fermesP = [];
+    for (let i = 0; i < fermeList.length; i++) {
+      const ferme = fermeList[i];
+      if (ferme.nom !== '') {
+        this.fermesP.push(new FermePartenaire(ferme.nom, ferme.presentation));
+      }
+    }
   }
   createUrlList(urlList): void {
     this.urlVideos = [];
@@ -98,6 +117,21 @@ export class FormUserComponent implements OnInit {
   removeUrl(i: number): void {
     this.urls().removeAt(i);
   }
+  fermes(): FormArray {
+    return this.fermeForm.get('fermes') as FormArray;
+  }
+  newFerme(): FormGroup {
+   return this.formBuilder.group({
+     nom: '',
+     presentation: ''
+   });
+  }
+  addFerme(): void {
+    this.fermes().push(this.newFerme());
+  }
+  removeFerme(i: number): void {
+    this.fermes().removeAt(i);
+  }
   onFileChanged(event): void {
     const files = event.target.files;
     let isImage = true;
@@ -119,17 +153,19 @@ export class FormUserComponent implements OnInit {
     }
   }
   onUpload(): void{
-    for (let i = 0; i < this.selectedFile.length; i++) {
-      const uploadData = new FormData();
-      uploadData.append('myFile', this.selectedFile[i], this.selectedFile[i].name);
-      this.infosTService.addImageTransformateur(uploadData, this.transformateur.id).subscribe(
-        res => {
-          alert ('Image sauvegardée');
-        },
-        err => {
-          alert ('Une erreur s\'est produite lors de l\'enregistrement, la taille de l\'image ne doit pas dépasser 500KB');
-        }
-      );
+    if (this.selectedFile !== undefined) {
+      for (let i = 0; i < this.selectedFile.length; i++) {
+        const uploadData = new FormData();
+        uploadData.append('myFile', this.selectedFile[i], this.selectedFile[i].name);
+        this.infosTService.addImageTransformateur(uploadData, this.transformateur.id).subscribe(
+          res => {
+            alert ('Image sauvegardée');
+          },
+          err => {
+            alert ('Une erreur s\'est produite lors de l\'enregistrement, la taille de l\'image ne doit pas dépasser 500KB');
+          }
+        );
+      }
     }
   }
 }

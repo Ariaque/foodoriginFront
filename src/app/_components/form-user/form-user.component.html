@@ -23,6 +23,10 @@
       <div class="form-group col-md-12">
         <mat-checkbox class="example-margin" [(ngModel)]="appartientGroupe" [ngModelOptions]="{standalone:true}">Appartient à un groupe</mat-checkbox>
       </div>
+      <div class="form-group col-md-12" *ngIf="appartientGroupe">
+        <label for="siret_groupe">Siret du groupe</label>
+        <input type="text" class="form-control" id="siret_groupe" placeholder="Siret du groupe" [(ngModel)]="siretGroupe" [maxLength]="14" [ngModelOptions]="{standalone:true}" pattern="'^[0-9]{14}$">
+      </div>
       <div class="form-group col-md-12">
         <label for = "label">Labels </label>
         <mat-select id ="label"  name = "label" [(ngModel)]="selectedLabels" class="form-control" placeholder="Choisissez vos labels" multiple>
@@ -57,34 +61,57 @@
 </div>
 
 
-<div class="main-div" fxLayoutAlign="space-around center" fxFlexFill>
+<div fxLayoutAlign="space-around center" fxFlexFill>
   <mat-card fxFlex="30">
     <mat-card-title class="title" >Gestion des médias</mat-card-title>
-    <h3> Images </h3>
-    <form #imagesForm="ngForm">
-      <p> Sélectionnez une ou plusieurs images </p>
-      <input type="file" accept="image/*" multiple (change)="onFileChanged($event)">
-    </form>
-    <h3> Vidéos </h3>
-    <form [formGroup]="urlVideoForm">
-      <button type="button" (click)="addUrl()" class="btn btn-primary" style="float: right"> Ajouter URL </button>
-      <table class="table borderless" formArrayName="urls">
-        <tr *ngFor="let url of urls().controls |slice:0:2; let i = index" [formGroupName]="i">
-          <td class="center-element">
-            <label for="urlV"> Url: </label>
-            <input type="text" formControlName="libelle" id="urlV" name="urlV">
-          </td>
-          <td class="center-element">
-            <button (click)="removeUrl(i)" class="btn btn-danger" > Supprimer </button>
+    <div>
+      <h2> Images </h2>
+      <h4> Sélectionnez une ou plusieurs images : </h4>
+      <form #imagesForm="ngForm">
+        <input type="file" accept="image/*" multiple (change)="onFileChanged($event)">
+      </form>
+    </div>
+    <br>
+    <br>
+    <div>
+      <h2> Vidéos </h2>
+      <h4> Saisissez le(s) url(s) des vidéos que vous souhaitez renseigner: </h4>
+      <form [formGroup]="urlVideoForm">
+        <button type="button" (click)="addUrl()" class="btn btn-primary position-bouton"> Ajouter URL </button>
+        <table class="table borderless" formArrayName="urls">
+          <tr *ngFor="let url of urls().controls |slice:0:10; let i = index" [formGroupName]="i">
+            <td class="center-element">
+              <input type="text" formControlName="libelle" class="form-control">
+            </td>
+            <td class="center-element">
+              <button (click)="removeUrl(i)" class="btn btn-danger" > Supprimer </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </mat-card>
+  <mat-card fxFlex="30">
+    <mat-card-title class="title"> Agriculteurs/Fermes Partenaires </mat-card-title>
+    <h4> Saisissez le(s) ferme(s)/agriculteur(s) partenaires que vous souhaitez renseigner: </h4>
+    <form [formGroup]="fermeForm">
+      <button type="button" (click)="addFerme()" class="btn btn-primary" style="float: right"> Ajouter</button>
+      <table class="table borderless" formArrayName="fermes">
+        <tr *ngFor="let ferme of fermes().controls |slice:0:5; let i = index" [formGroupName]="i">
+          <td>
+            <div class="form-group col-md-12">
+              <label for="nomF"> Nom: </label>
+              <input type="text" formControlName="nom" id="nomF" name="nomF" class="form-control">
+            </div>
+            <div class="form-group col-md-12">
+              <label for="presentationF"> Presentation: </label>
+             <textarea class="form-control" placeholder="Saisissez la description de la ferme/l'agriculteur" lang="fr" style="resize: none" rows="2" cols="45" type="text" formControlName="presentation" id="presentationF" name="presentationF"></textarea>
+            </div>
+            <button (click)="removeFerme(i)" class="btn btn-danger" style="float: right"> Supprimer </button>
           </td>
         </tr>
       </table>
     </form>
-  </mat-card>
-  <mat-card fxFlex="30">
-    <form #rsForm="ngForm" (ngSubmit)="rsForm.resetForm()">
-      <mat-card-title class="title"> Agriculteurs/Fermes Partenaires </mat-card-title>
-    </form>
-    <button mat-raised-button type="submit" class="style" (click)="saveInfos()" color="warn" mat-stroked-button>Envoyer</button>
+    <button mat-raised-button type="submit" (click)="saveInfos()" color="warn" mat-stroked-button>Envoyer</button>
   </mat-card>
 </div>
