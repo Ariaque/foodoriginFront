@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../../_services/auth.service';
 import {TokenStorageService} from '../../_services/token-storage.service';
 import {TopbarService} from '../../_services/topbar.service';
@@ -10,12 +10,14 @@ import {Router} from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  alert:boolean = false;
   form: any = {};
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
+  @Input()
+  signInError : string;
 
   constructor(private router: Router, private authService: AuthService, private tokenStorage: TokenStorageService, public topBarService: TopbarService) {
   }
@@ -39,12 +41,18 @@ export class LoginComponent implements OnInit {
         this.roles = this.tokenStorage.getUser().roles;
         this.topBarService.updateStatus();
         this.router.navigate(['/accueil']);
+        this.alert = false;
+
       },
       err => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
+        this.alert = true;
       }
     );
+  }
+  closeAlert(){
+    this.alert= false
   }
 
   reloadPage(): void {

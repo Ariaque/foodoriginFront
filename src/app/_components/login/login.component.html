@@ -1,8 +1,14 @@
 <div fxLayoutAlign="center center" fxFlexFill *ngIf="!topBarService.isConnected" >
-  <mat-card fxFlex="25">
+  <mat-card fxFlex="50">
     <mat-toolbar  class="mat-toolbar" ><h1>Connexion</h1></mat-toolbar>
+    
+    <div *ngIf= "alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Incorrect!</strong> Nom d'utilisateur ou mot de passe est incorrect
+      <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
       <form name="form" #f="ngForm" fxLayoutAlign="stretch" fxLayout="column" class="login.form" (ngSubmit)="f.form.valid && onSubmit()" >
-
           <mat-form-field appearance = "standard">
             <mat-label>Email</mat-label>
             <input name="username" matInput [(ngModel)]="form.username" required/>
