@@ -25,7 +25,8 @@
       </div>
       <div class="form-group col-md-12" *ngIf="appartientGroupe">
         <label for="siret_groupe">Siret du groupe</label>
-        <input type="text" class="form-control" id="siret_groupe" placeholder="Siret du groupe" [(ngModel)]="siretGroupe" [maxLength]="14" [ngModelOptions]="{standalone:true}" pattern="'^[0-9]{14}$">
+        <input type="text" class="form-control" id="siret_groupe" placeholder="Siret du groupe" [(ngModel)]="siretGroupe" [maxLength]="14" [ngModelOptions]="{standalone:true}">
+        <small *ngIf= "this.siretGroupe.length < 14" class="form-text custom-invalid-feedback" >Le numéro siret doit comporter 14 caractères </small>
       </div>
       <div class="form-group col-md-12">
         <label for = "label">Labels </label>

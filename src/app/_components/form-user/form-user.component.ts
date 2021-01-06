@@ -33,13 +33,12 @@ export class FormUserComponent implements OnInit {
   infos: InfosTransformateur;
   transformateur: Transformateur;
   appartientGroupe: boolean;
-  siretGroupe: string;
+  siretGroupe = '';
   urlVideoForm: FormGroup;
   urlVideos: UrlVideo[];
   fermeForm: FormGroup;
   fermesP: FermePartenaire[];
   selectedFile: FileList;
-  infosForm: FormGroup;
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
