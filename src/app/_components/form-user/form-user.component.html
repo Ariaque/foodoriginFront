@@ -62,17 +62,17 @@
     <mat-card-title class="title" >Gestion des médias</mat-card-title>
     <h3> Images </h3>
     <form #imagesForm="ngForm">
-      <input type="file" (change)="onFileChanged($event)" #fileInput>
-      <button (click)="onUpload()"> Upload </button>
+      <p> Sélectionnez une ou plusieurs images </p>
+      <input type="file" accept="image/*" multiple (change)="onFileChanged($event)">
     </form>
     <h3> Vidéos </h3>
     <form [formGroup]="urlVideoForm">
       <button type="button" (click)="addUrl()" class="btn btn-primary" style="float: right"> Ajouter URL </button>
       <table class="table borderless" formArrayName="urls">
-        <tr *ngFor="let url of urls().controls |slice:0:limit; let i = index" [formGroupName]="i">
+        <tr *ngFor="let url of urls().controls |slice:0:2; let i = index" [formGroupName]="i">
           <td class="center-element">
-            <label> Url: </label>
-            <input type="text" formControlName="libelle">
+            <label for="urlV"> Url: </label>
+            <input type="text" formControlName="libelle" id="urlV" name="urlV">
           </td>
           <td class="center-element">
             <button (click)="removeUrl(i)" class="btn btn-danger" > Supprimer </button>
