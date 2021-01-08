@@ -26,9 +26,10 @@ const routes: Routes = [
   {path: 'resetPassword', component: ResetPasswordComponent},
   {path: 'success', component: SuccessPagecomponent},
   {path: 'error', component: ErrorPageComponent},
+  {path: 'profil', component: ProfileComponent},
   {path: '404', component: NotFoundComponent},
   {path: '**', redirectTo: '/404'},
-  {path: 'profile', component: ProfileComponent},
+
 
 ];
 export const appRouting = RouterModule.forRoot(routes);
