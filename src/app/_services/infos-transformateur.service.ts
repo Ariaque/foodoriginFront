@@ -33,9 +33,11 @@ export class InfosTransformateurService {
       url_twitter: infosT.url_twitter,
       url_instagram: infosT.url_instagram,
       appartient_groupe: infosT.appartient_groupe,
+      siret_groupe: infosT.siret_groupe,
       labels: infosT.labels,
       certifications: infosT.certifications,
-      urls: infosT.urls
+      urls: infosT.urls,
+      fermesP: infosT.fermesP
     }, httpOptions);
   }
 

@@ -29,11 +29,11 @@
 
 .no-padding {
   padding-top: 0px;
-  margin-top: 0px
+  margin-top: 0px;
 }
 
 .icone-size {
-  font-size:24px
+  font-size:24px;
 }
 .main-div {
   margin-top: 120px;
@@ -45,4 +45,8 @@
 
 .center-element{
   text-align: center;
+}
+
+.position-bouton {
+  float: right; margin-right: 20px;
 }
