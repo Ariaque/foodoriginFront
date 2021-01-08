@@ -31,6 +31,7 @@ import { ResetPasswordComponent } from './_components/reset-password/reset-passw
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { SuccessPagecomponent } from './_components/success-page/success-pagecomponent';
 import { ErrorPageComponent } from './_components/error-page/error-page.component';
+import { ProfileComponent } from './_components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ErrorPageComponent } from './_components/error-page/error-page.componen
     ResetPasswordComponent,
     SuccessPagecomponent,
     ErrorPageComponent,
+    ProfileComponent,
   ],
     imports: [
         FormsModule,
