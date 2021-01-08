@@ -1,7 +1,19 @@
 export class UrlVideo {
 
-  constructor(private libelle: string) {
+  private id: number;
+  private libelle: string;
+
+  constructor(id?: number, libelle?: string) {
+    this.id = id;
     this.libelle = libelle;
+  }
+
+  getId(): number {
+    return this.id;
+  }
+
+  setId(value: number): void {
+    this.id = value;
   }
 
   getLibelle(): string {
