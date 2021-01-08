@@ -27,8 +27,7 @@ const routes: Routes = [
   {path: 'success', component: SuccessPagecomponent},
   {path: 'error', component: ErrorPageComponent},
   {path: '404', component: NotFoundComponent},
-  {path: '**', redirectTo: '/404'}
-  {path: 'error', component: ErrorPageComponent},
+  {path: '**', redirectTo: '/404'},
   {path: 'profile', component: ProfileComponent},
 
 ];
