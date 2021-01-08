@@ -12,6 +12,7 @@ import {SuccessPagecomponent} from './_components/success-page/success-pagecompo
 import {ErrorPageComponent} from './_components/error-page/error-page.component';
 import {NotFoundComponent} from './_components/not-found/not-found.component';
 
+import { ProfileComponent } from './_components/profile/profile.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,9 @@ const routes: Routes = [
   {path: 'error', component: ErrorPageComponent},
   {path: '404', component: NotFoundComponent},
   {path: '**', redirectTo: '/404'}
+  {path: 'error', component: ErrorPageComponent},
+  {path: 'profile', component: ProfileComponent},
+
 ];
 export const appRouting = RouterModule.forRoot(routes);
 

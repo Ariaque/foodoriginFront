@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      xmlns="http://www.w3.org/1999/html">
+<div class="main-div" fxLayoutAlign="space-around center" fxFlexFill>
+    <mat-card fxFlex="50">
+        <div class="text-center">
+            <mat-card-title class="title" ><i class="fa fa-user white-text"></i> Mon profil</mat-card-title>
+            <hr class="hr-light">
+        </div>
+        <form>
+            <h2>Information Utilisateur</h2>        
+            <div class="form-row">
+            <div class="form-group col-md-6" *ngIf="user">
+                <label for="description"><i class="fa fa-envelope prefix white-text"></i> Email</label><br>
+                <span>{{user.username}}</span>
+            </div>
+            </div>
+        
+            <hr class="hr">
+            <h2>Informations Transformateur</h2>
+            <div class="form-row">
+                <div class="form-group col-md-6" *ngIf="transformateur">
+                    <label  for="transformateur"><i class="fa fa-map-marker prefix white-text"></i> Adresse</label><br>
+                    <span>{{transformateur.adresse}}</span>
+                    <span>{{transformateur.code_postal}}</span>
+                </div>     
+                <div class="form-group col-md-6" *ngIf="transformateur">
+                    <label  for="transformateur"><i class="fa fa-briefcase r prefix white-text"></i> Raison Sociale</label><br>
+                    <span>{{transformateur.raison_sociale}}</span>
+                </div>
+                <div class="form-group col-md-6" *ngIf="transformateur">
+                    <label  for="transformateur"><i class="fa fa-sort-numeric-asc prefix white-text"></i> Siret</label><br>
+                    <span>{{transformateur.siret}}</span>
+                </div>
+            </div>
+            <hr class="hr">
+            <h2>Information Type Transformateur</h2>
+            <div class="form-row">
+                <div class="form-group col-md-6" *ngIf="typeTransformateur">
+                    <label  for="typeTransformateur"><i class="fa fa-user-o  prefix white-text"></i> Libellé</label><br>
+                    <span>{{typeTransformateur.libelle}}</span>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+</div>
+
+
+
+

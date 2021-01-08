@@ -32,6 +32,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { SuccessPagecomponent } from './_components/success-page/success-pagecomponent';
 import { ErrorPageComponent } from './_components/error-page/error-page.component';
 import { NotFoundComponent } from './_components/not-found/not-found.component';
+import { ProfileComponent } from './_components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { NotFoundComponent } from './_components/not-found/not-found.component';
     SuccessPagecomponent,
     ErrorPageComponent,
     NotFoundComponent,
+    ProfileComponent,
   ],
     imports: [
         FormsModule,
