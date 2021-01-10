@@ -9,7 +9,7 @@ import {Transformateur} from '../../_classes/transformateur';
 import {TransformateurService} from '../../_services/transformateur.service';
 import {TokenStorageService} from '../../_services/token-storage.service';
 import {UserService} from '../../_services/user.service';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {UrlVideo} from '../../_classes/url-video';
 import {FermePartenaire} from '../../_classes/ferme-partenaire';
 
@@ -20,10 +20,8 @@ import {FermePartenaire} from '../../_classes/ferme-partenaire';
 })
 export class FormUserComponent implements OnInit {
 
-  certificats: Certification[];
+  certifications: Certification[];
   labels: Label[];
-  selectedLabels: Label[];
-  selectedCertificats: Certification[];
   description: string;
   nbEmployes: string;
   lienFacebook: string;
@@ -35,19 +33,25 @@ export class FormUserComponent implements OnInit {
   appartientGroupe: boolean;
   siretGroupe = '';
   urlVideoForm: FormGroup;
-  urlVideos: UrlVideo[];
+  urlVideosInit: UrlVideo[] = [];
+  urlVideos: UrlVideo[] = [];
   fermeForm: FormGroup;
-  fermesP: FermePartenaire[];
+  fermesP: FermePartenaire[] = [];
+  fermesPInit: FermePartenaire[] = [];
   selectedFile: FileList;
+  imagesLink: string[] = [];
+  idInfo = 0;
+  listCertif = new FormControl();
+  listLabel = new FormControl();
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
               private tokenService: TokenStorageService, private userService: UserService, private formBuilder: FormBuilder) {
-    this.urlVideoForm = this.formBuilder.group({
-      urls: this.formBuilder.array([])
-    });
     this.fermeForm = this.formBuilder.group({
       fermes: this.formBuilder.array([])
+    });
+    this.urlVideoForm = this.formBuilder.group({
+      urls: this.formBuilder.array([])
     });
   }
 
@@ -57,20 +61,59 @@ export class FormUserComponent implements OnInit {
       this.labels = result;
     });
     this.certifService.findAll().subscribe((result) => {
-      this.certificats = result;
+      this.certifications = result;
     });
     this.userService.findUserByName(this.tokenService.getUser().username).subscribe((res: any) => {
       this.transformateur = res.transformateur;
+      this.infosTService.findById(this.transformateur.id).subscribe((info: InfosTransformateur)  => {
+        if (info != null) {
+          this.idInfo = info.id;
+          this.description = info.description;
+          this.nbEmployes = info.nombre_employes;
+          this.lienSite = info.url_site;
+          this.appartientGroupe = info.appartient_groupe;
+          this.siretGroupe = info.siret_groupe;
+          this.lienInsta = info.url_instagram;
+          this.lienFacebook = info.url_facebook;
+          this.lienTwitter = info.url_twitter;
+          const listL: Label[] = [];
+          for (let i = 0; i < info.labels.length; i++) {
+            const index = this.labels.findIndex(obj => obj.libelle === info.labels[i].libelle);
+            listL.push(this.labels[index]);
+          }
+          this.listLabel.setValue(listL);
+
+          const listC: Certification[] = [];
+          for (let i = 0; i < info.certifications.length; i++) {
+            const index = this.certifications.findIndex(obj => obj.libelle === info.certifications[i].libelle);
+            listC.push(this.certifications[index]);
+          }
+          this.listCertif.setValue(listC);
+
+          this.urlVideosInit = info.urls.map(url => Object.assign(new UrlVideo(), url));
+          this.urlVideosInit.forEach(url => {
+            this.urls().push(this.formBuilder.group({libelle: url.getLibelle()}));
+          });
+          this.fermesPInit = info.fermesP.map(ferme => Object.assign(new FermePartenaire(), ferme));
+          this.fermesPInit.forEach(ferme => {
+            this.fermes().push(this.formBuilder.group({nom: ferme.getNom(), presentation: ferme.getDescription()}));
+          });
+        }
+        this.infosTService.getImageTransformateur(this.transformateur.id).subscribe(image => {
+          image.map (link => {
+            this.imagesLink.push('http://foodorigin.projetetudiant.fr/images/' + this.transformateur.id + '/' + link);
+          });
+        });
+      });
     });
-}
+  }
   saveInfos(): void {
     this.createFermeList (this.fermeForm.value.fermes);
-    this.onUpload();
     this.createUrlList (this.urlVideoForm.value.urls);
     this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
-       this.lienInsta, this.lienTwitter, this.lienFacebook, this.appartientGroupe, this.siretGroupe, this.selectedLabels,
-       this.selectedCertificats, this.urlVideos, this.fermesP);
-    this.infosTService.saveInfosTransformateur(this.infos).subscribe(
+       this.lienInsta, this.lienTwitter, this.lienFacebook, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
+       this.listCertif.value, this.urlVideos, this.fermesP);
+    this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
       res => {
         alert ('Informations sauvegardées');
       },
@@ -80,21 +123,41 @@ export class FormUserComponent implements OnInit {
     );
   }
   createFermeList(fermeList): void {
-    this.fermesP = [];
     for (let i = 0; i < fermeList.length; i++) {
       const ferme = fermeList[i];
-      if (ferme.nom !== '') {
-        this.fermesP.push(new FermePartenaire(ferme.nom, ferme.presentation));
+      if (ferme.nom !== '' && !this.isAddFerme(ferme.nom, ferme.presentation)) {
+        const newF = new FermePartenaire(null, ferme.nom, ferme.presentation);
+        this.fermesP.push(newF);
       }
     }
   }
-  createUrlList(urlList): void {
-    this.urlVideos = [];
-    for (let i = 0; i < urlList.length; i++) {
-      if (urlList[i].libelle !== '') {
-        this.urlVideos.push(new UrlVideo(urlList[i].libelle));
+  isAddFerme(nom, presentation): boolean {
+    let ret = false;
+    for (let i = 0; i < this.fermesPInit.length; i++) {
+      if (this.fermesPInit[i].getNom() === nom && this.fermesPInit[i].getDescription() === presentation) {
+        this.fermesP.push(this.fermesPInit[i]);
+        ret = true;
       }
     }
+    return ret;
+  }
+  createUrlList(urlList): void {
+    for (let i = 0; i < urlList.length; i++) {
+      if (urlList[i].libelle !== '' && !this.isAddUrl (urlList[i].libelle)) {
+        const newUrlV = new UrlVideo(null, urlList[i].libelle);
+        this.urlVideos.push(newUrlV);
+      }
+    }
+  }
+  isAddUrl(libelle): boolean {
+    let ret = false;
+    for (let i = 0; i < this.urlVideosInit.length; i++) {
+      if (this.urlVideosInit[i].getLibelle() === libelle) {
+        this.urlVideos.push(this.urlVideosInit[i]);
+        ret = true;
+      }
+    }
+    return ret;
   }
   validate(ev: KeyboardEvent): void {
     const digits: Array<string> = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -160,6 +223,7 @@ export class FormUserComponent implements OnInit {
         this.infosTService.addImageTransformateur(uploadData, this.transformateur.id).subscribe(
           res => {
             alert ('Image sauvegardée');
+            this.imagesLink.push('http://foodorigin.projetetudiant.fr/images/' + this.transformateur.id + '/' + this.selectedFile[i].name);
           },
           err => {
             alert ('Une erreur s\'est produite lors de l\'enregistrement, la taille de l\'image ne doit pas dépasser 500KB');
@@ -167,5 +231,16 @@ export class FormUserComponent implements OnInit {
         );
       }
     }
+  }
+  deleteImage(fileName): void {
+    this.infosTService.deleteImageTransformateur(fileName, this.transformateur.id).subscribe(
+      res => {
+        alert ('Image supprimée');
+        const index = this.imagesLink.indexOf(fileName);
+        this.imagesLink.splice(index, 1);
+      },
+        err => {
+          alert ('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
+      });
   }
 }

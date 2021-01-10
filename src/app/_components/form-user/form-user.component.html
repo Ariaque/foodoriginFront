@@ -7,7 +7,7 @@
       <div class="form-group col-md-12">
         <label for="description">Description</label>
         <textarea class="form-control" id="description" placeholder="Saisissez la présentation de votre entreprise" lang="fr" style="resize: none" rows="3" [(ngModel)]="description" [ngModelOptions]="{standalone:true}">
-        </textarea>
+        {{this.description}}</textarea>
       </div>
       <div class="form-group col-md-8">
         <label for="nombre_employes">Nombre d'employés </label>
@@ -29,15 +29,15 @@
         <small *ngIf= "this.siretGroupe.length < 14" class="form-text custom-invalid-feedback" >Le numéro siret doit comporter 14 caractères </small>
       </div>
       <div class="form-group col-md-12">
-        <label for = "label">Labels </label>
-        <mat-select id ="label"  name = "label" [(ngModel)]="selectedLabels" class="form-control" placeholder="Choisissez vos labels" multiple>
+        <label for = "labels"> Labels </label>
+        <mat-select id="labels" name="labels" placeholder="Selectionnez vos labels" [formControl]="listLabel" multiple class="form-control">
           <mat-option *ngFor="let label of this.labels" [value]="label">{{label.libelle}}</mat-option>
         </mat-select>
       </div>
       <div class="form-group col-md-12">
         <label for = "certificat">Certifications </label>
-        <mat-select id ="certificat"  name = "certificat" [(ngModel)]="selectedCertificats" class="form-control" placeholder="Choisissez vos certifications" multiple>
-          <mat-option *ngFor="let certificat of this.certificats" [value]="certificat">{{certificat.libelle}}</mat-option>
+        <mat-select id="certificat" name="certificat" class="form-control" placeholder="Selectionnez vos certifications" [formControl]="listCertif" multiple>
+          <mat-option *ngFor="let certif of this.certifications" [value]="certif">{{certif.libelle}}</mat-option>
         </mat-select>
       </div>
     </form>
@@ -65,12 +65,20 @@
 <div fxLayoutAlign="space-around center" fxFlexFill>
   <mat-card fxFlex="30">
     <mat-card-title class="title" >Gestion des médias</mat-card-title>
+    <h2> Images </h2>
     <div>
-      <h2> Images </h2>
       <h4> Sélectionnez une ou plusieurs images : </h4>
       <form #imagesForm="ngForm">
         <input type="file" accept="image/*" multiple (change)="onFileChanged($event)">
+        <button (click)="this.onUpload()" class="btn btn-primary" > Valider </button>
       </form>
+    </div>
+    <div>
+      <h2 *ngIf="imagesLink.length > 0"> Images sauvegardées : </h2>
+      <div *ngFor="let link of imagesLink">
+        <img [src]="link" width="300" height="200">
+        <button class="btn btn-danger" (click)="deleteImage(link)"> Supprimer </button>
+      </div>
     </div>
     <br>
     <br>

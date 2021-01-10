@@ -3,7 +3,6 @@ export class Label {
   private _id: number;
   private _libelle: string;
 
-
   constructor(id: number, libelle: string) {
     this._id = id;
     this._libelle = libelle;

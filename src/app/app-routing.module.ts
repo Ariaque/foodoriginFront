@@ -10,6 +10,8 @@ import {ForgotPasswordComponent} from './_components/forgot-password/forgot-pass
 import {ResetPasswordComponent} from './_components/reset-password/reset-password.component';
 import {SuccessPagecomponent} from './_components/success-page/success-pagecomponent';
 import {ErrorPageComponent} from './_components/error-page/error-page.component';
+import {NotFoundComponent} from './_components/not-found/not-found.component';
+
 import { ProfileComponent } from './_components/profile/profile.component';
 
 
@@ -24,7 +26,10 @@ const routes: Routes = [
   {path: 'resetPassword', component: ResetPasswordComponent},
   {path: 'success', component: SuccessPagecomponent},
   {path: 'error', component: ErrorPageComponent},
-  {path: 'profile', component: ProfileComponent},
+  {path: 'profil', component: ProfileComponent},
+  {path: '404', component: NotFoundComponent},
+  {path: '**', redirectTo: '/404'},
+
 
 ];
 export const appRouting = RouterModule.forRoot(routes);
