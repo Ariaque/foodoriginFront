@@ -10,7 +10,7 @@
     padding-left: 5px;
   }
 .main-div{
-    padding-top: 200px;
+    padding-top: 500px;
 
 }
 .form{
@@ -37,11 +37,6 @@
 h6 {
     line-height: 1.7;
 }
-@media (max-width: 740px) {
-    .full-height,
-    .full-height body,
-    .full-height header,
-    .full-height header .view {
-        height: 1040px; 
-    } 
-}
+.style {
+    background-color: #F06449;
+  }
