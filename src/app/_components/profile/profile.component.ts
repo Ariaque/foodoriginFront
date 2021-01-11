@@ -6,6 +6,7 @@ import {TokenStorageService} from '../../_services/token-storage.service';
 import {TypeTransformateurs} from '../../_classes/type-transformateurs';
 import {Observable, throwError} from 'rxjs';
 import {AbstractControl,FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ResetPasswordService} from '../../_services/reset-password.service';
 
 
 @Component({
@@ -21,10 +22,12 @@ export class ProfileComponent implements OnInit {
   username : string;  
   transformateur: Transformateur;
   typeTransformateur: TypeTransformateurs;
-  oldPassword: string;
+  newPassword: string;
+  password:string;
   myForm: FormGroup;
+  id: number;
 
-  constructor(private _fb: FormBuilder,private userService: UserService, private tokenStorage:TokenStorageService ) { }
+  constructor(private _fb: FormBuilder,private userService: UserService, private tokenStorage:TokenStorageService,private resetPasswordService: ResetPasswordService) { }
 
   ngOnInit(): void {
     this.user = this.tokenStorage.getUser()
@@ -34,18 +37,32 @@ export class ProfileComponent implements OnInit {
       this.data = res;
       this.transformateur = res.transformateur;
       this.typeTransformateur = res.typeTransformateur;
+      this.id = res.id;
+
     });
     this.myForm = this._fb.group({
       password: [null, Validators.required],
       newPassword: [null, Validators.required]
     });
   }
-
-  get password(): AbstractControl {
+ 
+  get oldPsd(): AbstractControl {
     return this.myForm.get('password');
   }
-  get newPassword(): AbstractControl {
+  get newPsd(): AbstractControl {
     return this.myForm.get('newPassword');
+  }
+  onSubmit(): void {
+    this.resetPasswordService.resetPassword(this.username,this.password,this.newPassword).subscribe(
+      success => {
+        if (success){
+          console.log('Nouveau mot de passe enregistré !');
+        }},
+        err => {
+          if (err){
+          console.log('Error!');
+          }}
+    );
   }
 activeUser: User;
 
