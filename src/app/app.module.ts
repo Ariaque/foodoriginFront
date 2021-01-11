@@ -33,6 +33,8 @@ import { SuccessPagecomponent } from './_components/success-page/success-pagecom
 import { ErrorPageComponent } from './_components/error-page/error-page.component';
 import { NotFoundComponent } from './_components/not-found/not-found.component';
 import { ProfileComponent } from './_components/profile/profile.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './_components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import { ProfileComponent } from './_components/profile/profile.component';
     ErrorPageComponent,
     NotFoundComponent,
     ProfileComponent,
+    ConfirmationDialogComponent,
   ],
     imports: [
         FormsModule,
@@ -61,6 +64,7 @@ import { ProfileComponent } from './_components/profile/profile.component';
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
+        MatDialogModule,
         MatCardModule,
         MatToolbarModule,
         MatIconModule,

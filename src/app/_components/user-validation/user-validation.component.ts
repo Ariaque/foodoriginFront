@@ -4,6 +4,8 @@ import {User} from '../../_classes/user';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: 'app-user-validation',
@@ -13,11 +15,13 @@ import {MatTableDataSource} from '@angular/material/table';
 export class UserValidationComponent implements OnInit {
 
   usersSource: MatTableDataSource<User>;
-  displayedColumns: string[] = ['id', 'username', 'roles', 'transformateur.raison_sociale', 'typeTransformateur.libelle', 'isEnabled'];
+  dialogRef: MatDialogRef<UserValidationComponent, string>;
+  displayedColumns: string[] = ['id', 'username', 'roles', 'transformateur.raison_sociale', 'typeTransformateur.libelle', 'isEnabled', 'delete'];
+  numberPageMax: number;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private userService: UserService, private changeDetectorRefs: ChangeDetectorRef) {
+  constructor(private userService: UserService, private changeDetectorRefs: ChangeDetectorRef, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -37,6 +41,21 @@ export class UserValidationComponent implements OnInit {
     this.userService
       .userActivation(newUser)
       .subscribe(data => this.refreshDataSource());
+  }
+
+  deleteUser(user: User): void {
+    const dialogRef = this.dialog.open (ConfirmationDialogComponent, {
+      width: '350px',
+      data: 'Voulez-vous vraiment supprimer l\'utilisateur: ' + user.getUsername +  '?'
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.userService.deleteUser(user).subscribe(
+          data => this.refreshDataSource()
+        );
+      }
+    });
   }
 
   private refreshDataSource(): void {
@@ -64,6 +83,7 @@ export class UserValidationComponent implements OnInit {
             return item[property];
         }
       };
+      this.numberPageMax = this.usersSource.data.length;
       this.changeDetectorRefs.detectChanges();
     });
   }
