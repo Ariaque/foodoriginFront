@@ -31,7 +31,6 @@ export class ResetPasswordComponent implements OnInit {
     this.token =  this.url.searchParams.get('token');
     this.tokenValidityService.checkTokenValidity(this.id, this.token).subscribe((result) => {
       this.isTokenAvailable = result;
-      console.log(this.isTokenAvailable);
       if (!this.isTokenAvailable) {
         this.router.navigate(['/error'], { queryParams: { title: 'Erreur', text: 'Le jeton de réinitialisation est invalide !' } });
       }
