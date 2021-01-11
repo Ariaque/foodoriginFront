@@ -1,9 +1,9 @@
 <div fxLayoutAlign="center center" fxFlexFill *ngIf="!topBarService.isConnected" >
   <mat-card fxFlex="50">
-    <mat-toolbar  class="mat-toolbar" ><h1>Connexion</h1></mat-toolbar>
-    
+    <mat-toolbar  class="mat-toolbar" ><h1 id="title">Connexion</h1></mat-toolbar>
+
     <div *ngIf= "alert" class="alert alert-danger alert-dismissible fade show" role="alert">
-      <strong>Incorrect!</strong> Nom d'utilisateur ou mot de passe est incorrect
+      <strong>Erreur !</strong> Nom d'utilisateur ou mot de passe incorrect !
       <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -18,7 +18,7 @@
             <input name="password" matInput type="password" [(ngModel)]="form.password" required/>
           </mat-form-field>
           <button mat-raised-button type="submit" class="style">Se connecter</button>
-          <button mat-button (click)="loadPasswordForgottenPage()">Mot De Passe Oublié?</button>
+          <button mat-button (click)="loadPasswordForgottenPage()">Mot de passe oublié?</button>
       </form>
   </mat-card>
 </div>
