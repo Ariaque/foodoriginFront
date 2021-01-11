@@ -32,14 +32,6 @@ export class ResetPasswordService {
       userName: user,
       oldPassword: oldpswd,
       newPassword: newpswd
-    }, this.httpOptions)
-    .pipe(
-      catchError(err => {
-        console.log('error on changing password', err);
-        this.router.navigate(['/error'], { queryParams: { title: 'Erreur', text: 'Le changement du mot de passe a échoué !' } });
-        return throwError(err);
-      })
-    );
-
+    }, this.httpOptions);
   }
 }
