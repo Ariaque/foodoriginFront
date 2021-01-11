@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
     );
   }
   closeAlert(){
-    this.alert= false
+    this.alert = false;
   }
 
   reloadPage(): void {

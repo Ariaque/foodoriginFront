@@ -28,8 +28,8 @@ export class ResetPasswordService {
     );
   }
   resetPassword(user, oldpswd: string, newpswd: string) : Observable<string>{
-    return this.http.post<string>(this.resetUrl + '/resetPassword/changePassword', { 
-      userName: user.username,
+    return this.http.post<string>(this.resetUrl + '/resetPassword/changePassword', {
+      userName: user,
       oldPassword: oldpswd,
       newPassword: newpswd
     }, this.httpOptions)
