@@ -1,13 +1,13 @@
-export class FermePartenaire {
+export class DenreeAnimale {
 
   private id: number;
   private nom: string;
-  private description: string;
+  private origine: string;
 
-  constructor(id ?: number, nom?: string, description?: string) {
+  constructor(id ?: number, nom?: string, origine?: string) {
     this.id = id;
     this.nom = nom;
-    this.description = description;
+    this.origine = origine;
   }
 
   getId(): number {
@@ -26,11 +26,11 @@ export class FermePartenaire {
     this.nom = value;
   }
 
-  getDescription(): string {
-    return this.description;
+  getOrigine(): string {
+    return this.origine;
   }
 
-  setDescription(value: string): void {
-    this.description = value;
+  setOrigine(value: string): void {
+    this.origine = value;
   }
 }

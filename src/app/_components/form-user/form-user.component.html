@@ -61,7 +61,6 @@
   </mat-card>
 </div>
 
-
 <div fxLayoutAlign="space-around center" fxFlexFill>
   <mat-card fxFlex="30">
     <mat-card-title class="title" >Gestion des médias</mat-card-title>
@@ -116,11 +115,38 @@
               <label for="presentationF"> Presentation: </label>
              <textarea class="form-control" placeholder="Saisissez la description de la ferme/l'agriculteur" lang="fr" style="resize: none" rows="2" cols="45" type="text" formControlName="presentation" id="presentationF" name="presentationF"></textarea>
             </div>
-            <button (click)="removeFerme(i)" class="btn btn-danger" style="float: right"> Supprimer </button>
+            <button (click)="removeFerme(i)" class="btn btn-danger position-bouton"> Supprimer </button>
           </td>
         </tr>
       </table>
     </form>
-    <button mat-raised-button type="submit" (click)="saveInfos()" color="warn" mat-stroked-button>Envoyer</button>
+  </mat-card>
+</div>
+
+<div fxLayoutAlign="space-around center" fxFlexFill>
+  <mat-card fxFlex="30">
+    <mat-card-title class="title"> Denrées animales utilisées </mat-card-title>
+    <h4> Saisissez les denrées animales utilisées et leurs origines </h4>
+    <form [formGroup]="denreeForm">
+      <button type="button" (click)="addDenree()" class="btn btn-primary" style="float: right"> Ajouter</button>
+      <table class="table borderless" formArrayName="denrees">
+        <tr *ngFor="let denree of denrees().controls |slice:0:10; let i = index" [formGroupName]="i">
+          <td>
+              <label for="nomD"> Type de denrée: </label>
+              <input type="text" formControlName="nom" id="nomD" name="nomD" class="form-control">
+          </td>
+          <td>
+              <label for="origineD"> Origine de la denrée: </label>
+              <input type="text" formControlName="origine" id="origineD" name="origineD" class="form-control">
+          </td>
+          <td>
+            <button (click)="removeDenree(i)" class="btn btn-danger" style="margin-top: 25px"> Supprimer </button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </mat-card>
+  <mat-card fxFlex="30" style="background: none; border-block: none">
+     <button mat-raised-button type="submit" (click)="saveInfos()" color="warn" mat-stroked-button>Valider</button>
   </mat-card>
 </div>
