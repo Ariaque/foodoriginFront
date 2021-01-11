@@ -82,8 +82,11 @@
         <button class="btn btn-danger" (click)="deleteImage(link)"> Supprimer </button>
       </div>
     </div>
-    <br>
-    <br>
+  </mat-card>
+</div>
+<div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 4">
+  <mat-card fxFlex="50">
+    <mat-card-title class="title" >Gestion des médias</mat-card-title>
     <div>
       <h2> Vidéos </h2>
       <h4> Saisissez le(s) url(s) des vidéos que vous souhaitez renseigner: </h4>
@@ -103,7 +106,7 @@
     </div>
   </mat-card>
 </div>
-<div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 4">
+<div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 5">
   <mat-card fxFlex="50">    
     <mat-card-title class="title"> Agriculteurs/Fermes Partenaires </mat-card-title>
     <h4> Saisissez le(s) ferme(s)/agriculteur(s) partenaires que vous souhaitez renseigner: </h4>
@@ -127,7 +130,7 @@
     </form>
   </mat-card>
 </div>
-<div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 5">
+<div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 6">
   <mat-card fxFlex="50">    
     <mat-card-title class="title"> Denrées animales utilisées </mat-card-title>
     <h4> Saisissez les denrées animales utilisées et leurs origines </h4>
@@ -152,8 +155,10 @@
   </mat-card>
 </div>
 <div class="btn"  fxLayoutAlign="space-around center" fxFlexFill>
+  <mat-card fxFlex="20" class="butt">    
 <a class ="btn btn-primary mx-2" (click)= "previous()" *ngIf="step != 1">Précédent</a>
-<button type ="submit" class=" btn btn-primary mx-2"  *ngIf="step != 5">Suivant</button>
-<button mat-raised-button type ="submit" class=" btn btn-primary mx-2" (click)="saveInfos()" color="warn" *ngIf="step == 5" mat-stroked-button>Valider</button>
+<button type ="submit" class=" btn btn-primary mx-2"  *ngIf="step != 6">Suivant</button>
+<button mat-raised-button type ="submit" (click)="saveInfos()" color="warn" *ngIf="step == 6" mat-stroked-button>Valider</button>
+</mat-card>
 </div>
 </form>
