@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
       xmlns="http://www.w3.org/1999/html">
-<div class="main-div" fxLayoutAlign="space-around center" fxFlexFill>
-  <mat-card fxFlex="30">
+<form (ngSubmit)="submit()">
+<div class="main-div" fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 1">
+  <mat-card fxFlex="50">
     <mat-card-title class="title" >Informations générales</mat-card-title>
     <form #infosForm="ngForm" (ngSubmit)="infosForm.resetForm()">
       <div class="form-group col-md-12">
@@ -42,8 +43,10 @@
       </div>
     </form>
   </mat-card>
-  <mat-card fxFlex="30">
-    <form #rsForm="ngForm" (ngSubmit)="rsForm.resetForm()">
+</div>
+<div class="main-div" fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 2">
+  <mat-card fxFlex="50">
+      <form #rsForm="ngForm" (ngSubmit)="rsForm.resetForm()">
       <mat-card-title class="title" >Réseaux sociaux </mat-card-title>
       <div class="input-icone">
         <i class="fa fa-facebook-square icone-size" aria-hidden="true"></i>
@@ -61,8 +64,8 @@
   </mat-card>
 </div>
 
-<div fxLayoutAlign="space-around center" fxFlexFill>
-  <mat-card fxFlex="30">
+<div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 3">
+  <mat-card fxFlex="50">
     <mat-card-title class="title" >Gestion des médias</mat-card-title>
     <h2> Images </h2>
     <div>
@@ -99,7 +102,9 @@
       </form>
     </div>
   </mat-card>
-  <mat-card fxFlex="30">
+</div>
+<div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 4">
+  <mat-card fxFlex="50">    
     <mat-card-title class="title"> Agriculteurs/Fermes Partenaires </mat-card-title>
     <h4> Saisissez le(s) ferme(s)/agriculteur(s) partenaires que vous souhaitez renseigner: </h4>
     <form [formGroup]="fermeForm">
@@ -122,9 +127,8 @@
     </form>
   </mat-card>
 </div>
-
-<div fxLayoutAlign="space-around center" fxFlexFill>
-  <mat-card fxFlex="30">
+<div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 5">
+  <mat-card fxFlex="50">    
     <mat-card-title class="title"> Denrées animales utilisées </mat-card-title>
     <h4> Saisissez les denrées animales utilisées et leurs origines </h4>
     <form [formGroup]="denreeForm">
@@ -146,7 +150,10 @@
       </table>
     </form>
   </mat-card>
-  <mat-card fxFlex="30" style="background: none; border-block: none">
-     <button mat-raised-button type="submit" (click)="saveInfos()" color="warn" mat-stroked-button>Valider</button>
-  </mat-card>
 </div>
+<div class="btn"  fxLayoutAlign="space-around center" fxFlexFill>
+<a class ="btn btn-primary mx-2" (click)= "previous()" *ngIf="step != 1">Previous</a>
+<button type ="submit" class=" btn btn-primary mx-2"  *ngIf="step != 5">Next</button>
+<button mat-raised-button type ="submit" class=" btn btn-primary mx-2" (click)="saveInfos()" color="warn" *ngIf="step == 5" mat-stroked-button>Valider</button>
+</div>
+</form>

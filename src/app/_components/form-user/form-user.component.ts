@@ -47,6 +47,7 @@ export class FormUserComponent implements OnInit {
   denreeForm: FormGroup;
   denreeAInit: DenreeAnimale[] = [];
   denreesA: DenreeAnimale[] = [];
+  step: any = 1;
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
@@ -288,5 +289,13 @@ export class FormUserComponent implements OnInit {
         err => {
           alert ('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
       });
+  }
+  submit(){
+    this.step = this.step + 1;
+    console.log(this.step);
+  }
+  previous(){
+    this.step = this.step - 1;
+    console.log(this.step);
   }
 }

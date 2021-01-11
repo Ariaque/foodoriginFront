@@ -50,3 +50,6 @@
 .position-bouton {
   float: right; margin-right: 20px;
 }
+.btn{
+  padding-bottom: 0px;
+}
