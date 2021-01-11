@@ -3,8 +3,8 @@ export class UrlVideo {
   private id: number;
   private libelle: string;
 
-
-  constructor(libelle: string) {
+  constructor(id?: number, libelle?: string) {
+    this.id = id;
     this.libelle = libelle;
   }
 
@@ -12,7 +12,7 @@ export class UrlVideo {
     return this.id;
   }
 
-  setId(value: number): void{
+  setId(value: number): void {
     this.id = value;
   }
 

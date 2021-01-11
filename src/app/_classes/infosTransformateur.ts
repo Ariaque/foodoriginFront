@@ -2,6 +2,7 @@ import {Transformateur} from './transformateur';
 import {Label} from './label';
 import {Certification} from './certification';
 import {UrlVideo} from './url-video';
+import {FermePartenaire} from './ferme-partenaire';
 
 export class InfosTransformateur {
 
@@ -14,11 +15,13 @@ export class InfosTransformateur {
   private _url_twitter: string;
   private _url_instagram: string;
   private _appartient_groupe: boolean;
+  private _siret_groupe: string;
   private _labels: Label[];
   private _certifications: Certification[];
   private _urls: UrlVideo[];
+  private _fermesP: FermePartenaire[];
 
-  constructor(transformateur: Transformateur, description: string, nombre_employes: string, url_site: string, url_facebook: string, url_twitter: string, url_instagram: string, appartient_groupe: boolean, labels: Label[], certifications: Certification[], urls: UrlVideo[] ) {
+  constructor(transformateur: Transformateur, description: string, nombre_employes: string, url_site: string, url_facebook: string, url_twitter: string, url_instagram: string, appartient_groupe: boolean, siret_groupe: string, labels: Label[], certifications: Certification[], urls: UrlVideo[], fermesP: FermePartenaire[]) {
     this._fk_transformateur = transformateur;
     this._description = description;
     this._nombre_employes = nombre_employes;
@@ -27,9 +30,11 @@ export class InfosTransformateur {
     this._url_twitter = url_twitter;
     this._url_instagram = url_instagram;
     this._appartient_groupe = appartient_groupe;
+    this._siret_groupe = siret_groupe;
     this._labels = labels;
     this._certifications = certifications;
     this._urls = urls;
+    this._fermesP = fermesP;
   }
 
   get id(): number {
@@ -104,6 +109,15 @@ export class InfosTransformateur {
     this._appartient_groupe = value;
   }
 
+
+  get siret_groupe(): string {
+    return this._siret_groupe;
+  }
+
+  set siret_groupe(value: string) {
+    this._siret_groupe = value;
+  }
+
   get labels(): Label[] {
     return this._labels;
   }
@@ -124,5 +138,13 @@ export class InfosTransformateur {
   }
   set urls(value: UrlVideo[]) {
     this._urls = value;
+  }
+
+  get fermesP(): FermePartenaire[] {
+    return this._fermesP;
+  }
+
+  set fermesP(value: FermePartenaire[]) {
+    this._fermesP = value;
   }
 }

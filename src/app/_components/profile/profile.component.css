@@ -1,0 +1,42 @@
+.input-icone{
+    margin:8px 0;
+    outline:none;
+    padding:8px;
+    position:relative;
+  }
+  .input-icone i{
+    position:absolute;
+    padding-top: 5px;
+    padding-left: 5px;
+  }
+.main-div{
+    padding-top: 500px;
+
+}
+.form{
+    background-color:#FBFDFD;
+}
+.form-row label {
+    color: #545454;
+    font-size: 1.1pc;
+}
+.form-row span{
+    color: gray;
+    font-size: 1pc;
+
+}
+.form-row mat-cell{
+
+    background-color:#F4F4F4;
+}
+.hr-light{
+    border-color:#F06449;
+    padding-top: 30px;
+  
+}
+h6 {
+    line-height: 1.7;
+}
+.style {
+    background-color: #F06449;
+  }
