@@ -3,7 +3,7 @@ import {Label} from './label';
 import {Certification} from './certification';
 import {UrlVideo} from './url-video';
 import {FermePartenaire} from './ferme-partenaire';
-import {DenreeAnimale} from "./denree-animale";
+import {DenreeAnimale} from './denree-animale';
 
 export class InfosTransformateur {
 

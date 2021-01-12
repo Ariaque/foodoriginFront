@@ -38,6 +38,7 @@ export class JoinComponent implements OnInit {
       siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
       password: [null, Validators.required],
       confPassword: [null, Validators.required],
+      selectedType: [null, Validators.required]
     }, {
       validator: this.customValidator.passwordMatchValidator('password', 'confPassword')
     });
