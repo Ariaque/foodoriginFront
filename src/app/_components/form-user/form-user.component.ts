@@ -13,6 +13,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {UrlVideo} from '../../_classes/url-video';
 import {FermePartenaire} from '../../_classes/ferme-partenaire';
 import {DenreeAnimale} from '../../_classes/denree-animale';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-form-user',
@@ -129,10 +130,11 @@ export class FormUserComponent implements OnInit {
        this.step = 1;
     this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
       res => {
-        alert ('Informations sauvegardées');
+        Swal.fire('Informations sauvegardées')
       },
       err => {
-        alert ('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
+        Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies')
+
       }
     );
   }
