@@ -13,6 +13,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {UrlVideo} from '../../_classes/url-video';
 import {FermePartenaire} from '../../_classes/ferme-partenaire';
 import {DenreeAnimale} from '../../_classes/denree-animale';
+import Swal from 'sweetalert2'
 import {Router} from '@angular/router';
 
 @Component({
@@ -52,7 +53,7 @@ export class FormUserComponent implements OnInit {
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
-              private tokenService: TokenStorageService, private userService: UserService, private formBuilder: FormBuilder, private router: Router) {
+              private tokenService: TokenStorageService, private userService: UserService, private formBuilder: FormBuilder,private router: Router) {
     this.fermeForm = this.formBuilder.group({
       fermes: this.formBuilder.array([])
     });
@@ -128,13 +129,16 @@ export class FormUserComponent implements OnInit {
        this.lienFacebook, this.lienTwitter, this.lienInsta, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
        this.listCertif.value, this.urlVideos, this.fermesP, this.denreesA);
     this.step = 1;
+       this.router.navigate(['/user']);
     this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
       res => {
+        Swal.fire('Informations sauvegardées');
         alert ('Informations sauvegardées');
         this.router.navigate(['/accueil']);
       },
       err => {
-        alert ('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
+        Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
+
       }
     );
   }
@@ -256,7 +260,7 @@ export class FormUserComponent implements OnInit {
         continue;
       } else {
         isImage = false;
-        alert('Une image transmise a un format incorrect');
+        Swal.fire('Une image transmise a un format incorrect');
         break;
       }
     }
@@ -274,11 +278,11 @@ export class FormUserComponent implements OnInit {
         uploadData.append('myFile', this.selectedFile[i], this.selectedFile[i].name);
         this.infosTService.addImageTransformateur(uploadData, this.transformateur.id).subscribe(
           res => {
-            alert ('Image sauvegardée');
+            Swal.fire('Image sauvegardée');
             this.imagesLink.push('http://foodorigin.projetetudiant.fr/images/' + this.transformateur.id + '/' + this.selectedFile[i].name);
           },
           err => {
-            alert ('Une erreur s\'est produite lors de l\'enregistrement, la taille de l\'image ne doit pas dépasser 500KB');
+            Swal.fire('Une erreur s\'est produite lors de l\'enregistrement, la taille de l\'image ne doit pas dépasser 500KB');
           }
         );
       }
@@ -287,12 +291,12 @@ export class FormUserComponent implements OnInit {
   deleteImage(fileName): void {
     this.infosTService.deleteImageTransformateur(fileName, this.transformateur.id).subscribe(
       res => {
-        alert ('Image supprimée');
+        Swal.fire('Image supprimée');
         const index = this.imagesLink.indexOf(fileName);
         this.imagesLink.splice(index, 1);
       },
         err => {
-          alert ('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
+          Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
       });
   }
   submit(){
@@ -300,5 +304,6 @@ export class FormUserComponent implements OnInit {
   }
   previous(){
     this.step = this.step - 1;
+    console.log(this.step);
   }
 }
