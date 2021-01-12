@@ -36,7 +36,21 @@ export class UserService {
     );
     return ret;
   }
-
+  public findUsers(): Observable<User[]> {
+    let ret: Observable<User[]>;
+    ret = this.http.get<User[]>(this.userUrl + '/users').pipe(
+      map((data: any[]) => data.map((item: any) => new User(
+        item.id,
+        item.username,
+        item.password,
+        item.role,
+        item.transformateur,
+        item.isEnabled,
+        item.typeTransformateur,
+      ))),
+    );
+    return ret;
+  }
   userActivation(user: User): Observable<User> {
     return this.http.post<User>(this.userUrl + '/save', user, this.httpOptions)
       .pipe(

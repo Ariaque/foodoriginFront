@@ -27,7 +27,7 @@ export class AuthService {
       username: user.username,
       password: user.password,
       role: ['user'],
-      typeTransformateur: selectedType
+      typeTransformateur: selectedType.libelle
     }, httpOptions);
   }
 }
