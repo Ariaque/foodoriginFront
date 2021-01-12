@@ -5,6 +5,7 @@ import {TypeTransformateurs} from '../../_classes/type-transformateurs';
 import {TopbarService} from '../../_services/topbar.service';
 import {CustomValidationService} from '../../_services/custom-validation.service';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UserService} from "../../_services/user.service";
 
 @Component({
   selector: 'app-join',
@@ -24,7 +25,7 @@ export class JoinComponent implements OnInit {
   @Input()
   myForm: FormGroup;
 
-  constructor(private _fb: FormBuilder, private customValidator: CustomValidationService, private authService: AuthService, private typeTransformateurService: TypeTransformateurService, public topBarService: TopbarService) {
+  constructor(private _fb: FormBuilder, private customValidator: CustomValidationService, private authService: AuthService, private typeTransformateurService: TypeTransformateurService, private userService: UserService, public topBarService: TopbarService) {
   }
 
   ngOnInit(): void {
@@ -50,9 +51,11 @@ export class JoinComponent implements OnInit {
       data => {
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        alert('Compte crée. Veuillez contacter l\'administrateur pour l\'activer');
       },
       err => {
         this.errorMessage = err.error.message;
+        alert(this.errorMessage);
         this.isSignUpFailed = true;
       }
     );

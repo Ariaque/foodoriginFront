@@ -39,7 +39,8 @@ export class InfosTransformateurService {
         labels: infosT.labels,
         certifications: infosT.certifications,
         urls: infosT.urls,
-        fermesP: infosT.fermesP
+        fermesP: infosT.fermesP,
+        denreesA: infosT.denreesA
       }, httpOptions);
     }
     else {
@@ -56,7 +57,8 @@ export class InfosTransformateurService {
         labels: infosT.labels,
         certifications: infosT.certifications,
         urls: infosT.urls,
-        fermesP: infosT.fermesP
+        fermesP: infosT.fermesP,
+        denreesA: infosT.denreesA
       }, httpOptions);
     }
   }

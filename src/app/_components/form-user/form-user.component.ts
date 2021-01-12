@@ -12,6 +12,7 @@ import {UserService} from '../../_services/user.service';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {UrlVideo} from '../../_classes/url-video';
 import {FermePartenaire} from '../../_classes/ferme-partenaire';
+import {DenreeAnimale} from '../../_classes/denree-animale';
 
 @Component({
   selector: 'app-form-user',
@@ -43,6 +44,10 @@ export class FormUserComponent implements OnInit {
   idInfo = 0;
   listCertif = new FormControl();
   listLabel = new FormControl();
+  denreeForm: FormGroup;
+  denreeAInit: DenreeAnimale[] = [];
+  denreesA: DenreeAnimale[] = [];
+  step: any = 1;
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
@@ -52,6 +57,9 @@ export class FormUserComponent implements OnInit {
     });
     this.urlVideoForm = this.formBuilder.group({
       urls: this.formBuilder.array([])
+    });
+    this.denreeForm = this.formBuilder.group({
+      denrees: this.formBuilder.array([])
     });
   }
 
@@ -98,6 +106,10 @@ export class FormUserComponent implements OnInit {
           this.fermesPInit.forEach(ferme => {
             this.fermes().push(this.formBuilder.group({nom: ferme.getNom(), presentation: ferme.getDescription()}));
           });
+          this.denreeAInit = info.denreesA.map(denree => Object.assign(new DenreeAnimale(), denree));
+          this.denreeAInit.forEach(denree => {
+            this.denrees().push(this.formBuilder.group({nom: denree.getNom(), origine: denree.getOrigine()}));
+          });
         }
         this.infosTService.getImageTransformateur(this.transformateur.id).subscribe(image => {
           image.map (link => {
@@ -110,9 +122,11 @@ export class FormUserComponent implements OnInit {
   saveInfos(): void {
     this.createFermeList (this.fermeForm.value.fermes);
     this.createUrlList (this.urlVideoForm.value.urls);
+    this.createDenreeList (this.denreeForm.value.denrees);
     this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
        this.lienInsta, this.lienTwitter, this.lienFacebook, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
-       this.listCertif.value, this.urlVideos, this.fermesP);
+       this.listCertif.value, this.urlVideos, this.fermesP, this.denreesA);
+       this.step = 1;
     this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
       res => {
         alert ('Informations sauvegardées');
@@ -136,6 +150,25 @@ export class FormUserComponent implements OnInit {
     for (let i = 0; i < this.fermesPInit.length; i++) {
       if (this.fermesPInit[i].getNom() === nom && this.fermesPInit[i].getDescription() === presentation) {
         this.fermesP.push(this.fermesPInit[i]);
+        ret = true;
+      }
+    }
+    return ret;
+  }
+  createDenreeList(denreeList): void {
+    for (let i = 0; i < denreeList.length; i++) {
+      const denree = denreeList[i];
+      if (denree.nom !== '' && !this.isAddDenree(denree.nom, denree.origine)) {
+        const newD = new DenreeAnimale(null, denree.nom, denree.origine);
+        this.denreesA.push(newD);
+      }
+    }
+  }
+  isAddDenree(nom, origine): boolean {
+    let ret = false;
+    for (let i = 0; i < this.denreeAInit.length; i++) {
+      if (this.denreeAInit[i].getNom() === nom && this.denreeAInit[i].getOrigine() === origine) {
+        this.denreesA.push(this.denreeAInit[i]);
         ret = true;
       }
     }
@@ -195,6 +228,21 @@ export class FormUserComponent implements OnInit {
   removeFerme(i: number): void {
     this.fermes().removeAt(i);
   }
+  denrees(): FormArray {
+    return this.denreeForm.get('denrees') as FormArray;
+  }
+  newDenree(): FormGroup {
+    return this.formBuilder.group({
+      nom: '',
+      origine: ''
+    });
+  }
+  addDenree(): void {
+    this.denrees().push(this.newDenree());
+  }
+  removeDenree(i: number): void {
+    this.denrees().removeAt(i);
+  }
   onFileChanged(event): void {
     const files = event.target.files;
     let isImage = true;
@@ -242,5 +290,13 @@ export class FormUserComponent implements OnInit {
         err => {
           alert ('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
       });
+  }
+  submit(){
+    this.step = this.step + 1;
+    console.log(this.step);
+  }
+  previous(){
+    this.step = this.step - 1;
+    console.log(this.step);
   }
 }

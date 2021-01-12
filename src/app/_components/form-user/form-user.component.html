@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
       xmlns="http://www.w3.org/1999/html">
-<div class="main-div" fxLayoutAlign="space-around center" fxFlexFill>
-  <mat-card fxFlex="30">
+<form (ngSubmit)="submit()">
+<div class="main-div" fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 1">
+  <mat-card fxFlex="50">
     <mat-card-title class="title" >Informations générales</mat-card-title>
     <form #infosForm="ngForm" (ngSubmit)="infosForm.resetForm()">
       <div class="form-group col-md-12">
@@ -42,8 +43,10 @@
       </div>
     </form>
   </mat-card>
-  <mat-card fxFlex="30">
-    <form #rsForm="ngForm" (ngSubmit)="rsForm.resetForm()">
+</div>
+<div class="main-div" fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 2">
+  <mat-card fxFlex="50">
+      <form #rsForm="ngForm" (ngSubmit)="rsForm.resetForm()">
       <mat-card-title class="title" >Réseaux sociaux </mat-card-title>
       <div class="input-icone">
         <i class="fa fa-facebook-square icone-size" aria-hidden="true"></i>
@@ -61,9 +64,8 @@
   </mat-card>
 </div>
 
-
-<div fxLayoutAlign="space-around center" fxFlexFill>
-  <mat-card fxFlex="30">
+<div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 3">
+  <mat-card fxFlex="50">
     <mat-card-title class="title" >Gestion des médias</mat-card-title>
     <h2> Images </h2>
     <div>
@@ -80,8 +82,11 @@
         <button class="btn btn-danger" (click)="deleteImage(link)"> Supprimer </button>
       </div>
     </div>
-    <br>
-    <br>
+  </mat-card>
+</div>
+<div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 4">
+  <mat-card fxFlex="50">
+    <mat-card-title class="title" >Gestion des médias</mat-card-title>
     <div>
       <h2> Vidéos </h2>
       <h4> Saisissez le(s) url(s) des vidéos que vous souhaitez renseigner: </h4>
@@ -100,7 +105,9 @@
       </form>
     </div>
   </mat-card>
-  <mat-card fxFlex="30">
+</div>
+<div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 5">
+  <mat-card fxFlex="50">    
     <mat-card-title class="title"> Agriculteurs/Fermes Partenaires </mat-card-title>
     <h4> Saisissez le(s) ferme(s)/agriculteur(s) partenaires que vous souhaitez renseigner: </h4>
     <form [formGroup]="fermeForm">
@@ -116,11 +123,42 @@
               <label for="presentationF"> Presentation: </label>
              <textarea class="form-control" placeholder="Saisissez la description de la ferme/l'agriculteur" lang="fr" style="resize: none" rows="2" cols="45" type="text" formControlName="presentation" id="presentationF" name="presentationF"></textarea>
             </div>
-            <button (click)="removeFerme(i)" class="btn btn-danger" style="float: right"> Supprimer </button>
+            <button (click)="removeFerme(i)" class="btn btn-danger position-bouton"> Supprimer </button>
           </td>
         </tr>
       </table>
     </form>
-    <button mat-raised-button type="submit" (click)="saveInfos()" color="warn" mat-stroked-button>Envoyer</button>
   </mat-card>
 </div>
+<div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 6">
+  <mat-card fxFlex="50">    
+    <mat-card-title class="title"> Denrées animales utilisées </mat-card-title>
+    <h4> Saisissez les denrées animales utilisées et leurs origines </h4>
+    <form [formGroup]="denreeForm">
+      <button type="button" (click)="addDenree()" class="btn btn-primary" style="float: right"> Ajouter</button>
+      <table class="table borderless" formArrayName="denrees">
+        <tr *ngFor="let denree of denrees().controls |slice:0:10; let i = index" [formGroupName]="i">
+          <td>
+              <label for="nomD"> Type de denrée: </label>
+              <input type="text" formControlName="nom" id="nomD" name="nomD" class="form-control">
+          </td>
+          <td>
+              <label for="origineD"> Origine de la denrée: </label>
+              <input type="text" formControlName="origine" id="origineD" name="origineD" class="form-control">
+          </td>
+          <td>
+            <button (click)="removeDenree(i)" class="btn btn-danger" style="margin-top: 25px"> Supprimer </button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </mat-card>
+</div>
+<div class="btn"  fxLayoutAlign="space-around center" fxFlexFill>
+  <mat-card fxFlex="20" class="butt">    
+<a class ="btn btn-primary mx-2" (click)= "previous()" *ngIf="step != 1">Précédent</a>
+<button type ="submit" class=" btn btn-primary mx-2"  *ngIf="step != 6">Suivant</button>
+<button mat-raised-button type ="submit" (click)="saveInfos()" color="warn" *ngIf="step == 6" mat-stroked-button>Valider</button>
+</mat-card>
+</div>
+</form>
