@@ -7,6 +7,7 @@ import {TypeTransformateurs} from '../../_classes/type-transformateurs';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ResetPasswordService} from '../../_services/reset-password.service';
 import Swal from 'sweetalert2'
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class ProfileComponent implements OnInit {
   id: number;
   activeUser: User;
 
-  constructor(private _fb: FormBuilder, private userService: UserService, private tokenStorage: TokenStorageService, private resetPasswordService: ResetPasswordService) { }
+  constructor(private _fb: FormBuilder, private userService: UserService, private tokenStorage: TokenStorageService, private resetPasswordService: ResetPasswordService,private router: Router) { }
 
   ngOnInit(): void {
     this.user = this.tokenStorage.getUser()

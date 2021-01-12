@@ -127,7 +127,7 @@ export class FormUserComponent implements OnInit {
     this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
        this.lienFacebook, this.lienTwitter, this.lienInsta, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
        this.listCertif.value, this.urlVideos, this.fermesP, this.denreesA);
-       this.step = 1;
+       this.router.navigate(['/user']);
     this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
       res => {
         Swal.fire('Informations sauvegardées');
