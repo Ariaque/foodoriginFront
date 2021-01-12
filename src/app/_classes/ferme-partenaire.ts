@@ -3,11 +3,13 @@ export class FermePartenaire {
   private id: number;
   private nom: string;
   private description: string;
+  private url: string;
 
-  constructor(id ?: number, nom?: string, description?: string) {
+  constructor(id ?: number, nom?: string, description?: string, url ?: string) {
     this.id = id;
     this.nom = nom;
     this.description = description;
+    this.url = url;
   }
 
   getId(): number {
@@ -33,4 +35,13 @@ export class FermePartenaire {
   setDescription(value: string): void {
     this.description = value;
   }
+
+  getUrl(): string {
+    return this.url;
+  }
+
+  setUrl(value: string): void {
+    this.url = value;
+  }
+
 }
