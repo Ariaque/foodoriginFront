@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {HttpClient,HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 
 
@@ -27,9 +27,9 @@ export class ResetPasswordService {
       })
     );
   }
-  resetPassword(user, oldpswd: string, newpswd: string) : Observable<string>{
+  resetPassword(user, oldpswd: string, newpswd: string): Observable<string>{
     return this.http.post<string>(this.resetUrl + '/resetPassword/changePassword', {
-      userName: user,
+      userName: user.username,
       oldPassword: oldpswd,
       newPassword: newpswd
     }, this.httpOptions);
