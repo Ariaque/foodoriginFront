@@ -130,10 +130,10 @@ export class FormUserComponent implements OnInit {
        this.step = 1;
     this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
       res => {
-        Swal.fire('Informations sauvegardées')
+        Swal.fire('Informations sauvegardées');
       },
       err => {
-        Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies')
+        Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
 
       }
     );
@@ -254,7 +254,7 @@ export class FormUserComponent implements OnInit {
         continue;
       } else {
         isImage = false;
-        alert('Une image transmise a un format incorrect');
+        Swal.fire('Une image transmise a un format incorrect');
         break;
       }
     }
@@ -272,11 +272,11 @@ export class FormUserComponent implements OnInit {
         uploadData.append('myFile', this.selectedFile[i], this.selectedFile[i].name);
         this.infosTService.addImageTransformateur(uploadData, this.transformateur.id).subscribe(
           res => {
-            alert ('Image sauvegardée');
+            Swal.fire('Image sauvegardée');
             this.imagesLink.push('http://foodorigin.projetetudiant.fr/images/' + this.transformateur.id + '/' + this.selectedFile[i].name);
           },
           err => {
-            alert ('Une erreur s\'est produite lors de l\'enregistrement, la taille de l\'image ne doit pas dépasser 500KB');
+            Swal.fire('Une erreur s\'est produite lors de l\'enregistrement, la taille de l\'image ne doit pas dépasser 500KB');
           }
         );
       }
@@ -285,12 +285,12 @@ export class FormUserComponent implements OnInit {
   deleteImage(fileName): void {
     this.infosTService.deleteImageTransformateur(fileName, this.transformateur.id).subscribe(
       res => {
-        alert ('Image supprimée');
+        Swal.fire('Image supprimée');
         const index = this.imagesLink.indexOf(fileName);
         this.imagesLink.splice(index, 1);
       },
         err => {
-          alert ('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
+          Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
       });
   }
   submit(){

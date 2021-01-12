@@ -7,6 +7,7 @@ import {CustomValidationService} from '../../_services/custom-validation.service
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from "../../_services/user.service";
 import {Router} from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-join',
@@ -53,7 +54,7 @@ export class JoinComponent implements OnInit {
       data => {
         this.isSuccessful = true;
         this.isSignUpFailed = false;
-        alert('Compte crée. Veuillez contacter l\'administrateur pour l\'activer');
+        Swal.fire('Compte crée. Veuillez contacter l\'administrateur pour l\'activer');
         this.router.navigate(['/accueil']);
       },
       err => {

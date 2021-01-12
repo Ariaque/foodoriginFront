@@ -6,6 +6,7 @@ import {TokenStorageService} from '../../_services/token-storage.service';
 import {TypeTransformateurs} from '../../_classes/type-transformateurs';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ResetPasswordService} from '../../_services/reset-password.service';
+import Swal from 'sweetalert2'
 
 
 @Component({
@@ -56,11 +57,11 @@ export class ProfileComponent implements OnInit {
     this.resetPasswordService.resetPassword(this.username, this.password, this.newPassword).subscribe(
       success => {
         if (success){
-          alert ('Nouveau mot de passe enregistré !');
+          Swal.fire('Nouveau mot de passe enregistré !');
         }},
         err => {
           if (err){
-          alert('L\' ancien mot de passe n\'est pas correct');
+            Swal.fire('L\' ancien mot de passe n\'est pas correct');
           }}
     );
   }
