@@ -14,6 +14,7 @@ import {UrlVideo} from '../../_classes/url-video';
 import {FermePartenaire} from '../../_classes/ferme-partenaire';
 import {DenreeAnimale} from '../../_classes/denree-animale';
 import Swal from 'sweetalert2'
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-form-user',
@@ -52,7 +53,7 @@ export class FormUserComponent implements OnInit {
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
-              private tokenService: TokenStorageService, private userService: UserService, private formBuilder: FormBuilder) {
+              private tokenService: TokenStorageService, private userService: UserService, private formBuilder: FormBuilder,private router: Router) {
     this.fermeForm = this.formBuilder.group({
       fermes: this.formBuilder.array([])
     });
