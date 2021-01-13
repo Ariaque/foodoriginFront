@@ -23,7 +23,9 @@
     "@angular/platform-browser-dynamic": "~10.2.0",
     "@angular/router": "~10.2.0",
     "bootstrap": "^4.5.3",
+    "clarity-angular": "^0.10.28",
     "rxjs": "~6.6.0",
+    "rxjs-compat": "^6.6.3",
     "sweetalert2": "^10.13.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
