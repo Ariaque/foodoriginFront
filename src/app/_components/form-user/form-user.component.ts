@@ -124,9 +124,9 @@ export class FormUserComponent implements OnInit {
     this.createUrlList (this.urlVideoForm.value.urls);
     this.createDenreeList (this.denreeForm.value.denrees);
     this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
-       this.lienInsta, this.lienTwitter, this.lienFacebook, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
+       this.lienFacebook, this.lienTwitter, this.lienInsta, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
        this.listCertif.value, this.urlVideos, this.fermesP, this.denreesA);
-       this.step = 1;
+    this.step = 1;
     this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
       res => {
         alert ('Informations sauvegardées');
