@@ -6,6 +6,8 @@ import {TopbarService} from '../../_services/topbar.service';
 import {CustomValidationService} from '../../_services/custom-validation.service';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from "../../_services/user.service";
+import {Router} from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-join',
@@ -25,7 +27,7 @@ export class JoinComponent implements OnInit {
   @Input()
   myForm: FormGroup;
 
-  constructor(private _fb: FormBuilder, private customValidator: CustomValidationService, private authService: AuthService, private typeTransformateurService: TypeTransformateurService, private userService: UserService, public topBarService: TopbarService) {
+  constructor(private _fb: FormBuilder, private customValidator: CustomValidationService, private authService: AuthService, private typeTransformateurService: TypeTransformateurService, private userService: UserService, public topBarService: TopbarService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -37,6 +39,7 @@ export class JoinComponent implements OnInit {
       siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
       password: [null, Validators.required],
       confPassword: [null, Validators.required],
+      selectedType: [null, Validators.required]
     }, {
       validator: this.customValidator.passwordMatchValidator('password', 'confPassword')
     });
@@ -51,7 +54,8 @@ export class JoinComponent implements OnInit {
       data => {
         this.isSuccessful = true;
         this.isSignUpFailed = false;
-        alert('Compte crée. Veuillez contacter l\'administrateur pour l\'activer');
+        Swal.fire('Compte crée. Veuillez contacter l\'administrateur pour l\'activer');
+        this.router.navigate(['/accueil']);
       },
       err => {
         this.errorMessage = err.error.message;

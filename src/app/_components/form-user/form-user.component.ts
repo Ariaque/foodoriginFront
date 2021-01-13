@@ -13,6 +13,8 @@ import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {UrlVideo} from '../../_classes/url-video';
 import {FermePartenaire} from '../../_classes/ferme-partenaire';
 import {DenreeAnimale} from '../../_classes/denree-animale';
+import Swal from 'sweetalert2';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-form-user',
@@ -51,7 +53,8 @@ export class FormUserComponent implements OnInit {
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
-              private tokenService: TokenStorageService, private userService: UserService, private formBuilder: FormBuilder) {
+              private tokenService: TokenStorageService, private userService: UserService, private formBuilder: FormBuilder,
+              private router: Router) {
     this.fermeForm = this.formBuilder.group({
       fermes: this.formBuilder.array([])
     });
@@ -100,11 +103,11 @@ export class FormUserComponent implements OnInit {
 
           this.urlVideosInit = info.urls.map(url => Object.assign(new UrlVideo(), url));
           this.urlVideosInit.forEach(url => {
-            this.urls().push(this.formBuilder.group({libelle: url.getLibelle()}));
+            this.urls().push(this.formBuilder.group({libelle: url.getLibelle(), titre: url.getTitre()}));
           });
           this.fermesPInit = info.fermesP.map(ferme => Object.assign(new FermePartenaire(), ferme));
           this.fermesPInit.forEach(ferme => {
-            this.fermes().push(this.formBuilder.group({nom: ferme.getNom(), presentation: ferme.getDescription()}));
+            this.fermes().push(this.formBuilder.group({nom: ferme.getNom(), presentation: ferme.getDescription(), url: ferme.getUrl()}));
           });
           this.denreeAInit = info.denreesA.map(denree => Object.assign(new DenreeAnimale(), denree));
           this.denreeAInit.forEach(denree => {
@@ -129,26 +132,28 @@ export class FormUserComponent implements OnInit {
     this.step = 1;
     this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
       res => {
-        alert ('Informations sauvegardées');
+        Swal.fire('Informations sauvegardées');
+        this.router.navigate(['/accueil']);
       },
       err => {
-        alert ('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
+        Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
+
       }
     );
   }
   createFermeList(fermeList): void {
     for (let i = 0; i < fermeList.length; i++) {
       const ferme = fermeList[i];
-      if (ferme.nom !== '' && !this.isAddFerme(ferme.nom, ferme.presentation)) {
-        const newF = new FermePartenaire(null, ferme.nom, ferme.presentation);
+      if (ferme.nom !== '' && !this.isAddFerme(ferme.nom, ferme.presentation, ferme.url)) {
+        const newF = new FermePartenaire(null, ferme.nom, ferme.presentation, ferme.url);
         this.fermesP.push(newF);
       }
     }
   }
-  isAddFerme(nom, presentation): boolean {
+  isAddFerme(nom, presentation, url): boolean {
     let ret = false;
     for (let i = 0; i < this.fermesPInit.length; i++) {
-      if (this.fermesPInit[i].getNom() === nom && this.fermesPInit[i].getDescription() === presentation) {
+      if (this.fermesPInit[i].getNom() === nom && this.fermesPInit[i].getDescription() === presentation && this.fermesPInit[i].getUrl() === url) {
         this.fermesP.push(this.fermesPInit[i]);
         ret = true;
       }
@@ -176,16 +181,16 @@ export class FormUserComponent implements OnInit {
   }
   createUrlList(urlList): void {
     for (let i = 0; i < urlList.length; i++) {
-      if (urlList[i].libelle !== '' && !this.isAddUrl (urlList[i].libelle)) {
-        const newUrlV = new UrlVideo(null, urlList[i].libelle);
+      if (urlList[i].libelle !== '' && !this.isAddUrl (urlList[i].libelle, urlList[i].titre)) {
+        const newUrlV = new UrlVideo(null, urlList[i].libelle, urlList[i].titre);
         this.urlVideos.push(newUrlV);
       }
     }
   }
-  isAddUrl(libelle): boolean {
+  isAddUrl(libelle, titre): boolean {
     let ret = false;
     for (let i = 0; i < this.urlVideosInit.length; i++) {
-      if (this.urlVideosInit[i].getLibelle() === libelle) {
+      if (this.urlVideosInit[i].getLibelle() === libelle && this.urlVideosInit[i].getTitre() === titre) {
         this.urlVideos.push(this.urlVideosInit[i]);
         ret = true;
       }
@@ -204,7 +209,8 @@ export class FormUserComponent implements OnInit {
   }
   newUrl(): FormGroup {
     return this.formBuilder.group({
-      libelle: ''
+      libelle: '',
+      titre: ''
     });
   }
   addUrl(): void {
@@ -219,7 +225,8 @@ export class FormUserComponent implements OnInit {
   newFerme(): FormGroup {
    return this.formBuilder.group({
      nom: '',
-     presentation: ''
+     presentation: '',
+     url: ''
    });
   }
   addFerme(): void {
@@ -252,7 +259,7 @@ export class FormUserComponent implements OnInit {
         continue;
       } else {
         isImage = false;
-        alert('Une image transmise a un format incorrect');
+        Swal.fire('Une image transmise a un format incorrect');
         break;
       }
     }
@@ -270,11 +277,10 @@ export class FormUserComponent implements OnInit {
         uploadData.append('myFile', this.selectedFile[i], this.selectedFile[i].name);
         this.infosTService.addImageTransformateur(uploadData, this.transformateur.id).subscribe(
           res => {
-            alert ('Image sauvegardée');
             this.imagesLink.push('http://foodorigin.projetetudiant.fr/images/' + this.transformateur.id + '/' + this.selectedFile[i].name);
           },
           err => {
-            alert ('Une erreur s\'est produite lors de l\'enregistrement, la taille de l\'image ne doit pas dépasser 500KB');
+            Swal.fire('Une erreur s\'est produite lors de l\'enregistrement, la taille de l\'image ne doit pas dépasser 500KB');
           }
         );
       }
@@ -283,17 +289,16 @@ export class FormUserComponent implements OnInit {
   deleteImage(fileName): void {
     this.infosTService.deleteImageTransformateur(fileName, this.transformateur.id).subscribe(
       res => {
-        alert ('Image supprimée');
+        Swal.fire('Image supprimée');
         const index = this.imagesLink.indexOf(fileName);
         this.imagesLink.splice(index, 1);
       },
         err => {
-          alert ('Une erreur s\'est produite lors de l\'enregistrement des informations saisies' );
+          Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
       });
   }
   submit(){
     this.step = this.step + 1;
-    console.log(this.step);
   }
   previous(){
     this.step = this.step - 1;

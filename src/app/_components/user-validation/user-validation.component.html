@@ -1,4 +1,4 @@
-<div fxFlexFill fxLayoutAlign="center center">
+<div class="main-div" fxLayoutAlign="space-around center" fxFlexFill>
   <mat-card class="mat-elevation-z8" fxFlex="50">
     <mat-card-title class="title">Gestion des comptes</mat-card-title>
     <!-- Filter -->
@@ -18,7 +18,7 @@
         </ng-container>
 
         <ng-container matColumnDef="username">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Mail/Nom d'utilisateur</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header class="w-75"> Mail/Nom d'utilisateur</mat-header-cell>
           <mat-cell *matCellDef="let user"> {{user.username}} </mat-cell>
         </ng-container>
 

@@ -37,17 +37,15 @@
             'form-control':true,
             'is-invalid':!numSiret.valid &&  numSiret.touched,
             'is-valid': numSiret.valid }"
-            type="text" class="form-control" [maxLength]="14" id="siret" placeholder="Siret" name="siret" [(ngModel)]="siret" (ngModelChange)="onTypeTransformateurSelected($event)">
+            type="text" class="form-control" [maxLength]="14" id="siret" placeholder="Siret" name="siret" [(ngModel)]="siret">
           <small *ngIf= "numSiret.errors?.required && numSiret.touched" class="form-text custom-invalid-feedback" >Champ requis</small>
           <small *ngIf= "numSiret.errors?.pattern && numSiret.touched" class="form-text custom-invalid-feedback" >Le numéro siret doit comporter 14 caractères </small>
-
           </div>
           <div class="form-group col-md-6">
             <label for = "type">Type transformateur*</label>
-            <select id ="type"  name = "selectedType" [(ngModel)]="selectedType" class="form-control" >
-              <option></option>
-              <option *ngFor="let item of type">{{item.libelle}}</option>
-            </select>
+            <mat-select id ="type"  name= "selectedType" formControlName="selectedType" class="form-control" (ngModelChange)="onTypeTransformateurSelected($event)">
+              <mat-option *ngFor="let item of type" [value]="item">{{item.libelle}}</mat-option>
+            </mat-select>
           </div>
         </div>
         *Champ obligatoire

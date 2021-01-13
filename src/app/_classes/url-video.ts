@@ -2,10 +2,12 @@ export class UrlVideo {
 
   private id: number;
   private libelle: string;
+  private titre: string;
 
-  constructor(id?: number, libelle?: string) {
+  constructor(id?: number, libelle?: string, titre?: string) {
     this.id = id;
     this.libelle = libelle;
+    this.titre = titre;
   }
 
   getId(): number {
@@ -22,5 +24,13 @@ export class UrlVideo {
 
   setLibelle(value: string): void {
     this.libelle = value;
+  }
+
+  getTitre(): string {
+    return this.titre;
+  }
+
+  setTitre(value: string): void {
+    this.titre = value;
   }
 }

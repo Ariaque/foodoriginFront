@@ -9,10 +9,9 @@
     padding-top: 5px;
     padding-left: 5px;
   }
-.main-div{
-    padding-top: 500px;
-
-}
+  .main-div {
+    margin-top: 120px;
+  }
 .form{
     background-color:#FBFDFD;
 }

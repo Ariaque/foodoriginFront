@@ -59,7 +59,7 @@ export class UserValidationComponent implements OnInit {
   }
 
   private refreshDataSource(): void {
-    this.userService.findAll().subscribe(data => {
+    this.userService.findUsers().subscribe(data => {
       this.usersSource = new MatTableDataSource<User>(data);
       // allows the filtering to work on nested property such as 'transformateur.raison_sociale'
       this.usersSource.filterPredicate = (data, filter: string) => {

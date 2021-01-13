@@ -94,8 +94,13 @@
         <button type="button" (click)="addUrl()" class="btn btn-primary position-bouton"> Ajouter URL </button>
         <table class="table borderless" formArrayName="urls">
           <tr *ngFor="let url of urls().controls |slice:0:10; let i = index" [formGroupName]="i">
-            <td class="center-element">
-              <input type="text" formControlName="libelle" class="form-control">
+            <td class="form-group col-md-6">
+              <label for="urlV"> Url: </label>
+              <input type="text" formControlName="libelle" class="form-control" id="urlV" name="urlV">
+            </td>
+            <td class="form-group col-md-12">
+              <label for="titreV"> Titre de la vidéo: </label>
+              <input type="text" formControlName="titre" class="form-control" id="titreV" name="titreV">
             </td>
             <td class="center-element">
               <button (click)="removeUrl(i)" class="btn btn-danger" > Supprimer </button>
@@ -107,7 +112,7 @@
   </mat-card>
 </div>
 <div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 5">
-  <mat-card fxFlex="50">    
+  <mat-card fxFlex="50">
     <mat-card-title class="title"> Agriculteurs/Fermes Partenaires </mat-card-title>
     <h4> Saisissez le(s) ferme(s)/agriculteur(s) partenaires que vous souhaitez renseigner: </h4>
     <form [formGroup]="fermeForm">
@@ -123,6 +128,10 @@
               <label for="presentationF"> Presentation: </label>
              <textarea class="form-control" placeholder="Saisissez la description de la ferme/l'agriculteur" lang="fr" style="resize: none" rows="2" cols="45" type="text" formControlName="presentation" id="presentationF" name="presentationF"></textarea>
             </div>
+            <div class="form-group col-md-12">
+              <label for="urlF"> Url: </label>
+              <input type="text" formControlName="url" id="urlF" name="urlF" class="form-control">
+            </div>
             <button (click)="removeFerme(i)" class="btn btn-danger position-bouton"> Supprimer </button>
           </td>
         </tr>
@@ -131,7 +140,7 @@
   </mat-card>
 </div>
 <div class="main-div"  fxLayoutAlign="space-around center" fxFlexFill *ngIf ="step == 6">
-  <mat-card fxFlex="50">    
+  <mat-card fxFlex="50">
     <mat-card-title class="title"> Denrées animales utilisées </mat-card-title>
     <h4> Saisissez les denrées animales utilisées et leurs origines </h4>
     <form [formGroup]="denreeForm">
@@ -155,7 +164,7 @@
   </mat-card>
 </div>
 <div class="btn"  fxLayoutAlign="space-around center" fxFlexFill>
-  <mat-card fxFlex="20" class="butt">    
+  <mat-card fxFlex="20" class="butt">
 <a class ="btn btn-primary mx-2" (click)= "previous()" *ngIf="step != 1">Précédent</a>
 <button type ="submit" class=" btn btn-primary mx-2"  *ngIf="step != 6">Suivant</button>
 <button mat-raised-button type ="submit" (click)="saveInfos()" color="warn" *ngIf="step == 6" mat-stroked-button>Valider</button>
