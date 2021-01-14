@@ -35,6 +35,7 @@ import { NotFoundComponent } from './_components/not-found/not-found.component';
 import { ProfileComponent } from './_components/profile/profile.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './_components/confirmation-dialog/confirmation-dialog.component';
+import { ContactComponent } from './_components/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { ConfirmationDialogComponent } from './_components/confirmation-dialog/c
     NotFoundComponent,
     ProfileComponent,
     ConfirmationDialogComponent,
+    ContactComponent,
   ],
     imports: [
         FormsModule,
