@@ -12,6 +12,7 @@ export class ContactComponent implements OnInit {
   form: any = {};
   description: string;
   objet: string;
+  phone: number;
 
   constructor( private tokenService: TokenStorageService, private userService: UserService) { }
 

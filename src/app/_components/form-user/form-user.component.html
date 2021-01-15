@@ -15,11 +15,11 @@
         <input type="number" [min]="1"  class="form-control" id="nombre_employes" [(ngModel)]="nbEmployes" [ngModelOptions]="{standalone:true}" (keypress)="validate($event)">
       </div>
       <div>
-        <label for="siteW" class="padding-block">Site web </label>
+        <label for="siteW" class="padding-block">Lien vers le site web </label>
       </div>
       <div class="input-icone padding-block no-padding">
         <i class="fa fa-globe icone-size" aria-hidden="true"></i>
-        <input type="text" class="form-control" id="siteW" placeholder="Url du site web" [(ngModel)]="lienSite" [ngModelOptions]="{standalone:true}">
+        <input type="text" class="form-control" id="siteW" placeholder="Ex. http://www.expl.com/" [(ngModel)]="lienSite" [ngModelOptions]="{standalone:true}">
       </div>
       <div class="form-group col-md-12">
         <mat-checkbox class="example-margin" [(ngModel)]="appartientGroupe" [ngModelOptions]="{standalone:true}">Appartient à un groupe</mat-checkbox>
@@ -89,21 +89,21 @@
     <mat-card-title class="title" >Gestion des médias</mat-card-title>
     <div>
       <h2> Vidéos </h2>
-      <h4> Saisissez le(s) url(s) des vidéos que vous souhaitez renseigner: </h4>
+      <h4> Saisissez le(s) lien(s) des vidéos que vous souhaitez renseigner: </h4>
       <form [formGroup]="urlVideoForm">
-        <button type="button" (click)="addUrl()" class="btn btn-primary position-bouton"> Ajouter URL </button>
+        <button type="button" (click)="addUrl()" class="btn btn-primary position-bouton"> Ajouter lien </button>
         <table class="table borderless" formArrayName="urls">
           <tr *ngFor="let url of urls().controls |slice:0:10; let i = index" [formGroupName]="i">
-            <td class="form-group col-md-6">
-              <label for="urlV"> Url: </label>
-              <input type="text" formControlName="libelle" class="form-control" id="urlV" name="urlV">
+            <td>
+              <label for="urlV"> Lien vers la video : </label>
+              <input type="text" formControlName="libelle" class="form-control" id="urlV" name="urlV" placeholder="Ex. http://www.expl.com/">
             </td>
-            <td class="form-group col-md-12">
+            <td>
               <label for="titreV"> Titre de la vidéo: </label>
               <input type="text" formControlName="titre" class="form-control" id="titreV" name="titreV">
             </td>
             <td class="center-element">
-              <button (click)="removeUrl(i)" class="btn btn-danger" > Supprimer </button>
+              <button (click)="removeUrl(i)" class="btn btn-danger" style="margin-top: 25px"> Supprimer </button>
             </td>
           </tr>
         </table>
@@ -122,15 +122,15 @@
           <td>
             <div class="form-group col-md-12">
               <label for="nomF"> Nom: </label>
-              <input type="text" formControlName="nom" id="nomF" name="nomF" class="form-control">
+              <input type="text" formControlName="nom" id="nomF" name="nomF" class="form-control" placeholder="Saisissez le nom de la ferme/l'agriculteur">
             </div>
             <div class="form-group col-md-12">
               <label for="presentationF"> Presentation: </label>
              <textarea class="form-control" placeholder="Saisissez la description de la ferme/l'agriculteur" lang="fr" style="resize: none" rows="2" cols="45" type="text" formControlName="presentation" id="presentationF" name="presentationF"></textarea>
             </div>
             <div class="form-group col-md-12">
-              <label for="urlF"> Url: </label>
-              <input type="text" formControlName="url" id="urlF" name="urlF" class="form-control">
+              <label for="urlF"> Lien vers le site web de la ferme: </label>
+              <input type="text" formControlName="url" id="urlF" name="urlF" class="form-control" placeholder="Ex. http://www.expl.com/">
             </div>
             <button (click)="removeFerme(i)" class="btn btn-danger position-bouton"> Supprimer </button>
           </td>
