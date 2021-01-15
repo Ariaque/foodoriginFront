@@ -11,8 +11,9 @@ import {ResetPasswordComponent} from './_components/reset-password/reset-passwor
 import {SuccessPagecomponent} from './_components/success-page/success-pagecomponent';
 import {ErrorPageComponent} from './_components/error-page/error-page.component';
 import {NotFoundComponent} from './_components/not-found/not-found.component';
-
 import { ProfileComponent } from './_components/profile/profile.component';
+import { ContactComponent } from './_components/contact/contact.component';
+
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'error', component: ErrorPageComponent},
   {path: 'profil', component: ProfileComponent},
   {path: '404', component: NotFoundComponent},
+  {path: 'contact', component: ContactComponent},
   {path: '**', redirectTo: '/404'},
 
 
