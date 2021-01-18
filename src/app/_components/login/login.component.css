@@ -1,16 +1,35 @@
-.login.form{
-    padding: 20px;
+.login.form {
+  padding: 20px;
+  margin-top: 10%!important;
+  margin-bottom: 10%!important;
 }
+
 .mat-toolbar {
-    width: 50%;
-    margin: 0 auto;
-    background-color:white;
+  width: 50%;
+  margin: 0 auto;
+  background-color: white;
 }
+
 .style {
-    background-color: #F06449;
-  }
+  background-color: #F06449;
+  border: none!important;
+  outline: none!important;
+  box-shadow: none!important;
+  color: white;
+  transition: 0.5s!important;
+}
+
+.style:hover {
+  transition: 0.5s!important;
+  background-color: #F15025;
+}
 
 #title {
   margin-left: auto;
   margin-right: auto;
+}
+
+.login-align {
+  margin-top: 10%!important;
+  margin-bottom: 0%;
 }

@@ -297,10 +297,11 @@ export class FormUserComponent implements OnInit {
           Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
       });
   }
-  submit(){
+  submit(): void {
+    window.scroll(0, 0);
     this.step = this.step + 1;
   }
-  previous(){
+  previous(): void {
     this.step = this.step - 1;
     console.log(this.step);
   }

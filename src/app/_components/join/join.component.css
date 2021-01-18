@@ -6,6 +6,11 @@
     width: 100%;
    }
 
+   .join-align {
+     margin-top: 10%!important;
+     margin-bottom: 0%;
+   }
+
   .title {
     text-align:center;
     margin: 0 auto;
@@ -15,4 +20,15 @@
     width: 200px;
     margin-left: 45%;
     background-color: #F06449;
+    color: white;
+    border: none!important;
+    outline: none!important;
+    box-shadow: none!important;
+    transition: 0.5s!important;
+  }
+
+
+  .style:hover {
+    background-color: #F15025;
+    transition: 0.5s!important;
   }

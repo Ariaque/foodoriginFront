@@ -4,8 +4,8 @@ import {User} from '../../_classes/user';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-user-validation',
@@ -16,7 +16,7 @@ export class UserValidationComponent implements OnInit {
 
   usersSource: MatTableDataSource<User>;
   dialogRef: MatDialogRef<UserValidationComponent, string>;
-  displayedColumns: string[] = ['id', 'username', 'roles', 'transformateur.raison_sociale', 'typeTransformateur.libelle', 'isEnabled', 'delete'];
+  displayedColumns: string[] = ['username', 'transformateur.raison_sociale', 'typeTransformateur.libelle', 'isEnabled', 'delete'];
   numberPageMax: number;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

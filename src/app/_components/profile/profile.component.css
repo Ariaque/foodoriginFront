@@ -31,11 +31,22 @@
 .hr-light{
     border-color:#F06449;
     padding-top: 30px;
-  
+
 }
 h6 {
     line-height: 1.7;
 }
+
 .style {
-    background-color: #F06449;
-  }
+  background-color: #F06449;
+  color: white;
+  border: none!important;
+  outline: none!important;
+  box-shadow: none!important;
+  transition: 0.5s!important;
+}
+
+.style:hover {
+  background-color: #F15025;
+  transition: 0.5s!important;
+}
