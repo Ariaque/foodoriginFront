@@ -75,6 +75,7 @@ export class FormUserComponent implements OnInit {
     const reg = '(https?://)?([\\da-zA-Z!=.-]+)\\.([a-z.]{2,6})([/\\w!=? .-]*)/?';
     this.myForm = this.formBuilder.group({
       siteW : [null, [Validators.required, Validators.pattern(reg)]],
+      siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
       lienF : [null, [Validators.required, Validators.pattern(reg)]],
       lienT : [null, [Validators.required, Validators.pattern(reg)]],
       lienI : [null, [Validators.required, Validators.pattern(reg)]],
@@ -333,5 +334,8 @@ export class FormUserComponent implements OnInit {
     get titre(): AbstractControl {
     return this.myForm.get('titre');
   }
-  
+  get numSiret(): FormGroup{
+    const  temp = this.myForm.controls.siret as FormGroup;
+    return temp;
+  }
 }
