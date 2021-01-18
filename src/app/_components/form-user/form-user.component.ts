@@ -64,7 +64,7 @@ export class FormUserComponent implements OnInit {
       fermes: this.formBuilder.array([])
     });
     this.urlVideoForm = this.formBuilder.group({
-      urls: this.formBuilder.array([this.newUrl()])
+      urls: this.formBuilder.array([])
     });
     this.denreeForm = this.formBuilder.group({
       denrees: this.formBuilder.array([])
@@ -72,15 +72,15 @@ export class FormUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const reg = '(https?://)?([\\da-zA-Z!=.-]+)\\.([a-z.]{2,6})([/\\w!=? .-]*)/?';
+    const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
     this.myForm = this.formBuilder.group({
-      siteW : [null, [Validators.required, Validators.pattern(reg)]],
+      siteW : [null, [Validators.pattern(reg)]],
       siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
-      lienF : [null, [Validators.required, Validators.pattern(reg)]],
-      lienT : [null, [Validators.required, Validators.pattern(reg)]],
-      lienI : [null, [Validators.required, Validators.pattern(reg)]],
+      lienF : [null, [Validators.pattern(reg)]],
+      lienT : [null, [Validators.pattern(reg)]],
+      lienI : [null, [Validators.pattern(reg)]],
     });
-    
+
     this.nbEmployes = '1';
     this.labelService.findAll().subscribe((result) => {
       this.labels = result;
@@ -116,16 +116,18 @@ export class FormUserComponent implements OnInit {
           this.listCertif.setValue(listC);
 
           this.urlVideosInit = info.urls.map(url => Object.assign(new UrlVideo(), url));
+
           this.urlVideosInit.forEach(url => {
-            this.urls().push(this.formBuilder.group({libelle: url.getLibelle(), titre: url.getTitre()}));
+            console.log(url);
+            this.urls().push(this.formBuilder.group({libelle: [url.getLibelle(), [Validators.required, Validators.pattern(reg)]], titre: [url.getTitre(), Validators.required]}));
           });
           this.fermesPInit = info.fermesP.map(ferme => Object.assign(new FermePartenaire(), ferme));
           this.fermesPInit.forEach(ferme => {
-            this.fermes().push(this.formBuilder.group({nom: ferme.getNom(), presentation: ferme.getDescription(), url: ferme.getUrl()}));
+            this.fermes().push(this.formBuilder.group({nom: [ferme.getNom(), Validators.required], presentation: ferme.getDescription(), url: [ferme.getUrl(), Validators.pattern(reg)]}));
           });
           this.denreeAInit = info.denreesA.map(denree => Object.assign(new DenreeAnimale(), denree));
           this.denreeAInit.forEach(denree => {
-            this.denrees().push(this.formBuilder.group({nom: denree.getNom(), origine: denree.getOrigine()}));
+            this.denrees().push(this.formBuilder.group({nom: [denree.getNom(), Validators.required], origine: denree.getOrigine()}));
           });
         }
         this.infosTService.getImageTransformateur(this.transformateur.id).subscribe(image => {
@@ -136,6 +138,7 @@ export class FormUserComponent implements OnInit {
       });
     });
   }
+
   saveInfos(): void {
     this.createFermeList (this.fermeForm.value.fermes);
     this.createUrlList (this.urlVideoForm.value.urls);
@@ -146,7 +149,7 @@ export class FormUserComponent implements OnInit {
     this.step = 1;
     this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
       res => {
-        Swal.fire('Informations sauvegardées');
+        Swal.fire({title: 'Informations sauvegardées'});
         this.router.navigate(['/accueil']);
       },
       err => {
@@ -195,7 +198,7 @@ export class FormUserComponent implements OnInit {
   }
   createUrlList(urlList): void {
     for (let i = 0; i < urlList.length; i++) {
-      if (urlList[i].libelle !== '' && !this.isAddUrl (urlList[i].libelle, urlList[i].titre)) {
+      if (urlList[i].libelle != null && urlList[i].libelle !== '' && !this.isAddUrl (urlList[i].libelle, urlList[i].titre)) {
         const newUrlV = new UrlVideo(null, urlList[i].libelle, urlList[i].titre);
         this.urlVideos.push(newUrlV);
       }
@@ -222,7 +225,7 @@ export class FormUserComponent implements OnInit {
     return this.urlVideoForm.get('urls') as FormArray;
   }
   newUrl(): FormGroup {
-    const reg = '(https?://)?([\\da-zA-Z!=.-]+)\\.([a-z.]{2,6})([/\\w!=? .-]*)/?';
+    const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
     return this.formBuilder.group({
       libelle: [null, [Validators.required, Validators.pattern(reg)]],
       titre: [null, Validators.required]
@@ -238,11 +241,11 @@ export class FormUserComponent implements OnInit {
     return this.fermeForm.get('fermes') as FormArray;
   }
   newFerme(): FormGroup {
-    const reg = '(https?://)?([\\da-zA-Z!=.-]+)\\.([a-z.]{2,6})([/\\w!=? .-]*)/?';
+    const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
    return this.formBuilder.group({
      nom: [null, Validators.required],
      presentation: '',
-     url: [null, [Validators.required, Validators.pattern(reg)]],
+     url: [null, [Validators.pattern(reg)]],
    });
   }
   addFerme(): void {
@@ -320,6 +323,7 @@ export class FormUserComponent implements OnInit {
   previous(): void {
     this.step = this.step - 1;
   }
+
   get siteW(): AbstractControl {
     return this.myForm.get('siteW');
   }
@@ -339,4 +343,5 @@ export class FormUserComponent implements OnInit {
     const  temp = this.myForm.controls.siret as FormGroup;
     return temp;
   }
+
 }

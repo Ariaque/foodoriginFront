@@ -123,6 +123,15 @@
 }
 
 .knowMoreImg{
-  width: 33%;
+  width: 20%;
   height: auto;
+}
+
+.fields-div {
+  margin-bottom: 15px;
+}
+
+body.swal2-shown {
+  overflow-y: auto!important;
+  padding-right: 0px!important;
 }
