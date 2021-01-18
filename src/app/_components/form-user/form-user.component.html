@@ -118,7 +118,7 @@
         <table class="table borderless" formArrayName="urls">
           <tr *ngFor="let url of urls().controls |slice:0:10; let i = index" [formGroupName]="i">
             <td>
-              <label for="urlV"> Lien vers la video : </label>
+              <label for="urlV"> Lien vers la video*: </label>
               <input [ngClass]="{
                 'form-control':true, 
                 'is-invalid':!url.controls.libelle.valid && url.controls.libelle.touched,
@@ -151,7 +151,7 @@
         <tr *ngFor="let ferme of fermes().controls |slice:0:5; let i = index" [formGroupName]="i">
           <td>
             <div class="form-group col-md-12">
-              <label for="nomF"> Nom: </label>
+              <label for="nomF"> Nom*: </label>
               <input [ngClass]="{'form-control':true,'is-invalid': ferme.controls.nom.errors && ferme.controls.nom.touched}" type="text" formControlName="nom" id="nomF" name="nomF" class="form-control" placeholder="Saisissez le nom de la ferme/l'agriculteur">
               <small *ngIf="ferme.controls.nom.errors?.required && ferme.controls.nom.touched" class="form-text custom-invalid-feedback">Nom est requis</small>           
             </div>
@@ -160,7 +160,7 @@
              <textarea class="form-control" placeholder="Saisissez la description de la ferme/l'agriculteur" lang="fr" style="resize: none" rows="2" cols="45" type="text" formControlName="presentation" id="presentationF" name="presentationF"></textarea>
             </div>
             <div class="form-group col-md-12">
-              <label for="urlF"> Lien vers le site web de la ferme: </label>
+              <label for="urlF"> Lien vers le site web de la ferme*: </label>
               <input [ngClass]="{'form-control':true, 
               'is-invalid':!ferme.controls.url.valid && ferme.controls.url.touched,
               'is-valid': ferme.controls.url.valid }" type="text" formControlName="url" id="urlF" name="urlF" class="form-control" placeholder="Ex. http://www.expl.com/">
@@ -184,7 +184,7 @@
       <table class="table borderless" formArrayName="denrees">
         <tr *ngFor="let denree of denrees().controls |slice:0:10; let i = index" [formGroupName]="i">
           <td>
-              <label for="nomD"> Type de denrée: </label>
+              <label for="nomD"> Type de denrée*: </label>
               <input type="text" [ngClass]="{'form-control':true,'is-invalid': denree.controls.nom.errors && denree.controls.nom.touched}" formControlName="nom" id="nomD" name="nomD" class="form-control">
               <small *ngIf="denree.controls.nom.errors?.required && denree.controls.nom.touched" class="form-text custom-invalid-feedback">Nom est requis</small> 
             </td>
