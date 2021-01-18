@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,Input} from '@angular/core';
 import {LabelService} from '../../_services/label.service';
 import {CertificationService} from '../../_services/certification.service';
 import {Certification} from '../../_classes/certification';
@@ -9,12 +9,13 @@ import {Transformateur} from '../../_classes/transformateur';
 import {TransformateurService} from '../../_services/transformateur.service';
 import {TokenStorageService} from '../../_services/token-storage.service';
 import {UserService} from '../../_services/user.service';
-import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {UrlVideo} from '../../_classes/url-video';
 import {FermePartenaire} from '../../_classes/ferme-partenaire';
 import {DenreeAnimale} from '../../_classes/denree-animale';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators, AbstractControl} from '@angular/forms';
+
 
 @Component({
   selector: 'app-form-user',
@@ -50,6 +51,10 @@ export class FormUserComponent implements OnInit {
   denreeAInit: DenreeAnimale[] = [];
   denreesA: DenreeAnimale[] = [];
   step: any = 1;
+  @Input()
+  myForm: FormGroup;
+  form: any = {};
+
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
@@ -59,7 +64,7 @@ export class FormUserComponent implements OnInit {
       fermes: this.formBuilder.array([])
     });
     this.urlVideoForm = this.formBuilder.group({
-      urls: this.formBuilder.array([])
+      urls: this.formBuilder.array([this.newUrl()])
     });
     this.denreeForm = this.formBuilder.group({
       denrees: this.formBuilder.array([])
@@ -67,6 +72,14 @@ export class FormUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const reg = '(https?://)?([\\da-zA-Z!=.-]+)\\.([a-z.]{2,6})([/\\w!=? .-]*)/?';
+    this.myForm = this.formBuilder.group({
+      siteW : [null, [Validators.required, Validators.pattern(reg)]],
+      lienF : [null, [Validators.required, Validators.pattern(reg)]],
+      lienT : [null, [Validators.required, Validators.pattern(reg)]],
+      lienI : [null, [Validators.required, Validators.pattern(reg)]],
+    });
+    
     this.nbEmployes = '1';
     this.labelService.findAll().subscribe((result) => {
       this.labels = result;
@@ -208,9 +221,10 @@ export class FormUserComponent implements OnInit {
     return this.urlVideoForm.get('urls') as FormArray;
   }
   newUrl(): FormGroup {
+    const reg = '(https?://)?([\\da-zA-Z!=.-]+)\\.([a-z.]{2,6})([/\\w!=? .-]*)/?';
     return this.formBuilder.group({
-      libelle: '',
-      titre: ''
+      libelle: [null, [Validators.required, Validators.pattern(reg)]],
+      titre: [null, Validators.required]
     });
   }
   addUrl(): void {
@@ -223,10 +237,11 @@ export class FormUserComponent implements OnInit {
     return this.fermeForm.get('fermes') as FormArray;
   }
   newFerme(): FormGroup {
+    const reg = '(https?://)?([\\da-zA-Z!=.-]+)\\.([a-z.]{2,6})([/\\w!=? .-]*)/?';
    return this.formBuilder.group({
-     nom: '',
+     nom: [null, Validators.required],
      presentation: '',
-     url: ''
+     url: [null, [Validators.required, Validators.pattern(reg)]],
    });
   }
   addFerme(): void {
@@ -240,7 +255,7 @@ export class FormUserComponent implements OnInit {
   }
   newDenree(): FormGroup {
     return this.formBuilder.group({
-      nom: '',
+      nom: [null, Validators.required],
       origine: ''
     });
   }
@@ -302,6 +317,21 @@ export class FormUserComponent implements OnInit {
   }
   previous(){
     this.step = this.step - 1;
-    console.log(this.step);
   }
+  get siteW(): AbstractControl {
+    return this.myForm.get('siteW');
+  }
+  get lienF(): AbstractControl {
+    return this.myForm.get('lienF');
+  }
+  get lienT(): AbstractControl {
+    return this.myForm.get('lienT');
+  }
+  get lienI(): AbstractControl {
+    return this.myForm.get('lienI');
+  }
+    get titre(): AbstractControl {
+    return this.myForm.get('titre');
+  }
+  
 }
