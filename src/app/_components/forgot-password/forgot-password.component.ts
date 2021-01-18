@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {SendResetPassordEmailService} from '../../_services/send-reset-passord-email.service';
 import {Router} from '@angular/router';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -12,9 +13,15 @@ export class ForgotPasswordComponent implements OnInit {
 
   form: any = {};
   email: string;
-  constructor(private router: Router, private sendResetPassordEmailService: SendResetPassordEmailService) { }
+  @Input()
+  myForm: FormGroup;
+
+  constructor(private _fb: FormBuilder,private router: Router, private sendResetPassordEmailService: SendResetPassordEmailService) { }
 
   ngOnInit(): void {
+    this.myForm = this._fb.group({
+      mail: [null, [Validators.required, Validators.email]]
+    });
   }
 
   onSubmit(): void {
@@ -24,4 +31,7 @@ export class ForgotPasswordComponent implements OnInit {
       }});
   }
 
+  get mail(): AbstractControl {
+    return this.myForm.get('mail');
+  }
 }
