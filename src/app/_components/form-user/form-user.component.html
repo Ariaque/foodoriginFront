@@ -59,7 +59,7 @@
         <input formControlName="lienF" [ngClass]="{
           'form-control':true,
           'is-invalid':!lienF.valid && lienF.touched,
-          'is-valid': lienF.valid }" type="text" class="form-control" id="facebook" name="lienF" placeholder="Lien Facebook" [(ngModel)]="lienFacebook" [ngModelOptions]="{standalone:true}">
+          'is-valid': lienF.valid }" type="text" class="form-control" id="facebook" name="lienF" placeholder="Lien Facebook    Ex. https://www.facebook.com/" [(ngModel)]="lienFacebook" [ngModelOptions]="{standalone:true}">
           <small *ngIf= "lienF.errors?.required && lienF.touched" class="form-text custom-invalid-feedback" >Le lien est requis</small>
           <small *ngIf= "lienF.errors?.pattern && lienF.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
         </div>
@@ -68,7 +68,7 @@
         <input formControlName="lienT" [ngClass]="{
           'form-control':true,
           'is-invalid':!lienT.valid && lienT.touched,
-          'is-valid': lienT.valid }" type="text" class="form-control" name="lienT" id="twitter" placeholder="Lien Twitter" [(ngModel)]="lienTwitter" [ngModelOptions]="{standalone:true}">
+          'is-valid': lienT.valid }" type="text" class="form-control" name="lienT" id="twitter" placeholder="Lien Twitter         Ex.https://twitter.com/" [(ngModel)]="lienTwitter" [ngModelOptions]="{standalone:true}">
           <small *ngIf= "lienT.errors?.required && lienT.touched" class="form-text custom-invalid-feedback" >Le lien est requis</small>
           <small *ngIf= "lienT.errors?.pattern && lienT.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
         </div>
@@ -77,7 +77,7 @@
         <input formControlName="lienI" [ngClass]="{
           'form-control':true,
           'is-invalid':!lienI.valid && lienI.touched,
-          'is-valid': lienI.valid }" type="text" class="form-control" name="lienI" type="text" class="form-control" id="instagram" placeholder="Lien Instagram" [(ngModel)]="lienInsta" [ngModelOptions]="{standalone:true}">
+          'is-valid': lienI.valid }" type="text" class="form-control" name="lienI" type="text" class="form-control" id="instagram" placeholder="Lien Instagram    Ex.https://www.instagram.com/" [(ngModel)]="lienInsta" [ngModelOptions]="{standalone:true}">
           <small *ngIf= "lienI.errors?.required && lienI.touched" class="form-text custom-invalid-feedback" >Le lien est requis</small>
           <small *ngIf= "lienI.errors?.pattern && lienI.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
         </div>
