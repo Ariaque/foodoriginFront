@@ -59,7 +59,7 @@ export class JoinComponent implements OnInit {
       },
       err => {
         this.errorMessage = err.error.message;
-        alert(this.errorMessage);
+        Swal.fire(this.errorMessage);
         this.isSignUpFailed = true;
       }
     );
