@@ -1,76 +1,95 @@
 import {TestBed} from '@angular/core/testing';
-
-import {UserService} from './user.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {UserService} from './user.service';
+import {User} from '../_classes/user';
+import {Role} from '../_classes/role';
+import {Transformateur} from '../_classes/transformateur';
+import {TypeTransformateurs} from '../_classes/type-transformateurs';
 
 describe('UserService', () => {
   let userService: UserService;
-  let httpTestingController: HttpTestingController;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [UserService],
-      imports: [HttpClientTestingModule]
     });
-    httpTestingController = TestBed.inject(HttpTestingController);
+
     userService = TestBed.inject(UserService);
+    httpMock = TestBed.inject(HttpTestingController);
   });
+
   afterEach(() => {
-    httpTestingController.verify();
+    httpMock.verify();
   });
 
-  it('should be created', () => {
-    expect(userService).toBeTruthy();
-  });
-  describe('#findAll', () => {
-    it('returned Observable should match the right data', () => {
-      const mockUsers = [
-        {
-          id: 1,
-          username: 'username',
-          password: 'hdhfdh52$ù',
-          role: null,
-          transformateur: null,
-          isEnabled: false,
-          typeTransformateur: null,
-        },
-        {
-          id: 78,
-          username: 'username2',
-          password: 'fghfgh',
-          role: null,
-          transformateur: null,
-          isEnabled: true,
-          typeTransformateur: {id: 1, libelle: 'typeTransfo'},
-        },
-      ];
+  const transformateurDetails = new Transformateur(1,
+    '01.004.002',
+    '12365478953265',
+    'nom entreprise',
+    '7 rue de paris',
+    '35000',
+    'Rennes',
+    'C',
+    null,
+    null,
+    null, null);
 
-      userService.findAll()
-        .subscribe(usersData => {
-          expect(usersData[0].getId).toEqual(1);
-          expect(usersData[0].getUsername).toEqual('username');
-          expect(usersData[0].getPassword).toEqual('hdhfdh52$ù');
-          expect(usersData[0].getRole).toEqual(null);
-          expect(usersData[0].getTransformateur).toEqual(null);
-          expect(usersData[0].getIsEnabled).toEqual(false);
-          expect(usersData[0].getTypeTransformateur).toEqual(null);
+  const typeTransformateurDetails = new TypeTransformateurs(1, 'artisan');
 
-          expect(usersData[1].getId).toEqual(78);
-          expect(usersData[1].getUsername).toEqual('username2');
-          expect(usersData[1].getPassword).toEqual('fghfgh');
-          expect(usersData[1].getRole).toEqual(null);
-          expect(usersData[1].getTransformateur).toEqual(null);
-          expect(usersData[1].getIsEnabled).toEqual(true);
-          expect(usersData[1].getTypeTransformateur.id).toEqual(1);
-          expect(usersData[1].getTypeTransformateur.libelle).toEqual('typeTransfo');
+  const roleDetails = new Role(1, 'role_user');
 
-        });
+  const userListResponse: Array<User> = [
+    new User(1, 'username1', 'pwd1', roleDetails, transformateurDetails, false, typeTransformateurDetails),
+    new User(2, 'username2', 'pwd2', roleDetails, transformateurDetails, true, typeTransformateurDetails),
+    new User(3, 'username3', 'pwd3', roleDetails, transformateurDetails, false, typeTransformateurDetails),
+  ];
 
-      const req = httpTestingController.expectOne(
-        '/api/user/all'
-      );
-
-      req.flush(mockUsers);
+  it('findAll() should return data', () => {
+    userService.findAll().subscribe((res) => {
+      expect(res).toEqual(userListResponse);
     });
+
+    const req = httpMock.expectOne('/api/user/all');
+    expect(req.request.method).toBe('GET');
+    req.flush(userListResponse);
   });
+
+  it('findUsers() should return data', () => {
+    userService.findUsers().subscribe((res) => {
+      expect(res).toEqual(userListResponse);
+    });
+
+    const req = httpMock.expectOne('/api/user/users');
+    expect(req.request.method).toBe('GET');
+    req.flush(userListResponse);
+  });
+
+  it('findUserByName() should return data', () => {
+    userService.findUserByName('username3').subscribe((res) => {
+      expect(res).toEqual(userListResponse[2]);
+    });
+
+    const req = httpMock.expectOne('/api/user/username3');
+    expect(req.request.method).toBe('GET');
+    req.flush(userListResponse[2]);
+  });
+
+  it('userActivation() should return data', () => {
+    userService.userActivation(userListResponse[0]).subscribe((res) => {
+      expect(userListResponse[0].getIsEnabled).toEqual(true);
+    });
+    const req = httpMock.expectOne('/api/user/save');
+    expect(req.request.method).toBe('POST');
+  });
+
+  it('deleteUser() should return data', () => {
+    userService.deleteUser(userListResponse[2]).subscribe((res) => {
+      expect(userListResponse.length).toBe(2);
+    });
+    const req = httpMock.expectOne('/api/user/delete');
+    expect(req.request.method).toBe('POST');
+  });
+
 });
