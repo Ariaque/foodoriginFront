@@ -338,13 +338,13 @@ export class FormUserComponent implements OnInit {
   }
   newDenree(): FormGroup {
     return this.formBuilder.group({
-      nom: [null, Validators.required],
-      espece: [null, Validators.required],
-      animal: [null, Validators.required],
-      pays: [null, Validators.required],
-      region: [null, Validators.required],
-      infosT: [null, Validators.required],
-      infosO: [null, Validators.required]
+      nom: '',
+      espece: '',
+      animal: '',
+      pays: '',
+      region: '',
+      infosT: '',
+      infosO: ''
     });
   }
   addDenree(): void {
@@ -430,20 +430,20 @@ export class FormUserComponent implements OnInit {
 
   fillEspece(i): void {
     this.denreeService.findEspeceByNom(this.denreeForm.value.denrees[i].nom).subscribe(res => {
-      this.typeDenreeEspece[i] = res;
+      this.typeDenreeEspece[i] = res.sort();
       this.typeDenreeAnimal[i] = [];
     });
   }
 
   fillAnimal(i): void {
     this.denreeService.findAnimalByEspece(this.denreeForm.value.denrees[i].espece).subscribe(res => {
-      this.typeDenreeAnimal[i] = res;
+      this.typeDenreeAnimal[i] = res.sort();
     });
   }
 
   fillRegion(i): void {
     this.denreeService.findRegionByPays(this.denreeForm.value.denrees[i].pays).subscribe(res => {
-      this.typeOrigineRegion[i] = res;
+      this.typeOrigineRegion[i] = res.sort();
     });
   }
 }
