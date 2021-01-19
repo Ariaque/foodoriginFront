@@ -211,6 +211,42 @@
       </form>
       *Champ obligatoire
     </mat-card>
+    <mat-card fxFlex="50">
+      <mat-card-title class="title"> Denrées animales utilisées</mat-card-title>
+      <h4> Saisissez les denrées animales utilisées et leurs origines </h4>
+      <form>
+        <button (click)="addDenree()" class="btn btn-primary" style="float: right" type="button"> Ajouter</button>
+        <table class="table borderless" formArrayName="denrees">
+          <td>
+            <div class="form-group col-md-12">
+              <mat-select class="form-control" id="denree" multiple name="denree"
+                          placeholder="Selectionnez la denrée animale utilisée">
+                <mat-option *ngFor="let type of this.typeDenree"> {{type.getNom()}}</mat-option>
+              </mat-select>
+              <mat-select>
+                <mat-option></mat-option>
+              </mat-select>
+              <mat-select>
+                <mat-option></mat-option>
+              </mat-select>
+              <label for="infosTD"> Informations complémentaires: </label>
+              <input class="form-control" id="infosTD" name="infosTD" type="text">
+            </div>
+            <div class="form-group col-md-12">
+              <mat-select class="form-control" multiple name="denree"
+                          placeholder="Selectionnez l'origine de la denrée animale utilisée">
+                <mat-option *ngFor="let origine of this.origineDenree"> {{origine.getPays()}}</mat-option>
+              </mat-select>
+              <mat-select>
+                <mat-option></mat-option>
+              </mat-select>
+            </div>
+          </td>
+
+        </table>
+      </form>
+      *Champ obligatoire
+    </mat-card>
     <IMG SRC="assets/images/enSavoirPlusExplication.png" class="knowMoreImg"/>
   </div>
   </div>

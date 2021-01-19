@@ -15,6 +15,9 @@ import {DenreeAnimale} from '../../_classes/denree-animale';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators, AbstractControl} from '@angular/forms';
+import {TypeDenree} from '../../_classes/type-denree';
+import {OrigineDenree} from '../../_classes/origine-denree';
+import {DenreeService} from "../../_services/denree.service";
 
 
 @Component({
@@ -26,6 +29,8 @@ export class FormUserComponent implements OnInit {
 
   certifications: Certification[];
   labels: Label[];
+  typeDenree: TypeDenree [];
+  origineDenree: OrigineDenree[];
   description: string;
   nbEmployes: string;
   lienFacebook: string;
@@ -59,7 +64,7 @@ export class FormUserComponent implements OnInit {
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
               private tokenService: TokenStorageService, private userService: UserService, private formBuilder: FormBuilder,
-              private router: Router) {
+              private router: Router, private denreeService: DenreeService) {
     this.fermeForm = this.formBuilder.group({
       fermes: this.formBuilder.array([])
     });
@@ -80,13 +85,18 @@ export class FormUserComponent implements OnInit {
       lienT : [null, [Validators.pattern(reg)]],
       lienI : [null, [Validators.pattern(reg)]],
     });
-
     this.nbEmployes = '1';
     this.labelService.findAll().subscribe((result) => {
       this.labels = result;
     });
     this.certifService.findAll().subscribe((result) => {
       this.certifications = result;
+    });
+    this.denreeService.findAllOrgineDenree().subscribe((result) => {
+      this.origineDenree = result;
+    });
+    this.denreeService.findAllTypeDenree().subscribe((result) => {
+      this.typeDenree = result;
     });
     this.userService.findUserByName(this.tokenService.getUser().username).subscribe((res: any) => {
       this.transformateur = res.transformateur;
@@ -118,7 +128,6 @@ export class FormUserComponent implements OnInit {
           this.urlVideosInit = info.urls.map(url => Object.assign(new UrlVideo(), url));
 
           this.urlVideosInit.forEach(url => {
-            console.log(url);
             this.urls().push(this.formBuilder.group({libelle: [url.getLibelle(), [Validators.required, Validators.pattern(reg)]], titre: [url.getTitre(), Validators.required]}));
           });
           this.fermesPInit = info.fermesP.map(ferme => Object.assign(new FermePartenaire(), ferme));
