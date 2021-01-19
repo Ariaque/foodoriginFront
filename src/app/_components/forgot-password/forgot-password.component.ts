@@ -32,7 +32,6 @@ export class ForgotPasswordComponent implements OnInit {
     });
     this.userService.findUsers().subscribe(data => {
       this.usersSource = new MatTableDataSource<User>(data);
-      this.data = data[0].getUsername;
       for (let i = 0; i < this.usersSource.data.length; i++) {
         this.usersname.push(data[i].getUsername) ;
       }

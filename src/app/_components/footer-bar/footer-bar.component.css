@@ -1,0 +1,12 @@
+.footer-container {
+  margin-top: 5%;
+}
+
+.footer-top {
+  background-color: lightgray;
+}
+.footer-bottom {
+  background-color: black;
+  color: white;
+}
+

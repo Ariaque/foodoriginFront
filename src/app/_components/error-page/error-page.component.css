@@ -8,3 +8,8 @@
   height: auto;
   cursor: default;
 }
+
+.error-align {
+  margin-top: 15%;
+  margin-bottom: 0%;
+}

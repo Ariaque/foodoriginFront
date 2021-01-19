@@ -36,3 +36,92 @@
 .img-fluid, mb-4 {
   cursor: default;
 }
+
+.card-div {
+  background-color: lightgray;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  justify-content: center;
+  height: 50%;
+}
+
+.v-card {
+  width: 15rem;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.card-img-top {
+  cursor: default;
+}
+
+.card-header {
+  font-size: 25px;
+}
+
+.card-text {
+  text-align: justify;
+}
+
+.pres-card {
+  margin-top: 60px;
+  width: 50%;
+}
+
+#contact-card {
+  margin-right: 15px;
+}
+
+.pres-text {
+  font-size: 15px;
+}
+
+.contact-button {
+  transition: 0.5s!important;
+  background-color: black;
+  border-color: black;
+  bottom: 1.25rem;
+  position: absolute;
+  width: 244px;
+  height: 52px;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+
+#contact-text {
+  position: absolute;
+  top: 25%;
+  bottom: 25%;
+  left: 25%;
+  right: 25%;
+}
+
+.contact-button:hover {
+  transition: 0.5s!important;
+  background-color: #333333;
+  border-color: #333333;
+}
+
+.google-play-button {
+  transition: 0.5s!important;
+  background-color: black;
+  border-color: black;
+  width: 244px;
+  height: 52px;
+}
+
+.google-play-button:hover {
+  transition: 0.5s!important;
+  background-color: #333333;
+  border-color: #333333;
+}
+
+#google-play-icon {
+  margin-right: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+

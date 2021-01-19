@@ -1,3 +1,6 @@
+.mat-user-validation {
+  max-width: 95%!important;
+}
 .table-container {
   height: 400px;
   overflow: auto;
@@ -8,7 +11,7 @@
 .title {
   text-align: center;
   margin: 0 auto;
-  padding: 5%;
+  padding: 2%;
 }
 
 mat-table {
@@ -36,4 +39,27 @@ mat-cell {
 }
 .main-div {
   margin-top: 120px;
+}
+
+.btn-enable {
+  color: green;
+  width: 98px;
+  transition: 0.5s;
+}
+
+.btn-enable:hover {
+  background: #EBFFE6;
+  transition: 0.5s;
+}
+
+.btn-disable {
+  transition: 0.5s!important;
+}
+
+.btn-disable:hover {
+  transition: 0.5s!important;
+}
+
+mat-header-row {
+  z-index: 0!important;
 }

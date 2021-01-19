@@ -35,6 +35,7 @@ import { NotFoundComponent } from './_components/not-found/not-found.component';
 import { ProfileComponent } from './_components/profile/profile.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './_components/confirmation-dialog/confirmation-dialog.component';
+import { FooterBarComponent } from './_components/footer-bar/footer-bar.component';
 import { ContactComponent } from './_components/contact/contact.component';
 
 @NgModule({
@@ -54,6 +55,7 @@ import { ContactComponent } from './_components/contact/contact.component';
     NotFoundComponent,
     ProfileComponent,
     ConfirmationDialogComponent,
+    FooterBarComponent,
     ContactComponent,
   ],
     imports: [
