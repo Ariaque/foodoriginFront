@@ -30,7 +30,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.myForm = this._fb.group({
       mail: [null, [Validators.required, Validators.email]]
     });
-    this.userService.findUsers().subscribe(data => {
+    this.userService.findAll().subscribe(data => {
       this.usersSource = new MatTableDataSource<User>(data);
       for (let i = 0; i < this.usersSource.data.length; i++) {
         this.usersname.push(data[i].getUsername) ;
@@ -40,15 +40,15 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if(this.usersname.indexOf(this.email) !== -1){
       this.sendResetPassordEmailService.sendEmail(this.email).subscribe(success => {
+        if(this.usersname.indexOf(this.email) !== -1){
         if (success){
         this.router.navigate(['/success'], { queryParams: { title: 'Vérifiez vos mails !', text: 'Vérifiez vos mails (et vos spams !) un mail pour réinitialiser votre mot de passe vous a été envoyé !' } });
-        }});
-    } else {
-      Swal.fire({title: "Ce mail n'est pas un utilisateur valide!"});
-      }
+      }}
+      else{Swal.fire("Ce mail n'est pas un utilisateur valide!");}
+    } );
   }
+
 
   get mail(): AbstractControl {
     return this.myForm.get('mail');
