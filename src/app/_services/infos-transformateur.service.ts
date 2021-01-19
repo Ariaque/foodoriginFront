@@ -40,7 +40,7 @@ export class InfosTransformateurService {
         certifications: infosT.certifications,
         urls: infosT.urls,
         fermesP: infosT.fermesP,
-        denreesA: infosT.denreesA
+        denrees: infosT.denrees
       }, httpOptions);
     }
     else {
@@ -58,7 +58,7 @@ export class InfosTransformateurService {
         certifications: infosT.certifications,
         urls: infosT.urls,
         fermesP: infosT.fermesP,
-        denreesA: infosT.denreesA
+        denrees: infosT.denrees
       }, httpOptions);
     }
   }
