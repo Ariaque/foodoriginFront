@@ -8,3 +8,8 @@
   height: auto;
   cursor: default;
 }
+
+.not-found-align {
+  margin-top: 15%;
+  margin-bottom: 0%;
+}

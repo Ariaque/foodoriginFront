@@ -76,10 +76,16 @@
   font-size: 15px;
 }
 
+.btn {
+  border: none!important;
+  outline: none!important;
+  box-shadow: none!important;
+}
+
+
 .contact-button {
   transition: 0.5s!important;
-  background-color: black;
-  border-color: black;
+  background: black;
   bottom: 1.25rem;
   position: absolute;
   width: 244px;
@@ -99,13 +105,17 @@
 .contact-button:hover {
   transition: 0.5s!important;
   background-color: #333333;
-  border-color: #333333;
 }
+
+.contact-button:focus {
+  background-color: #333333!important;
+
+}
+
 
 .google-play-button {
   transition: 0.5s!important;
-  background-color: black;
-  border-color: black;
+  background: black;
   width: 244px;
   height: 52px;
 }
@@ -113,7 +123,10 @@
 .google-play-button:hover {
   transition: 0.5s!important;
   background-color: #333333;
-  border-color: #333333;
+}
+
+.google-play-button:focus {
+  background-color: #333333!important;
 }
 
 #google-play-icon {

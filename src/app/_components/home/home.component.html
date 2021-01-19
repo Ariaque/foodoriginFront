@@ -37,7 +37,7 @@
           votre passion !
           <br>
           Notre équipe investie saura vous renseigner !</p>
-        <a class="btn btn-primary contact-button" href="#"><div id="contact-text">Contactez-nous !</div></a>
+        <button class="btn btn-primary contact-button" (click)="gotToPage('/contact')"><div id="contact-text">Contactez-nous !</div></button>
       </div>
 
     </div>
@@ -53,9 +53,9 @@
           <br>
           FoodOrigin facilite la visibilité de l'origine des produits en "décryptant" l'estampille sanitaire de façon
           automatique.</p>
-        <a class="btn btn-primary google-play-button" href="#"><img id="google-play-icon"
+        <button class="btn btn-primary google-play-button" (click)="gotToPage('/playStore')"><img id="google-play-icon"
                                                                     src="assets/images/google_play_icon_38.png">Téléchargement
-          Android</a>
+          Android</button>
       </div>
     </div>
   </div>

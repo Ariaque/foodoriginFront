@@ -1,12 +1,23 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { CustomValidationService } from './custom-validation.service';
+import {CustomValidationService} from './custom-validation.service';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 describe('CustomValidationService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: CustomValidationService;
+  let httpMock: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [CustomValidationService],
+    });
+
+    service = TestBed.inject(CustomValidationService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
 
   it('should be created', () => {
-    const service: CustomValidationService = TestBed.get(CustomValidationService);
     expect(service).toBeTruthy();
   });
 });

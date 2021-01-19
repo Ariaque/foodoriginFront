@@ -61,7 +61,7 @@
         </div>
       </form>
     </mat-card>
-    <IMG SRC="assets/images/enSavoirPlusExplication.png" class="knowMoreImg"/>
+    <img src="assets/images/enSavoirPlusExplicationP1.png" class="knowMoreImg"/>
   </div>
   <div *ngIf="step == 2" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
@@ -93,7 +93,7 @@
         </div>
       </form>
     </mat-card>
-    <IMG SRC="assets/images/enSavoirPlusExplication.png" class="knowMoreImg"/>
+    <img src="assets/images/enSavoirPlusExplicationP2.png" class="knowMoreImg"/>
   </div>
 
   <div *ngIf="step == 3" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
@@ -104,18 +104,18 @@
         <h4> Sélectionnez une ou plusieurs images : </h4>
         <form #imagesForm="ngForm">
           <input (change)="onFileChanged($event)" accept="image/*" multiple type="file">
-          <button (click)="this.onUpload()" class="btn btn-primary"> Valider</button>
+          <button (click)="this.onUpload()" class="btn btn-primary ftp-valid-button">Valider</button>
         </form>
       </div>
       <div>
         <h2 *ngIf="imagesLink.length > 0"> Images sauvegardées : </h2>
         <div *ngFor="let link of imagesLink">
           <img [src]="link" height="200" width="300">
-          <button (click)="deleteImage(link)" class="btn btn-danger btn-del-image"> Supprimer</button>
+          <button (click)="deleteImage(link)" class="btn btn-danger btn-del-image">Supprimer</button>
         </div>
       </div>
     </mat-card>
-    <IMG SRC="assets/images/enSavoirPlusExplication.png" class="knowMoreImg"/>
+    <img src="assets/images/enSavoirPlusExplicationP3.png" class="knowMoreImg knowMoreImg-align"/>
   </div>
   <div *ngIf="step == 4" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
@@ -149,7 +149,7 @@
         *Champ obligatoire
       </div>
     </mat-card>
-    <IMG SRC="assets/images/enSavoirPlusExplication.png" class="knowMoreImg"/>
+      <img src="assets/images/enSavoirPlusExplicationP4.png" class="knowMoreImg"/>
   </div>
   <div *ngIf="step == 5" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
@@ -184,7 +184,7 @@
       </form>
       *Champ obligatoire
     </mat-card>
-    <IMG SRC="assets/images/enSavoirPlusExplication.png" class="knowMoreImg"/>
+    <img src="assets/images/enSavoirPlusExplicationP5.png" class="knowMoreImg"/>
   </div>
   <div *ngIf="step == 6" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="60">
@@ -249,7 +249,7 @@
       </form>
       *Champ obligatoire
     </mat-card>
-    <img src="assets/images/enSavoirPlusExplication.png" class="knowMoreImg"/>
+    <img src="assets/images/enSavoirPlusExplicationP6.png" class="knowMoreImg"/>
   </div>
   </div>
   <div class="btn" fxFlexFill fxLayoutAlign="space-around center">
