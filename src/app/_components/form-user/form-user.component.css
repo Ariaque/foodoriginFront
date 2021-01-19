@@ -123,8 +123,12 @@
 }
 
 .knowMoreImg{
-  width: 20%;
+  width: 23%;
   height: auto;
+}
+
+.knowMoreImg-align {
+  margin-bottom: 15% !important;
 }
 
 .fields-div {
@@ -135,3 +139,9 @@ body.swal2-shown {
   overflow-y: auto!important;
   padding-right: 0px!important;
 }
+
+.ftp-valid-button {
+  margin-left: 6%;
+}
+
+
