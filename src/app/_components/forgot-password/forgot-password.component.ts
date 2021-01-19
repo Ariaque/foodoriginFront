@@ -46,7 +46,7 @@ export class ForgotPasswordComponent implements OnInit {
         this.router.navigate(['/success'], { queryParams: { title: 'Vérifiez vos mails !', text: 'Vérifiez vos mails (et vos spams !) un mail pour réinitialiser votre mot de passe vous a été envoyé !' } });
         }});
     } else {
-      Swal.fire({title: "Votre mail n'existe pas!"});
+      Swal.fire({title: "Ce mail n'est pas un utilisateur valide!"});
       }
   }
 
