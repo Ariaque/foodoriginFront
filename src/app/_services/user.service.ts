@@ -32,6 +32,7 @@ export class UserService {
         item.transformateur,
         item.isEnabled,
         item.typeTransformateur,
+        item.numeroTelephone
       ))),
     );
     return ret;
@@ -47,6 +48,7 @@ export class UserService {
         item.transformateur,
         item.isEnabled,
         item.typeTransformateur,
+        item.numeroTelephone
       ))),
     );
     return ret;

@@ -196,14 +196,14 @@
           <tr *ngFor="let denree of denrees().controls; let i = index" [formGroupName]="i">
             <td>
               <div class="form-group">
-                <label for="typeD"> Type de denrée </label>
+                <label for="typeD"> Type de denrée *</label>
                 <mat-select class="form-control" formControlName="nom" (selectionChange)="fillEspece(i)" id="typeD" name="typeD">
                   <mat-option *ngFor="let nom of this.typeDenreeNom.sort()" [value]="nom"> {{nom}}</mat-option>
                 </mat-select>
               </div>
 
               <div class="form-group">
-                <label for="origineD"> Origine de la denrée </label>
+                <label for="origineD"> Origine de la denrée * </label>
                 <mat-select class="form-control" formControlName="pays" (selectionChange)="fillRegion(i)" id="origineD" name="origineD">
                   <mat-option *ngFor="let pays of this.typeOrigineNom.sort()" [value]="pays"> {{pays}}</mat-option>
                 </mat-select>
@@ -211,13 +211,13 @@
             </td>
             <td>
               <div class="form-group">
-                <label for="typeE"> Espèce </label>
+                <label for="typeE"> Espèce * </label>
                 <mat-select class="form-control" formControlName="espece" (selectionChange)="fillAnimal(i)" id="typeE" name="typeE">
                   <mat-option *ngFor="let espece of this.typeDenreeEspece[i]" [value]="espece"> {{espece}}</mat-option>
                 </mat-select>
               </div>
               <div>
-                <label for="origineR"> Région </label>
+                <label for="origineR"> Région *</label>
                 <mat-select class="form-control" formControlName="region" id="origineR" name="origineR">
                   <mat-option *ngFor="let region of this.typeOrigineRegion[i]" [value]="region"> {{region}}</mat-option>
                 </mat-select>
@@ -225,7 +225,7 @@
             </td>
             <td>
               <div class="form-group">
-                <label for="typeA"> Animal </label>
+                <label for="typeA"> Animal *</label>
                 <mat-select class="form-control" formControlName="animal" id="typeA" name="typeA">
                   <mat-option *ngFor="let animal of this.typeDenreeAnimal[i]" [value]="animal" > {{animal}}</mat-option>
                 </mat-select>
@@ -246,6 +246,7 @@
             </td>
           </tr>
         </table>
+        *Champ obligatoire
       </form>
     </mat-card>
     <img src="assets/images/enSavoirPlusExplicationP6.png" class="knowMoreImg"/>

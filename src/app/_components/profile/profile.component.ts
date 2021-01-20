@@ -3,10 +3,10 @@ import {UserService} from '../../_services/user.service';
 import {Transformateur} from '../../_classes/transformateur';
 import {User} from '../../_classes/user';
 import {TokenStorageService} from '../../_services/token-storage.service';
-import {TypeTransformateurs} from '../../_classes/type-transformateurs';
+import {TypeTransformateur} from '../../_classes/type-transformateur';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ResetPasswordService} from '../../_services/reset-password.service';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
 
 
@@ -21,10 +21,12 @@ export class ProfileComponent implements OnInit {
   user: any;
   data: any;
   username: string;
+  roleUser: string;
   transformateur: Transformateur;
-  typeTransformateur: TypeTransformateurs;
+  typeTransformateur: TypeTransformateur;
   newPassword: string;
   password: string;
+  numTel: string;
   myForm: FormGroup;
   id: number;
   activeUser: User;
@@ -40,7 +42,8 @@ export class ProfileComponent implements OnInit {
       this.transformateur = res.transformateur;
       this.typeTransformateur = res.typeTransformateur;
       this.id = res.id;
-
+      this.roleUser = res.role.name;
+      this.numTel = res.numeroTelephone;
     });
     this.myForm = this._fb.group({
       password: [null, Validators.required],

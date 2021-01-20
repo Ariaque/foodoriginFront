@@ -22,12 +22,13 @@ export class AuthService {
     }, httpOptions);
   }
 
-  register(user, selectedType, siret): Observable<any> {
+  register(user, selectedType, siret, numTel): Observable<any> {
     return this.http.post(AUTH_API + '/signup/' + siret, {
       username: user.username,
       password: user.password,
       role: ['user'],
-      typeTransformateur: selectedType.libelle
+      typeTransformateur: selectedType.libelle,
+      numeroTelephone: numTel
     }, httpOptions);
   }
 }
