@@ -37,8 +37,8 @@ export class SendEmailService {
       );
   }
 
-  sendContactEmail(mail: string): Observable<string> {
-    return this.http.post<string>(this.resetUrl + '/contact/sendEmail', {email: mail}, this.httpOptions)
+  sendContactEmail(emailAdr: string, obj: string, phoneN: string, mail: string): Observable<string> {
+    return this.http.post<string>(this.resetUrl + '/contact/sendEmail', {emailAdress: emailAdr, object: obj, phoneNumber: phoneN, email: mail}, this.httpOptions)
       .pipe(
         catchError(err => {
           console.log('error on email sending', err);
@@ -46,7 +46,7 @@ export class SendEmailService {
             this.router.navigate(['/error'], { queryParams: { title: 'Erreur', text: 'Votre email n\'est associé à aucun compte !' } });
           }
           else {
-            this.router.navigate(['/error'], { queryParams: { title: 'Erreur', text: 'L\'envoi du mail de réinitialisation a échoué !' } });
+            this.router.navigate(['/error'], { queryParams: { title: 'Erreur', text: 'L\'envoi de votre message a échoué !' } });
             return throwError(err);
           }
         })
