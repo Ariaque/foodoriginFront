@@ -11,10 +11,13 @@ import {TokenStorageService} from '../../_services/token-storage.service';
 import {UserService} from '../../_services/user.service';
 import {UrlVideo} from '../../_classes/url-video';
 import {FermePartenaire} from '../../_classes/ferme-partenaire';
-import {DenreeAnimale} from '../../_classes/denree-animale';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators, AbstractControl} from '@angular/forms';
+import {TypeDenree} from '../../_classes/type-denree';
+import {OrigineDenree} from '../../_classes/origine-denree';
+import {DenreeService} from '../../_services/denree.service';
+import {DenreeAnimale} from '../../_classes/denree-animale';
 
 
 @Component({
@@ -26,6 +29,13 @@ export class FormUserComponent implements OnInit {
 
   certifications: Certification[];
   labels: Label[];
+  typeDenree: TypeDenree [] = [];
+  origineDenree: OrigineDenree[] = [];
+  typeDenreeNom: string [] = [];
+  typeOrigineNom: string [] = [];
+  typeDenreeEspece = [[]];
+  typeDenreeAnimal = [[]];
+  typeOrigineRegion = [[]];
   description: string;
   nbEmployes: string;
   lienFacebook: string;
@@ -48,8 +58,8 @@ export class FormUserComponent implements OnInit {
   listCertif = new FormControl();
   listLabel = new FormControl();
   denreeForm: FormGroup;
-  denreeAInit: DenreeAnimale[] = [];
-  denreesA: DenreeAnimale[] = [];
+  denreeInit: DenreeAnimale[] = [];
+  denreeSelected: DenreeAnimale[] = [];
   step: any = 1;
   @Input()
   myForm: FormGroup;
@@ -59,7 +69,7 @@ export class FormUserComponent implements OnInit {
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
               private tokenService: TokenStorageService, private userService: UserService, private formBuilder: FormBuilder,
-              private router: Router) {
+              private router: Router, private denreeService: DenreeService) {
     this.fermeForm = this.formBuilder.group({
       fermes: this.formBuilder.array([])
     });
@@ -80,13 +90,24 @@ export class FormUserComponent implements OnInit {
       lienT : [null, [Validators.pattern(reg)]],
       lienI : [null, [Validators.pattern(reg)]],
     });
-
     this.nbEmployes = '1';
     this.labelService.findAll().subscribe((result) => {
       this.labels = result;
     });
     this.certifService.findAll().subscribe((result) => {
       this.certifications = result;
+    });
+    this.denreeService.findAllOrgineDenree().subscribe((result) => {
+      this.origineDenree = result.map(origine => Object.assign(new OrigineDenree(), origine));
+    });
+    this.denreeService.findAllTypeDenree().subscribe((result) => {
+      this.typeDenree = result.map(type => Object.assign(new TypeDenree(), type));
+    });
+    this.denreeService.findAllTypeDenreeNom().subscribe((result) => {
+      this.typeDenreeNom = result;
+    });
+    this.denreeService.findAllPaysOrigine().subscribe((result) => {
+      this.typeOrigineNom = result;
     });
     this.userService.findUserByName(this.tokenService.getUser().username).subscribe((res: any) => {
       this.transformateur = res.transformateur;
@@ -118,17 +139,36 @@ export class FormUserComponent implements OnInit {
           this.urlVideosInit = info.urls.map(url => Object.assign(new UrlVideo(), url));
 
           this.urlVideosInit.forEach(url => {
-            console.log(url);
             this.urls().push(this.formBuilder.group({libelle: [url.getLibelle(), [Validators.required, Validators.pattern(reg)]], titre: [url.getTitre(), Validators.required]}));
           });
           this.fermesPInit = info.fermesP.map(ferme => Object.assign(new FermePartenaire(), ferme));
           this.fermesPInit.forEach(ferme => {
             this.fermes().push(this.formBuilder.group({nom: [ferme.getNom(), Validators.required], presentation: ferme.getDescription(), url: [ferme.getUrl(), Validators.pattern(reg)]}));
           });
-          this.denreeAInit = info.denreesA.map(denree => Object.assign(new DenreeAnimale(), denree));
-          this.denreeAInit.forEach(denree => {
-            this.denrees().push(this.formBuilder.group({nom: [denree.getNom(), Validators.required], origine: denree.getOrigine()}));
-          });
+          this.denreeInit = info.denrees.map(denree => Object.assign(new DenreeAnimale(), denree));
+          for (let i = 0; i < this.denreeInit.length; i++) {
+            const denree = this.denreeInit[i];
+
+            const typeD = Object.assign(new TypeDenree(), denree.getTypeDenree());
+            const origineD = Object.assign(new OrigineDenree(), denree.getOrigineDenree());
+            this.denreeService.findEspeceByNom(typeD.getNom()).subscribe(espece => {
+              this.typeDenreeEspece[i] = espece;
+            });
+            this.denreeService.findAnimalByEspece(typeD.getEspece()).subscribe(animal => {
+              this.typeDenreeAnimal[i] = animal;
+            });
+            this.denreeService.findRegionByPays(origineD.getPays()).subscribe(pays => {
+              this.typeOrigineRegion[i] = pays;
+            });
+            this.denrees().push(this.formBuilder.group(
+              {nom: typeD.getNom(),
+                espece: typeD.getEspece(),
+                animal: typeD.getAnimal(),
+                pays: origineD.getPays(),
+                region: origineD.getRegion(),
+                infosT: denree.getInfosTypeDenree(),
+                infosO: denree.getInfosOrigineDenree()}));
+          }
         }
         this.infosTService.getImageTransformateur(this.transformateur.id).subscribe(image => {
           image.map (link => {
@@ -145,7 +185,7 @@ export class FormUserComponent implements OnInit {
     this.createDenreeList (this.denreeForm.value.denrees);
     this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
        this.lienFacebook, this.lienTwitter, this.lienInsta, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
-       this.listCertif.value, this.urlVideos, this.fermesP, this.denreesA);
+       this.listCertif.value, this.urlVideos, this.fermesP, this.denreeSelected);
     this.step = 1;
     this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
       res => {
@@ -158,10 +198,68 @@ export class FormUserComponent implements OnInit {
       }
     );
   }
+  isAddDenree(type, origine, infosT, infosO): boolean {
+    let ret = false;
+    for (let i = 0; i < this.denreeInit.length; i++) {
+      const denree = this.denreeInit[i];
+      const typeD = Object.assign(new TypeDenree(), denree.getTypeDenree());
+      const origineD = Object.assign(new OrigineDenree(), denree.getOrigineDenree());
+      if (this.equalityType(type, typeD) && this.equalityOrigine(origine, origineD) && infosT === denree.getInfosTypeDenree() && infosO === denree.getInfosOrigineDenree()) {
+        this.denreeSelected.push(denree);
+        ret = true;
+      }
+    }
+    return ret;
+  }
+  equalityType(type1: TypeDenree, type2: TypeDenree): boolean {
+    let ret = false;
+    if (type1.getId() === type2.getId() && type1.getEspece() === type2.getEspece() && type1.getNom() === type2.getNom() && type1.getAnimal() === type2.getAnimal()) {
+      ret = true;
+    }
+    return ret;
+  }
+  equalityOrigine(origine1: OrigineDenree, origine2: OrigineDenree): boolean {
+    let ret = false;
+    if (origine1.getId() === origine2.getId() && origine1.getPays() === origine2.getPays() && origine1.getRegion() === origine2.getRegion()) {
+      ret = true;
+    }
+    return ret;
+  }
+  createDenreeList(denreeList): void {
+    for (let i = 0; i < denreeList.length; i++) {
+      const denree = denreeList[i];
+      const typeDenree = this.findTypeDenree(denree.nom, denree.espece, denree.animal);
+      const origineDenree = this.findOrigineDenree(denree.pays, denree.region);
+      if (denree.nom != null && !this.isAddDenree(typeDenree, origineDenree, denree.infosT, denree.infosO)) {
+        const denreeA = new DenreeAnimale(null, typeDenree, origineDenree, denree.infosT, denree.infosO);
+        this.denreeSelected.push(denreeA);
+      }
+    }
+  }
+  findTypeDenree(type, espece, animal): TypeDenree {
+    let ret = null;
+    for (let i = 0; i < this.typeDenree.length; i++) {
+      const typeD = this.typeDenree[i];
+      if (typeD.getNom() === type && typeD.getEspece() === espece && typeD.getAnimal() === animal) {
+        ret = typeD;
+      }
+    }
+    return ret;
+  }
+  findOrigineDenree(pays, region): OrigineDenree {
+    let ret = null;
+    for (let i = 0; i < this.origineDenree.length; i++) {
+      const origineD = this.origineDenree[i];
+      if (origineD.getPays() === pays && origineD.getRegion() === region) {
+        ret = origineD;
+      }
+    }
+    return ret;
+  }
   createFermeList(fermeList): void {
     for (let i = 0; i < fermeList.length; i++) {
       const ferme = fermeList[i];
-      if (ferme.nom !== '' && !this.isAddFerme(ferme.nom, ferme.presentation, ferme.url)) {
+      if (ferme.nom !== null && !this.isAddFerme(ferme.nom, ferme.presentation, ferme.url)) {
         const newF = new FermePartenaire(null, ferme.nom, ferme.presentation, ferme.url);
         this.fermesP.push(newF);
       }
@@ -172,25 +270,6 @@ export class FormUserComponent implements OnInit {
     for (let i = 0; i < this.fermesPInit.length; i++) {
       if (this.fermesPInit[i].getNom() === nom && this.fermesPInit[i].getDescription() === presentation && this.fermesPInit[i].getUrl() === url) {
         this.fermesP.push(this.fermesPInit[i]);
-        ret = true;
-      }
-    }
-    return ret;
-  }
-  createDenreeList(denreeList): void {
-    for (let i = 0; i < denreeList.length; i++) {
-      const denree = denreeList[i];
-      if (denree.nom !== '' && !this.isAddDenree(denree.nom, denree.origine)) {
-        const newD = new DenreeAnimale(null, denree.nom, denree.origine);
-        this.denreesA.push(newD);
-      }
-    }
-  }
-  isAddDenree(nom, origine): boolean {
-    let ret = false;
-    for (let i = 0; i < this.denreeAInit.length; i++) {
-      if (this.denreeAInit[i].getNom() === nom && this.denreeAInit[i].getOrigine() === origine) {
-        this.denreesA.push(this.denreeAInit[i]);
         ret = true;
       }
     }
@@ -259,8 +338,13 @@ export class FormUserComponent implements OnInit {
   }
   newDenree(): FormGroup {
     return this.formBuilder.group({
-      nom: [null, Validators.required],
-      origine: ''
+      nom: '',
+      espece: '',
+      animal: '',
+      pays: '',
+      region: '',
+      infosT: '',
+      infosO: ''
     });
   }
   addDenree(): void {
@@ -347,4 +431,22 @@ export class FormUserComponent implements OnInit {
     return temp;
   }
 
+  fillEspece(i): void {
+    this.denreeService.findEspeceByNom(this.denreeForm.value.denrees[i].nom).subscribe(res => {
+      this.typeDenreeEspece[i] = res.sort();
+      this.typeDenreeAnimal[i] = [];
+    });
+  }
+
+  fillAnimal(i): void {
+    this.denreeService.findAnimalByEspece(this.denreeForm.value.denrees[i].espece).subscribe(res => {
+      this.typeDenreeAnimal[i] = res.sort();
+    });
+  }
+
+  fillRegion(i): void {
+    this.denreeService.findRegionByPays(this.denreeForm.value.denrees[i].pays).subscribe(res => {
+      this.typeOrigineRegion[i] = res.sort();
+    });
+  }
 }

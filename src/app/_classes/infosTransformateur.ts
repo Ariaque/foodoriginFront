@@ -21,9 +21,9 @@ export class InfosTransformateur {
   private _certifications: Certification[];
   private _urls: UrlVideo[];
   private _fermesP: FermePartenaire[];
-  private _denreesA: DenreeAnimale[];
+  private _denrees: DenreeAnimale[];
 
-  constructor(transformateur: Transformateur, description: string, nombre_employes: string, url_site: string, url_facebook: string, url_twitter: string, url_instagram: string, appartient_groupe: boolean, siret_groupe: string, labels: Label[], certifications: Certification[], urls: UrlVideo[], fermesP: FermePartenaire[], denreesA: DenreeAnimale[]) {
+  constructor(transformateur: Transformateur, description: string, nombre_employes: string, url_site: string, url_facebook: string, url_twitter: string, url_instagram: string, appartient_groupe: boolean, siret_groupe: string, labels: Label[], certifications: Certification[], urls: UrlVideo[], fermesP: FermePartenaire[], denrees: DenreeAnimale[]) {
     this._fk_transformateur = transformateur;
     this._description = description;
     this._nombre_employes = nombre_employes;
@@ -37,7 +37,7 @@ export class InfosTransformateur {
     this._certifications = certifications;
     this._urls = urls;
     this._fermesP = fermesP;
-    this._denreesA = denreesA;
+    this._denrees = denrees;
   }
 
   get id(): number {
@@ -151,11 +151,11 @@ export class InfosTransformateur {
     this._fermesP = value;
   }
 
-  get denreesA(): DenreeAnimale[] {
-    return this._denreesA;
+  get denrees(): DenreeAnimale[] {
+    return this._denrees;
   }
 
-  set denreesA(value: DenreeAnimale[]) {
-    this._denreesA = value;
+  set denrees(value: DenreeAnimale[]) {
+    this._denrees = value;
   }
 }

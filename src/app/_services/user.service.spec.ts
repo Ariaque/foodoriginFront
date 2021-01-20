@@ -4,7 +4,7 @@ import {UserService} from './user.service';
 import {User} from '../_classes/user';
 import {Role} from '../_classes/role';
 import {Transformateur} from '../_classes/transformateur';
-import {TypeTransformateurs} from '../_classes/type-transformateurs';
+import {TypeTransformateurs} from '../_classes/type-transformateur';
 
 describe('UserService', () => {
   let userService: UserService;

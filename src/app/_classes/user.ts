@@ -1,6 +1,6 @@
 import {Role} from './role';
 import {Transformateur} from './transformateur';
-import {TypeTransformateurs} from './type-transformateurs';
+import {TypeTransformateur} from './type-transformateur';
 
 export class User {
 
@@ -10,9 +10,10 @@ export class User {
   private role: Role;
   private transformateur: Transformateur;
   private isEnabled: boolean;
-  private typeTransformateur: TypeTransformateurs;
+  private typeTransformateur: TypeTransformateur;
+  private numeroTelephone: string;
 
-  constructor(id: number, username: string, password: string, role: Role, transformateur: Transformateur, isEnabled: boolean, typeTransformateur: TypeTransformateurs) {
+  constructor(id: number, username: string, password: string, role: Role, transformateur: Transformateur, isEnabled: boolean, typeTransformateur: TypeTransformateur, numeroTel: string) {
     this.id = id;
     this.username = username;
     this.role = role;
@@ -20,6 +21,7 @@ export class User {
     this.password = password;
     this.typeTransformateur = typeTransformateur;
     this.transformateur = transformateur;
+    this.numeroTelephone = numeroTel;
   }
 
   get getId(): number {
@@ -63,11 +65,11 @@ export class User {
     this.password = value;
   }
 
-  get getTypeTransformateur(): TypeTransformateurs {
+  get getTypeTransformateur(): TypeTransformateur {
     return this.typeTransformateur;
   }
 
-  set setTypeTransformateur(value: TypeTransformateurs) {
+  set setTypeTransformateur(value: TypeTransformateur) {
     this.typeTransformateur = value;
   }
 
@@ -77,6 +79,14 @@ export class User {
 
   set setTransformateur(value: Transformateur) {
     this.transformateur = value;
+  }
+
+  get getNumeroTelephone(): string {
+    return this.numeroTelephone;
+  }
+
+  set setNumeroTelephone(value: string) {
+    this.numeroTelephone = value;
   }
 
 }

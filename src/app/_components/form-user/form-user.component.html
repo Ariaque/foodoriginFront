@@ -98,7 +98,7 @@
 
   <div *ngIf="step == 3" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
-      <mat-card-title class="title">Gestion des médias</mat-card-title>
+      <mat-card-title class="title">Gestion des médias (images) </mat-card-title>
       <h2> Images </h2>
       <div>
         <h4> Sélectionnez une ou plusieurs images : </h4>
@@ -119,7 +119,7 @@
   </div>
   <div *ngIf="step == 4" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
-      <mat-card-title class="title">Gestion des médias</mat-card-title>
+      <mat-card-title class="title">Gestion des médias (vidéos)</mat-card-title>
       <div>
         <h2> Vidéos </h2>
         <h4> Saisissez le(s) lien(s) des vidéos que vous souhaitez renseigner: </h4>
@@ -187,29 +187,68 @@
     <img src="assets/images/enSavoirPlusExplicationP5.png" class="knowMoreImg"/>
   </div>
   <div *ngIf="step == 6" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
-    <mat-card fxFlex="50">
+    <mat-card fxFlex="60">
       <mat-card-title class="title"> Denrées animales utilisées</mat-card-title>
       <h4> Saisissez les denrées animales utilisées et leurs origines </h4>
       <form [formGroup]="denreeForm">
         <button (click)="addDenree()" class="btn btn-primary" style="float: right" type="button"> Ajouter</button>
         <table class="table borderless" formArrayName="denrees">
-          <tr *ngFor="let denree of denrees().controls |slice:0:10; let i = index" [formGroupName]="i">
+          <tr *ngFor="let denree of denrees().controls; let i = index" [formGroupName]="i">
             <td>
-              <label for="nomD"> Type de denrée*: </label>
-              <input [ngClass]="{'form-control':true,'is-invalid': denree.get('nom').errors && denree.get('nom').touched}"  class="form-control" formControlName="nom" id="nomD" name="nomD" type="text">
-              <small *ngIf="denree.get('nom').errors?.required && denree.get('nom').touched" class="form-text custom-invalid-feedback">Nom est requis</small>
+              <div class="form-group">
+                <label for="typeD"> Type de denrée *</label>
+                <mat-select class="form-control" formControlName="nom" (selectionChange)="fillEspece(i)" id="typeD" name="typeD">
+                  <mat-option *ngFor="let nom of this.typeDenreeNom.sort()" [value]="nom"> {{nom}}</mat-option>
+                </mat-select>
+              </div>
+
+              <div class="form-group">
+                <label for="origineD"> Origine de la denrée * </label>
+                <mat-select class="form-control" formControlName="pays" (selectionChange)="fillRegion(i)" id="origineD" name="origineD">
+                  <mat-option *ngFor="let pays of this.typeOrigineNom.sort()" [value]="pays"> {{pays}}</mat-option>
+                </mat-select>
+              </div>
             </td>
             <td>
-              <label for="origineD"> Origine de la denrée: </label>
-              <input class="form-control" formControlName="origine" id="origineD" name="origineD" type="text">
+              <div class="form-group">
+                <label for="typeE"> Espèce * </label>
+                <mat-select class="form-control" formControlName="espece" (selectionChange)="fillAnimal(i)" id="typeE" name="typeE">
+                  <mat-option *ngFor="let espece of this.typeDenreeEspece[i]" [value]="espece"> {{espece}}</mat-option>
+                </mat-select>
+              </div>
+              <div>
+                <label for="origineR"> Région *</label>
+                <mat-select class="form-control" formControlName="region" id="origineR" name="origineR">
+                  <mat-option *ngFor="let region of this.typeOrigineRegion[i]" [value]="region"> {{region}}</mat-option>
+                </mat-select>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="typeA"> Animal *</label>
+                <mat-select class="form-control" formControlName="animal" id="typeA" name="typeA">
+                  <mat-option *ngFor="let animal of this.typeDenreeAnimal[i]" [value]="animal" > {{animal}}</mat-option>
+                </mat-select>
+              </div>
             </td>
             <td>
               <button (click)="removeDenree(i)" class="btn btn-danger btn-del-animal-product" style="margin-top: 25px" type="button"> Supprimer</button>
+              <div class="form-group">
+                <label for="infosT"> Infos complémentaires </label>
+                <input type="text" id="infosT" name="infosT" class="form-control" formControlName="infosT">
+              </div>
+              <div>
+                <label for="infosO"> Infos complémentaires </label>
+                <input type="text" id="infosO" name="infosO" class="form-control" formControlName="infosO">
+              </div>
+            </td>
+            <td class="center-element">
+              <button (click)="removeDenree(i)" class="btn btn-danger btn-url"> Supprimer</button>
             </td>
           </tr>
         </table>
+        *Champ obligatoire
       </form>
-      *Champ obligatoire
     </mat-card>
     <img src="assets/images/enSavoirPlusExplicationP6.png" class="knowMoreImg"/>
   </div>
