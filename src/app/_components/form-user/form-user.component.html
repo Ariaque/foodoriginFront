@@ -109,7 +109,7 @@
       </div>
       <div>
         <h2 *ngIf="imagesLink.length > 0"> Images sauvegardées : </h2>
-        <div *ngFor="let link of imagesLink">
+        <div class="div-img" *ngFor="let link of imagesLink">
           <img [src]="link" height="200" width="300">
           <button (click)="deleteImage(link)" type="button" class="btn btn-danger btn-del-image">Supprimer</button>
         </div>
@@ -232,7 +232,6 @@
               </div>
             </td>
             <td>
-              <button (click)="removeDenree(i)" class="btn btn-danger btn-del-animal-product" style="margin-top: 25px" type="button"> Supprimer</button>
               <div class="form-group">
                 <label for="infosT"> Infos complémentaires </label>
                 <input type="text" id="infosT" name="infosT" class="form-control" formControlName="infosT">
@@ -243,7 +242,7 @@
               </div>
             </td>
             <td class="center-element">
-              <button (click)="removeDenree(i)" class="btn btn-danger btn-url"> Supprimer</button>
+              <button (click)="removeDenree(i)" class="btn btn-remove-denree btn-danger btn-url">Supprimer</button>
             </td>
           </tr>
         </table>

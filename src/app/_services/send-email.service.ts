@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 export class SendEmailService {
 
   private resetUrl: string;
+  private contactUrl: string;
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -19,6 +20,7 @@ export class SendEmailService {
 
   constructor(private http: HttpClient, private router: Router) {
     this.resetUrl = 'api/reset';
+    this.contactUrl = 'api/contact';
   }
 
   sendResetEmail(mail: string): Observable<string> {
@@ -37,8 +39,8 @@ export class SendEmailService {
       );
   }
 
-  sendContactEmail(emailAdr: string, obj: string, phoneN: string, mail: string): Observable<string> {
-    return this.http.post<string>(this.resetUrl + '/contact/sendEmail', {emailAdress: emailAdr, object: obj, phoneNumber: phoneN, email: mail}, this.httpOptions)
+  sendContactEmail(emailAdr: string, obj: string, phoneN: string, mess: string): Observable<string> {
+    return this.http.post<string>(this.contactUrl + '/sendEmail', {emailAdress: emailAdr, subjet: obj, phoneNumber: phoneN, message: mess}, this.httpOptions)
       .pipe(
         catchError(err => {
           console.log('error on email sending', err);
@@ -49,6 +51,17 @@ export class SendEmailService {
             this.router.navigate(['/error'], { queryParams: { title: 'Erreur', text: 'L\'envoi de votre message a échoué !' } });
             return throwError(err);
           }
+        })
+      );
+  }
+
+  sendNotificationEmail(emailAdr: string, obj: string, phoneN: string, mess: string): Observable<string> {
+    return this.http.post<string>(this.contactUrl + '/notify', {emailAdress: emailAdr, subjet: obj, phoneNumber: phoneN, message: mess}, this.httpOptions)
+      .pipe(
+        catchError(err => {
+          console.log('error on email sending', err);
+          this.router.navigate(['/error'], { queryParams: { title: 'Erreur', text: 'L\'envoi de votre message a échoué !' } });
+          return throwError(err);
         })
       );
   }

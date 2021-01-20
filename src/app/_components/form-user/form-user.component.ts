@@ -1,4 +1,4 @@
-import {Component, OnInit,Input} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {LabelService} from '../../_services/label.service';
 import {CertificationService} from '../../_services/certification.service';
 import {Certification} from '../../_classes/certification';

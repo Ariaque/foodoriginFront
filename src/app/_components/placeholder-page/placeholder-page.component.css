@@ -1,0 +1,15 @@
+#img-error {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width:230px;
+  max-height:95px;
+  width: auto;
+  height: auto;
+  cursor: default;
+}
+
+.placeholder-align {
+  margin-top: 15%;
+  margin-bottom: 0%;
+}

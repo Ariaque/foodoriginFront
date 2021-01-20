@@ -20,9 +20,10 @@ export class ContactComponent implements OnInit {
   @Input()
   myForm: FormGroup;
 
-  constructor(private _fb: FormBuilder, private tokenService: TokenStorageService, private sendEmailService: SendEmailService, private router: Router) { }
+  constructor(private _fb: FormBuilder, private tokenService: TokenStorageService, private sendEmailService: SendEmailService, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     if (this.tokenService.getToken() == null || this.tokenService.getToken() === undefined || this.tokenService.getToken().length === 0) {
       this.areShown = true;
     }
@@ -31,33 +32,52 @@ export class ContactComponent implements OnInit {
       username: [null, [Validators.required, Validators.email]],
       phone: [null, [Validators.required, Validators.pattern(reg)]],
       objet: [null, Validators.required],
-      description: [null,Validators.required]
+      description: [null, Validators.required]
     });
+    if (!this.areShown) {
+      console.log(this.tokenService.getUser());
+      this.form.username = this.tokenService.getUser().username;
+      this.userService.findUserByName(this.form.userName).subscribe((res: any) => {
+        this.phone = res.numeroTelephone;
+      });
+    }
   }
   get username(): AbstractControl {
     return this.myForm.get('username');
   }
 
   onSubmit(): void {
-    if (!this.areShown) {
-      this.form.userName = this.tokenService.getUser().userName;
-      this.phone = this.tokenService.getUser().numeroTelephone;
-    }
-    const emailAdress: string = this.form.userName;
-    const objet: string = this.objet;
-    const phone: string = this.phone;
-    const email: string = this.description;
+    if (this.myForm.valid) {
+      const emailAdress: string = this.form.username;
+      const objet: string = '[FoodOrigin-Contact] ' + this.objet;
+      const phone: string = this.phone;
+      const message: string = this.description;
 
-    this.sendEmailService.sendContactEmail(emailAdress, objet, phone, email).subscribe(success => {
-      if (this.form.userName.indexOf(emailAdress) !== -1) {
-        if (success) {
-          this.router.navigate(['/success'], {
-            queryParams: {
-              title: 'Vérifiez vos mails !',
-              text: 'Vérifiez vos mails (et vos spams !) un mail pour réinitialiser votre mot de passe vous a été envoyé !'
-            }
-          });
+      this.sendEmailService.sendContactEmail(emailAdress, objet, phone, message).subscribe(success => {
+        if (this.form.username.indexOf(emailAdress) !== -1) {
+          if (success) {
+            this.router.navigate(['/success'], {
+              queryParams: {
+                title: 'Envoi réussi !',
+                text: 'Votre message a bien été pris en compte, nous reviendrons vers vous dès que possible !'
+              }
+            });
+          }
         }
+      });
+    }
+    else {
+      this.validateAllFields(this.myForm);
+    }
+  }
+
+  validateAllFields(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFields(control);
       }
     });
   }
@@ -65,7 +85,7 @@ export class ContactComponent implements OnInit {
   get numPhone(): AbstractControl {
     return this.myForm.get('phone');
   }
-  get objt(): AbstractControl {
+  get obj(): AbstractControl {
     return this.myForm.get('objet');
   }
   get desc(): AbstractControl {
