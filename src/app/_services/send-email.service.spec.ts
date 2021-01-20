@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SendResetPassordEmailService } from './send-reset-passord-email.service';
+import { SendEmailService } from './send-email.service';
 
 describe('SendResetPassordEmailService', () => {
-  let service: SendResetPassordEmailService;
+  let service: SendEmailService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SendResetPassordEmailService);
+    service = TestBed.inject(SendEmailService);
   });
 
   it('should be created', () => {

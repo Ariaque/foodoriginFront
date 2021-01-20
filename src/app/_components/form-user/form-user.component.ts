@@ -290,13 +290,15 @@ export class FormUserComponent implements OnInit {
     }
   }
   onUpload(): void{
-    if (this.selectedFile !== undefined) {
-      for (let i = 0; i < this.selectedFile.length; i++) {
+    const selectedFileCopy = this.selectedFile;
+    if (selectedFileCopy !== undefined) {
+      for (let i = 0; i < selectedFileCopy.length; i++) {
         const uploadData = new FormData();
-        uploadData.append('myFile', this.selectedFile[i], this.selectedFile[i].name);
+        uploadData.append('myFile', selectedFileCopy[i], selectedFileCopy[i].name);
         this.infosTService.addImageTransformateur(uploadData, this.transformateur.id).subscribe(
           res => {
-            this.imagesLink.push('http://foodorigin.projetetudiant.fr/images/' + this.transformateur.id + '/' + this.selectedFile[i].name);
+            this.imagesLink.push('http://foodorigin.projetetudiant.fr/images/' + this.transformateur.id + '/' + selectedFileCopy[i].name);
+            this.selectedFile = undefined;
           },
           err => {
             Swal.fire('Une erreur s\'est produite lors de l\'enregistrement, la taille de l\'image ne doit pas dépasser 500KB');
@@ -306,9 +308,9 @@ export class FormUserComponent implements OnInit {
     }
   }
   deleteImage(fileName): void {
+    console.log(fileName);
     this.infosTService.deleteImageTransformateur(fileName, this.transformateur.id).subscribe(
       res => {
-        Swal.fire('Image supprimée');
         const index = this.imagesLink.indexOf(fileName);
         this.imagesLink.splice(index, 1);
       },
@@ -317,6 +319,7 @@ export class FormUserComponent implements OnInit {
       });
   }
   submit(): void {
+    console.log('here');
     window.scroll(0, 0);
     this.step = this.step + 1;
   }
