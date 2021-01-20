@@ -16,6 +16,8 @@ export class ForgotPasswordComponent implements OnInit {
 
   form: any = {};
   email: string;
+  alert: boolean;
+  erreurMessage: string;
   @Input()
   myForm: FormGroup;
   usersSource: MatTableDataSource<User>;
@@ -41,20 +43,24 @@ export class ForgotPasswordComponent implements OnInit {
         this.usersname.push(data[i].getUsername);
       }
     });
+
   }
 
   onSubmit(): void {
     if (this.myForm.valid) {
-      this.sendResetPassordEmailService.sendResetEmail(this.email).subscribe(success => {
-        if (this.usersname.indexOf(this.email) !== -1) {
-          if (success) {
-            this.router.navigate(['/success'], {
-              queryParams: {
-                title: 'Vérifiez vos mails !',
-                text: 'Vérifiez vos mails (et vos spams !) un mail pour réinitialiser votre mot de passe vous a été envoyé !'
-              }
-            });
-          }
+      this.userService.findUserByName(this.email).subscribe((res: any) => {
+        if (res === null) {
+          this.alert = true;
+          this.erreurMessage = 'Cet email ne correspond à aucun utilisateur';
+        }
+        else if (!res.isEnabled) {
+          this.alert = true;
+          this.erreurMessage = 'Votre compte est désactivé, vous ne pouvez pas changer votre mot de passe';
+        }
+        else {
+          this.sendResetPassordEmailService.sendResetEmail(this.email).subscribe(success => {
+            this.router.navigate(['/success'], { queryParams: { title: 'Vérifiez vos mails !', text: 'Vérifiez vos mails (et vos spams !) un mail pour réinitialiser votre  mot de passe vous a été envoyé !' } });
+          });
         }
       });
     }

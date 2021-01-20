@@ -6,23 +6,29 @@
             <mat-card-title class="title" ><i class="fa fa-user white-text"></i> CONTACT</mat-card-title>
             <hr class="hr-light">
         </div>
-        <form  >
+        <form [formGroup]="myForm" name="form" >
             <div class="form-row">
             <div class="form-group col-md-12">
-                <label for="email" *ngIf="areShown"> Votre adresse mail</label>
-                <input *ngIf="areShown" type="email" class="form-control" id="email" placeholder="Email" name="username" [(ngModel)]="form.username">
+                <label *ngIf="areShown" for="email"> Votre adresse mail</label>
+                <input *ngIf="areShown" formControlName="username" [ngClass]="{'form-control': true,
+                'is-invalid': !username.valid && username.touched}"  type="email" class="form-control" id="email" placeholder="Email" name="username" [(ngModel)]="form.username">
+                <small *ngIf="username.errors?.email && username.touched" class="form-text custom-invalid-feedback">Entrez l'adresse e-mail dans un format correct: nom@exemple.com</small>
             </div>
             <div class="form-group col-md-12">
                 <label *ngIf="areShown" for="phone"> Votre N° Téléphone</label>
-                <input *ngIf="areShown" type="tel" class="form-control" id="phone" placeholder="" name="phone" [(ngModel)]="phone">
+                <input *ngIf="areShown" formControlName="phone" [ngClass]="{'form-control': true,
+                'is-invalid': !numPhone.valid && numPhone.touched}" type="tel" class="form-control" id="phone" placeholder="" name="phone" [(ngModel)]="phone">
+                <small *ngIf="numPhone.errors?.pattern && numPhone.touched" class="form-text custom-invalid-feedback">Entrez le numéro téléphone dans un format correct: 0xxxxxxxxx</small>
             </div>
             <div class="form-group col-md-12">
                 <label for="objet">Objet</label><br>
-                <input type="text" class="form-control" id="objet" placeholder="Objet" name="objet" [(ngModel)]="objet">
+                <input formControlName="objet"  [ngClass]="{'form-control': true,
+                'is-invalid': !objt.valid && objt.touched}" type="text" class="form-control" id="objet" placeholder="Objet" name="objet" [(ngModel)]="objet">
             </div>
             <div class="form-group col-md-12">
                 <label for="description">Votre message</label>
-                <textarea class="form-control" id="description" placeholder="Saisissez votre message" lang="fr" style="resize: none" rows="3" [(ngModel)]="description">
+                <textarea formControlName="description"  [ngClass]="{'form-control': true,
+                'is-invalid': !desc.valid && desc.touched}" class="form-control" id="description" name="description" placeholder="Saisissez votre message" lang="fr" style="resize: none" rows="3" [(ngModel)]="description">
                </textarea>
               </div>
             </div>
