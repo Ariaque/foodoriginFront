@@ -1,7 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {TypeTransformateurService} from '../../_services/type-transformateur.service';
 import {AuthService} from '../../_services/auth.service';
-import {TypeTransformateurs} from '../../_classes/type-transformateurs';
+import {TypeTransformateur} from '../../_classes/type-transformateur';
 import {TopbarService} from '../../_services/topbar.service';
 import {CustomValidationService} from '../../_services/custom-validation.service';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -20,10 +20,11 @@ export class JoinComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-  type: TypeTransformateurs[];
+  type: TypeTransformateur[];
   siret: number;
+  numTelephone: number;
   confPassword: string;
-  selectedType: TypeTransformateurs;
+  selectedType: TypeTransformateur;
   @Input()
   myForm: FormGroup;
 
@@ -39,7 +40,8 @@ export class JoinComponent implements OnInit {
       siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
       password: [null, Validators.required],
       confPassword: [null, Validators.required],
-      selectedType: [null, Validators.required]
+      selectedType: [null, Validators.required],
+      numTelephone: [null, [Validators.required, Validators.pattern('^[0-9]{10}$')]]
     }, {
       validator: this.customValidator.passwordMatchValidator('password', 'confPassword')
     });
@@ -50,7 +52,7 @@ export class JoinComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.authService.register(this.form, this.selectedType, this.siret).subscribe(
+    this.authService.register(this.form, this.selectedType, this.siret, this.numTelephone.toString()).subscribe(
       data => {
         this.isSuccessful = true;
         this.isSignUpFailed = false;
@@ -67,6 +69,11 @@ export class JoinComponent implements OnInit {
 
   get numSiret(): FormGroup{
     const  temp = this.myForm.controls.siret as FormGroup;
+    return temp;
+  }
+
+  get numTel(): FormGroup{
+    const  temp = this.myForm.controls.numTelephone as FormGroup;
     return temp;
   }
 

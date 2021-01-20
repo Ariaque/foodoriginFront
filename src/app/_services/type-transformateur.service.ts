@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {TypeTransformateurs} from '../_classes/type-transformateurs';
+import {TypeTransformateur} from '../_classes/type-transformateur';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class TypeTransformateurService {
     this.typeTransformateurUrl = '/api/typeTransformateur';
   }
 
-  public findAll(): Observable<TypeTransformateurs[]> {
-    return this.http.get<TypeTransformateurs[]>(this.typeTransformateurUrl + '/all');
+  public findAll(): Observable<TypeTransformateur[]> {
+    return this.http.get<TypeTransformateur[]>(this.typeTransformateurUrl + '/all');
   }
 }

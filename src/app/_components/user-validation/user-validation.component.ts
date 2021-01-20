@@ -17,7 +17,6 @@ export class UserValidationComponent implements OnInit {
   usersSource: MatTableDataSource<User>;
   dialogRef: MatDialogRef<UserValidationComponent, string>;
   displayedColumns: string[] = ['username', 'transformateur.raison_sociale', 'typeTransformateur.libelle', 'isEnabled', 'delete'];
-  numberPageMax: number;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -38,7 +37,7 @@ export class UserValidationComponent implements OnInit {
   }
 
   activateUser(user: User, activation: boolean): void {
-    const newUser = new User(user.getId, user.getUsername, user.getPassword, user.getRole, user.getTransformateur, activation, user.getTypeTransformateur);
+    const newUser = new User(user.getId, user.getUsername, user.getPassword, user.getRole, user.getTransformateur, activation, user.getTypeTransformateur, user.getNumeroTelephone);
     this.userService
       .userActivation(newUser)
       .subscribe(data => this.refreshDataSource());
@@ -84,7 +83,6 @@ export class UserValidationComponent implements OnInit {
             return item[property];
         }
       };
-      this.numberPageMax = this.usersSource.data.length;
       this.changeDetectorRefs.detectChanges();
     });
   }

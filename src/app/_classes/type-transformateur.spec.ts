@@ -1,13 +1,13 @@
-import { TypeTransformateurs } from './type-transformateurs';
+import { TypeTransformateur } from './type-transformateur';
 import {TestBed} from '@angular/core/testing';
 
 describe('TypeTransformateur', () => {
-  let typeTransformateurs: TypeTransformateurs;
+  let typeTransformateurs: TypeTransformateur;
   const mockTypeTransformateur = {};
 
   beforeEach(() => {
-    TestBed.configureTestingModule({providers: [{provide: TypeTransformateurs, useValue: mockTypeTransformateur}]});
-    typeTransformateurs = TestBed.inject(TypeTransformateurs);
+    TestBed.configureTestingModule({providers: [{provide: TypeTransformateur, useValue: mockTypeTransformateur}]});
+    typeTransformateurs = TestBed.inject(TypeTransformateur);
   });
 
   it('should create an instance', () => {

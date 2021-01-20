@@ -13,7 +13,7 @@
 <!--    </a>-->
 
     <a class="nav-link" id="home_btn" [routerLink]="['/accueil']" >Accueil</a>
-    <a class="nav-link" id="home_btn" [routerLink]="['/contact']" >Contact</a>
+    <a class="nav-link" id="contact_btn" [routerLink]="['/contact']" *ngIf="!topBarService.isAdmin">Contact</a>
     <a class="nav-link" id="company_space_btn" [routerLink]="['/user']" *ngIf="!topBarService.isAdmin && topBarService.isConnected" >Espace entreprise</a>
     <a class="nav-link" id="account_management_btn" [routerLink]="['/userValidation']" *ngIf="topBarService.isAdmin && topBarService.isConnected">Gestion des comptes</a>
     <a class="nav-link" id="join_btn" [routerLink]="['/join']" *ngIf="!topBarService.isConnected">Rejoindre</a>

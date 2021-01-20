@@ -1,14 +1,22 @@
+import {TypeDenree} from './type-denree';
+import {OrigineDenree} from './origine-denree';
+
 export class DenreeAnimale {
-
   private id: number;
-  private nom: string;
-  private origine: string;
+  private typeDenree: TypeDenree;
+  private origineDenree: OrigineDenree;
+  private infosTypeDenree: string;
+  private infosOrigineDenree: string;
 
-  constructor(id ?: number, nom?: string, origine?: string) {
+
+  constructor(id?: number, typeDenree?: TypeDenree, origineDenree?: OrigineDenree, infosTypeDenree?: string, infosOrigineDenree?: string) {
     this.id = id;
-    this.nom = nom;
-    this.origine = origine;
+    this.typeDenree = typeDenree;
+    this.origineDenree = origineDenree;
+    this.infosTypeDenree = infosTypeDenree;
+    this.infosOrigineDenree = infosOrigineDenree;
   }
+
 
   getId(): number {
     return this.id;
@@ -18,19 +26,37 @@ export class DenreeAnimale {
     this.id = value;
   }
 
-  getNom(): string {
-    return this.nom;
+  getTypeDenree(): TypeDenree {
+    return this.typeDenree;
   }
 
-  setNom(value: string): void {
-    this.nom = value;
+  setTypeDenree(value: TypeDenree): void {
+    this.typeDenree = value;
   }
 
-  getOrigine(): string {
-    return this.origine;
+  getOrigineDenree(): OrigineDenree {
+    return this.origineDenree;
   }
 
-  setOrigine(value: string): void {
-    this.origine = value;
+  setOrgineDenree(value: OrigineDenree): void {
+    this.origineDenree = value;
+  }
+
+  getInfosTypeDenree(): string {
+    return this.infosTypeDenree;
+  }
+
+  setInfosTypeDenree(value: string): void {
+    this.infosTypeDenree = value;
+  }
+
+  getInfosOrigineDenree(): string {
+    return this.infosOrigineDenree;
+  }
+
+  setInfosOrigineDenree(value: string): void {
+    this.infosOrigineDenree = value;
   }
 }
+
+

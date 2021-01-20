@@ -7,38 +7,44 @@
             <hr class="hr-light">
         </div>
         <form [formGroup]="myForm" >
-            <h2>Information Utilisateur</h2>        
+            <h2>Information Utilisateur</h2>
             <div class="form-row">
             <div class="form-group col-md-6" *ngIf="user">
-                <label for="mail"><i class="fa fa-envelope prefix white-text"></i> Email</label><br>
+                <label><i class="fa fa-envelope prefix white-text"></i> Email</label><br>
                 <span>{{user.username}}</span>
             </div>
+              <div class="form-group col-md-6" *ngIf="user">
+                <label><i class="fa fa-phone prefix white-text"></i> Numéro de téléphone </label><br>
+                <span>{{this.numTel}}</span>
+              </div>
             </div>
-        
-            <hr class="hr">
-            <h2>Informations Transformateur</h2>
-            <div class="form-row">
-                <div class="form-group col-md-6" *ngIf="transformateur">
-                    <label  for="transformateur"><i class="fa fa-map-marker prefix white-text"></i> Adresse</label><br>
-                    <span>{{transformateur.adresse}}</span>
-                    <span>{{transformateur.code_postal}}</span>
-                </div>     
-                <div class="form-group col-md-6" *ngIf="transformateur">
-                    <label  for="transformateur"><i class="fa fa-briefcase r prefix white-text"></i> Raison Sociale</label><br>
-                    <span>{{transformateur.raison_sociale}}</span>
-                </div>
-                <div class="form-group col-md-6" *ngIf="transformateur">
-                    <label  for="transformateur"><i class="fa fa-sort-numeric-asc prefix white-text"></i> Siret</label><br>
-                    <span>{{transformateur.siret}}</span>
-                </div>
-            </div>
-            <hr class="hr">
-            <h2>Information Type Transformateur</h2>
-            <div class="form-row">
-                <div class="form-group col-md-6" *ngIf="typeTransformateur">
-                    <label  for="typeTransformateur"><i class="fa fa-user-o  prefix white-text"></i> Libellé</label><br>
-                    <span>{{typeTransformateur.libelle}}</span>
-                </div>
+
+            <div *ngIf="this.roleUser === 'ROLE_USER'">
+              <hr class="hr">
+              <h2>Informations Transformateur</h2>
+              <div class="form-row">
+                  <div class="form-group col-md-6" *ngIf="transformateur">
+                      <label><i class="fa fa-map-marker prefix white-text"></i> Adresse</label><br>
+                      <span>{{transformateur.adresse}}</span>
+                      <span>{{transformateur.code_postal}}</span>
+                  </div>
+                  <div class="form-group col-md-6" *ngIf="transformateur">
+                      <label ><i class="fa fa-briefcase r prefix white-text"></i> Raison Sociale</label><br>
+                      <span>{{transformateur.raison_sociale}}</span>
+                  </div>
+                  <div class="form-group col-md-6" *ngIf="transformateur">
+                      <label><i class="fa fa-sort-numeric-asc prefix white-text"></i> Siret</label><br>
+                      <span>{{transformateur.siret}}</span>
+                  </div>
+              </div>
+              <hr class="hr">
+              <h2>Information Type Transformateur</h2>
+              <div class="form-row">
+                  <div class="form-group col-md-6" *ngIf="typeTransformateur">
+                      <label><i class="fa fa-user-o  prefix white-text"></i> Libellé</label><br>
+                      <span>{{typeTransformateur.libelle}}</span>
+                  </div>
+              </div>
             </div>
             <hr class="hr">
             <h2>Changement du mot de passe</h2>
@@ -57,7 +63,7 @@
                     type="password" class="form-control" id="newPassword" placeholder="mot de passe" name="newPassword" [(ngModel)]="newPassword">
                     <small *ngIf="newPsd.hasError('required')" class="form-text custom-invalid-feedback">Mot de passe requis</small>
                   </div>
-               
+
             </div>
               <div fxLayoutAlign="center center">
                 <button mat-raised-button type="submit" (click)= "onSubmit()" class="style">Changer votre mot de passe</button>
