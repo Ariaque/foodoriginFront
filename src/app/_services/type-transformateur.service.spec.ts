@@ -15,6 +15,7 @@ describe('TypeTransformateurService', () => {
     httpTestingController = TestBed.inject(HttpTestingController);
     typeTransformateurService = TestBed.inject(TypeTransformateurService);
   });
+
   afterEach(() => {
     httpTestingController.verify();
   });

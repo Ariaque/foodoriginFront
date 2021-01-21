@@ -17,8 +17,12 @@ describe('InfosTransformateurService', () => {
     service = TestBed.inject(InfosTransformateurService);
   });
 
+
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+  afterEach(() => {
+    httpTestingController.verify();
   });
   const mockInfos = new InfosTransformateur(
     null,
