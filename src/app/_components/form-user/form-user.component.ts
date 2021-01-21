@@ -229,27 +229,30 @@ export class FormUserComponent implements OnInit {
     this.createUrlList(this.urlVideoForm.value.urls);
     this.createDenreeList(this.denreeForm.value.denrees);
     this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
-      this.lienFacebook, this.lienTwitter, this.lienInsta, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
-      this.listCertif.value, this.urlVideos, this.fermesP, this.denreeSelected);
+       this.lienFacebook, this.lienTwitter, this.lienInsta, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
+       this.listCertif.value, this.urlVideos, this.fermesP, this.denreeSelected);
 
-    if (this.step == 6 && this.denreeForm.valid) {
-      this.step = this.step + 1;
-      window.scroll(0, 0);
-    } else {
-      this.validateAllFieldsDynamicForm(this.denrees());
-      console.log(this.denreeForm.valid)
-    }
-    this.step = 1;
-    this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
-      res => {
-        Swal.fire({title: 'Informations sauvegardées'});
-        this.router.navigate(['/accueil']);
-      },
-      err => {
-        Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
+      if (this.step == 6 && this.denreeForm.valid){
+        window.scroll(0, 0);
+        this.step = 1;
+        this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
+          res => {
+            Swal.fire({title: 'Informations sauvegardées'});
+            this.router.navigate(['/accueil']);
+          },
+          err => {
+            Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
 
+          }
+
+        );
+        console.log("denreeForm testtt 1")
       }
-    );
+      else{
+        this.validateAllFieldsDynamicForm(this.denrees());
+        console.log(this.denreeForm.valid);
+      }
+
 
   }
 
@@ -535,6 +538,26 @@ export class FormUserComponent implements OnInit {
 
   previous(): void {
     this.step = this.step - 1;
+  }
+
+  get siteW(): AbstractControl {
+    return this.myForm.get('siteW');
+  }
+  get lienF(): AbstractControl {
+    return this.myForm.get('lienF');
+  }
+  get lienT(): AbstractControl {
+    return this.myForm.get('lienT');
+  }
+  get lienI(): AbstractControl {
+    return this.myForm.get('lienI');
+  }
+    get titre(): AbstractControl {
+    return this.myForm.get('titre');
+  }
+  get numSiret(): FormGroup{
+    const  temp = this.myForm.controls.siret as FormGroup;
+    return temp;
   }
 
   fillEspece(i): void {
