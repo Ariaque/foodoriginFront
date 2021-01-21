@@ -28,11 +28,13 @@ export class ContactComponent implements OnInit {
       this.areShown = true;
     }
     const reg = '(0)[1-9][0-9]{8}';
+    const whiteSpace = '^(?!\\s*$).+';
+    const email = '';
     this.myForm = this._fb.group({
-      username: [null, [Validators.required, Validators.email]],
+      username: [null, [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]],
       phone: [null, [Validators.required, Validators.pattern(reg)]],
-      objet: [null, Validators.required],
-      description: [null, Validators.required]
+      objet: [null, [Validators.required, Validators.pattern(whiteSpace)]],
+      description: [null, [Validators.required, Validators.pattern(whiteSpace)]]
     });
     if (!this.areShown) {
       this.form.username = this.tokenService.getUser().username;
@@ -76,6 +78,7 @@ export class ContactComponent implements OnInit {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
+        console.log(control);
         control.markAsTouched({ onlySelf: true });
       } else if (control instanceof FormGroup) {
         this.validateAllFields(control);

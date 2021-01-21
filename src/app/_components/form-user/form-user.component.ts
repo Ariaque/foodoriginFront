@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {LabelService} from '../../_services/label.service';
 import {CertificationService} from '../../_services/certification.service';
 import {Certification} from '../../_classes/certification';
@@ -13,7 +13,7 @@ import {UrlVideo} from '../../_classes/url-video';
 import {FermePartenaire} from '../../_classes/ferme-partenaire';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators, AbstractControl, FormArrayName} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {TypeDenree} from '../../_classes/type-denree';
 import {OrigineDenree} from '../../_classes/origine-denree';
 import {DenreeService} from '../../_services/denree.service';
@@ -62,12 +62,12 @@ export class FormUserComponent implements OnInit {
   denreeSelected: DenreeAnimale[] = [];
   step: any = 1;
   @Input()
-  myForm: FormGroup;
-  formG: FormGroup;
+  formGroupGeneralInfo: FormGroup;
+  globalForm: FormGroup;
   form: any = {};
-  Form2 : FormGroup;
-  Form3 : FormGroup;
-  row : FormGroup;
+  formGroupSocialLinks: FormGroup;
+  formGroupPictures: FormGroup;
+  row: FormGroup;
 
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
@@ -85,20 +85,46 @@ export class FormUserComponent implements OnInit {
     });
   }
 
+  get siteW(): AbstractControl {
+    return this.formGroupGeneralInfo.get('siteW');
+  }
+
+  get lienF(): AbstractControl {
+    return this.formGroupSocialLinks.get('lienF');
+  }
+
+  get lienT(): AbstractControl {
+    return this.formGroupSocialLinks.get('lienT');
+  }
+
+  get lienI(): AbstractControl {
+    return this.formGroupSocialLinks.get('lienI');
+  }
+
+  get titre(): AbstractControl {
+    return this.formGroupGeneralInfo.get('titre');
+  }
+
+  get numSiret(): FormGroup {
+    const temp = this.formGroupGeneralInfo.controls.siret as FormGroup;
+    return temp;
+  }
+
   ngOnInit(): void {
-    this.formG = this.formBuilder.group({});
+    this.globalForm = this.formBuilder.group({});
     const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
-    this.myForm = this.formBuilder.group({
-      siteW : [null, [Validators.pattern(reg)]],
+    const whiteSpace = '^(?!\\s*$).+';
+    this.formGroupGeneralInfo = this.formBuilder.group({
+      siteW: [null, [Validators.pattern(reg)]],
       siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
     });
-    this.myForm.controls['siret'].disable();
-    this.Form2 = this.formBuilder.group({
-      lienF : [null, [Validators.pattern(reg)]],
-      lienT : [null, [Validators.pattern(reg)]],
-      lienI : [null, [Validators.pattern(reg)]],
+    this.formGroupGeneralInfo.controls['siret'].disable();
+    this.formGroupSocialLinks = this.formBuilder.group({
+      lienF: [null, [Validators.pattern(reg)]],
+      lienT: [null, [Validators.pattern(reg)]],
+      lienI: [null, [Validators.pattern(reg)]],
     });
-    this.Form3 = this.formBuilder.group({});
+    this.formGroupPictures = this.formBuilder.group({});
     this.row = this.formBuilder.group({});
     this.nbEmployes = '1';
     this.labelService.findAll().subscribe((result) => {
@@ -121,7 +147,7 @@ export class FormUserComponent implements OnInit {
     });
     this.userService.findUserByName(this.tokenService.getUser().username).subscribe((res: any) => {
       this.transformateur = res.transformateur;
-      this.infosTService.findById(this.transformateur.id).subscribe((info: InfosTransformateur)  => {
+      this.infosTService.findById(this.transformateur.id).subscribe((info: InfosTransformateur) => {
         if (info != null) {
           this.idInfo = info.id;
           this.description = info.description;
@@ -149,11 +175,18 @@ export class FormUserComponent implements OnInit {
           this.urlVideosInit = info.urls.map(url => Object.assign(new UrlVideo(), url));
 
           this.urlVideosInit.forEach(url => {
-            this.urls().push(this.formBuilder.group({libelle: [url.getLibelle(), [Validators.required, Validators.pattern(reg)]], titre: [url.getTitre(), Validators.required]}));
+            this.urls().push(this.formBuilder.group({
+              libelle: [url.getLibelle(), [Validators.required, Validators.pattern(reg)]],
+              titre: [url.getTitre(), [Validators.required, Validators.pattern(whiteSpace)]]
+            }));
           });
           this.fermesPInit = info.fermesP.map(ferme => Object.assign(new FermePartenaire(), ferme));
           this.fermesPInit.forEach(ferme => {
-            this.fermes().push(this.formBuilder.group({nom: [ferme.getNom(), Validators.required], presentation: ferme.getDescription(), url: [ferme.getUrl(), Validators.pattern(reg)]}));
+            this.fermes().push(this.formBuilder.group({
+              nom: [ferme.getNom(), [Validators.required, Validators.pattern(whiteSpace)]],
+              presentation: ferme.getDescription(),
+              url: [ferme.getUrl(), Validators.pattern(reg)]
+            }));
           });
           this.denreeInit = info.denrees.map(denree => Object.assign(new DenreeAnimale(), denree));
           for (let i = 0; i < this.denreeInit.length; i++) {
@@ -171,17 +204,19 @@ export class FormUserComponent implements OnInit {
               this.typeOrigineRegion[i] = pays;
             });
             this.denrees().push(this.formBuilder.group(
-              {nom: [typeD.getNom(), Validators.required],
+              {
+                nom: [typeD.getNom(), Validators.required],
                 espece: [typeD.getEspece(), Validators.required],
-                animal: [typeD.getAnimal(),Validators.required],
+                animal: [typeD.getAnimal(), Validators.required],
                 pays: origineD.getPays(),
                 region: origineD.getRegion(),
                 infosT: denree.getInfosTypeDenree(),
-                infosO: denree.getInfosOrigineDenree()}));
+                infosO: denree.getInfosOrigineDenree()
+              }));
           }
         }
         this.infosTService.getImageTransformateur(this.transformateur.id).subscribe(image => {
-          image.map (link => {
+          image.map(link => {
             this.imagesLink.push('http://foodorigin.projetetudiant.fr/images/' + this.transformateur.id + '/' + link);
           });
         });
@@ -190,13 +225,13 @@ export class FormUserComponent implements OnInit {
   }
 
   saveInfos(): void {
-    this.createFermeList (this.fermeForm.value.fermes);
-    this.createUrlList (this.urlVideoForm.value.urls);
-    this.createDenreeList (this.denreeForm.value.denrees);
+    this.createFermeList(this.fermeForm.value.fermes);
+    this.createUrlList(this.urlVideoForm.value.urls);
+    this.createDenreeList(this.denreeForm.value.denrees);
     this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
        this.lienFacebook, this.lienTwitter, this.lienInsta, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
        this.listCertif.value, this.urlVideos, this.fermesP, this.denreeSelected);
-    
+
       if (this.step == 6 && this.denreeForm.valid){
         window.scroll(0, 0);
         this.step = 1;
@@ -207,9 +242,9 @@ export class FormUserComponent implements OnInit {
           },
           err => {
             Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
-    
+
           }
-          
+
         );
         console.log("denreeForm testtt 1")
       }
@@ -217,9 +252,10 @@ export class FormUserComponent implements OnInit {
         this.validateAllFieldsDynamicForm(this.denrees());
         console.log(this.denreeForm.valid);
       }
-     
+
 
   }
+
   isAddDenree(type, origine, infosT, infosO): boolean {
     let ret = false;
     for (let i = 0; i < this.denreeInit.length; i++) {
@@ -233,6 +269,7 @@ export class FormUserComponent implements OnInit {
     }
     return ret;
   }
+
   equalityType(type1: TypeDenree, type2: TypeDenree): boolean {
     let ret = false;
     if (type1.getId() === type2.getId() && type1.getEspece() === type2.getEspece() && type1.getNom() === type2.getNom() && type1.getAnimal() === type2.getAnimal()) {
@@ -240,6 +277,7 @@ export class FormUserComponent implements OnInit {
     }
     return ret;
   }
+
   equalityOrigine(origine1: OrigineDenree, origine2: OrigineDenree): boolean {
     let ret = false;
     if (origine1.getId() === origine2.getId() && origine1.getPays() === origine2.getPays() && origine1.getRegion() === origine2.getRegion()) {
@@ -247,6 +285,7 @@ export class FormUserComponent implements OnInit {
     }
     return ret;
   }
+
   createDenreeList(denreeList): void {
     for (let i = 0; i < denreeList.length; i++) {
       const denree = denreeList[i];
@@ -258,6 +297,7 @@ export class FormUserComponent implements OnInit {
       }
     }
   }
+
   findTypeDenree(type, espece, animal): TypeDenree {
     let ret = null;
     for (let i = 0; i < this.typeDenree.length; i++) {
@@ -268,6 +308,7 @@ export class FormUserComponent implements OnInit {
     }
     return ret;
   }
+
   findOrigineDenree(pays, region): OrigineDenree {
     let ret = null;
     for (let i = 0; i < this.origineDenree.length; i++) {
@@ -278,6 +319,7 @@ export class FormUserComponent implements OnInit {
     }
     return ret;
   }
+
   createFermeList(fermeList): void {
     for (let i = 0; i < fermeList.length; i++) {
       const ferme = fermeList[i];
@@ -287,6 +329,7 @@ export class FormUserComponent implements OnInit {
       }
     }
   }
+
   isAddFerme(nom, presentation, url): boolean {
     let ret = false;
     for (let i = 0; i < this.fermesPInit.length; i++) {
@@ -297,14 +340,16 @@ export class FormUserComponent implements OnInit {
     }
     return ret;
   }
+
   createUrlList(urlList): void {
     for (let i = 0; i < urlList.length; i++) {
-      if (urlList[i].libelle != null && urlList[i].libelle !== '' && !this.isAddUrl (urlList[i].libelle, urlList[i].titre)) {
+      if (urlList[i].libelle != null && urlList[i].libelle !== '' && !this.isAddUrl(urlList[i].libelle, urlList[i].titre)) {
         const newUrlV = new UrlVideo(null, urlList[i].libelle, urlList[i].titre);
         this.urlVideos.push(newUrlV);
       }
     }
   }
+
   isAddUrl(libelle, titre): boolean {
     let ret = false;
     for (let i = 0; i < this.urlVideosInit.length; i++) {
@@ -315,6 +360,7 @@ export class FormUserComponent implements OnInit {
     }
     return ret;
   }
+
   validate(ev: KeyboardEvent): void {
     const digits: Array<string> = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const saisie = ev.key;
@@ -322,42 +368,54 @@ export class FormUserComponent implements OnInit {
       ev.preventDefault();
     }
   }
+
   urls(): FormArray {
     return this.urlVideoForm.get('urls') as FormArray;
   }
+
   newUrl(): FormGroup {
     const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
+    const whiteSpace = '^(?!\\s*$).+';
     return this.formBuilder.group({
       libelle: [null, [Validators.required, Validators.pattern(reg)]],
-      titre: [null, Validators.required]
+      titre: [null, [Validators.required, Validators.pattern(whiteSpace)]]
     });
   }
+
   addUrl(): void {
     this.urls().push(this.newUrl());
   }
+
   removeUrl(i: number): void {
     this.urls().removeAt(i);
   }
+
   fermes(): FormArray {
     return this.fermeForm.get('fermes') as FormArray;
   }
+
   newFerme(): FormGroup {
     const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
-   return this.formBuilder.group({
-     nom: [null, Validators.required],
-     presentation: '',
-     url: [null, [Validators.pattern(reg)]],
-   });
+    const whiteSpace = '^(?!\\s*$).+';
+    return this.formBuilder.group({
+      nom: [null, [Validators.required, Validators.pattern(whiteSpace)]],
+      presentation: '',
+      url: [null, [Validators.pattern(reg)]],
+    });
   }
+
   addFerme(): void {
     this.fermes().push(this.newFerme());
   }
+
   removeFerme(i: number): void {
     this.fermes().removeAt(i);
   }
+
   denrees(): FormArray {
     return this.denreeForm.get('denrees') as FormArray;
   }
+
   newDenree(): FormGroup {
     return this.formBuilder.group({
       nom: [null, Validators.required],
@@ -369,33 +427,36 @@ export class FormUserComponent implements OnInit {
       infosO: ''
     });
   }
+
   addDenree(): void {
     this.denrees().push(this.newDenree());
   }
+
   removeDenree(i: number): void {
     this.denrees().removeAt(i);
   }
+
   onFileChanged(event): void {
     const files = event.target.files;
     let isImage = true;
 
     for (let i = 0; i < files.length; i++) {
       if (files.item(i).type.match('image.*')) {
-        continue;
+
       } else {
         isImage = false;
         Swal.fire('Une image transmise a un format incorrect');
         break;
       }
     }
-    if (isImage){
+    if (isImage) {
       this.selectedFile = files;
-    }
-    else {
+    } else {
       this.selectedFile = undefined;
     }
   }
-  onUpload(): void{
+
+  onUpload(): void {
     const selectedFileCopy = this.selectedFile;
     if (selectedFileCopy !== undefined) {
       for (let i = 0; i < selectedFileCopy.length; i++) {
@@ -413,6 +474,7 @@ export class FormUserComponent implements OnInit {
       }
     }
   }
+
   deleteImage(fileName): void {
     console.log(fileName);
     this.infosTService.deleteImageTransformateur(fileName, this.transformateur.id).subscribe(
@@ -420,92 +482,60 @@ export class FormUserComponent implements OnInit {
         const index = this.imagesLink.indexOf(fileName);
         this.imagesLink.splice(index, 1);
       },
-        err => {
-          Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
+      err => {
+        Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
       });
   }
+
   submit(): void {
-    if(this.step == 1){
-      if(this.myForm.valid){
-        this.step =  this.step + 1;
+    if (this.step === 1) {
+      if (this.formGroupGeneralInfo.valid) {
+        this.step = this.step + 1;
         window.scroll(0, 0);
+      } else {
+        this.validateAllFields(this.formGroupGeneralInfo);
       }
-      else{
-        this.validateAllFields(this.myForm);
-      }
-    }
-    else if(this.step == 2){
-      if(this.Form2.valid){
-        this.step =  this.step + 1;
+    } else if (this.step === 2) {
+      if (this.formGroupSocialLinks.valid) {
+        this.step = this.step + 1;
         window.scroll(0, 0);
+      } else {
+        this.validateAllFields(this.formGroupSocialLinks);
       }
-      else{
-        this.validateAllFields(this.Form2);
-      }
-    }
-    else if(this.step == 3){
-      if(this.Form3.valid){
-        this.step =  this.step + 1;
+    } else if (this.step === 3) {
+      if (this.formGroupPictures.valid) {
+        this.step = this.step + 1;
         window.scroll(0, 0);
+      } else {
+        this.validateAllFields(this.formGroupPictures);
       }
-      else{
-        this.validateAllFields(this.Form3);
-      }
-    }
-    else if(this.step == 4){
-      if(this.urlVideoForm.valid){
-        this.step =  this.step + 1;
+    } else if (this.step === 4) {
+      if (this.urlVideoForm.valid) {
+        this.step = this.step + 1;
         window.scroll(0, 0);
-      }
-      else{
+      } else {
         this.validateAllFieldsDynamicForm(this.urls());
-        
+
       }
-    }
-    else if(this.step == 5){
-      if(this.fermeForm.valid){
-        this.step =  this.step + 1;
+    } else if (this.step === 5) {
+      if (this.fermeForm.valid) {
+        this.step = this.step + 1;
         window.scroll(0, 0);
-      }
-      else{
+      } else {
         this.validateAllFieldsDynamicForm(this.fermes());
       }
-    }
-    
-    else {
-      if(this.denreeForm.valid){
-        this.step =  this.step + 1;
+    } else {
+      if (this.denreeForm.valid) {
+        this.step = this.step + 1;
         window.scroll(0, 0);
-        console.log("denreeForm testtt 1")
-      }
-      else{
+      } else {
         this.validateAllFieldsDynamicForm(this.denrees());
-        console.log("denreeForm testtt 2")
       }
     }
-  }
-  previous(): void {
-    this.step = this.step - 1;
   }
 
-  get siteW(): AbstractControl {
-    return this.myForm.get('siteW');
-  }
-  get lienF(): AbstractControl {
-    return this.Form2.get('lienF');
-  }
-  get lienT(): AbstractControl {
-    return this.Form2.get('lienT');
-  }
-  get lienI(): AbstractControl {
-    return this.Form2.get('lienI');
-  }
-    get titre(): AbstractControl {
-    return this.myForm.get('titre');
-  }
-  get numSiret(): FormGroup{
-    const  temp = this.myForm.controls.siret as FormGroup;
-    return temp;
+  previous(): void {
+    this.step = this.step - 1;
   }
 
   fillEspece(i): void {
@@ -526,28 +556,29 @@ export class FormUserComponent implements OnInit {
       this.typeOrigineRegion[i] = res.sort();
     });
   }
+
   validateAllFields(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
-        control.markAsTouched({ onlySelf: true });
+        control.markAsTouched({onlySelf: true});
       } else if (control instanceof FormGroup) {
         this.validateAllFields(control);
       }
     });
   }
 
-  validateAllFieldsDynamicForm(formArray: FormArray){
-    for(const c of formArray.controls){
+  validateAllFieldsDynamicForm(formArray: FormArray) {
+    for (const c of formArray.controls) {
       this.validateAllFields(c as FormGroup);
     }
   }
-    check(){
-    if(this.appartientGroupe == false) {
-      this.myForm.controls['siret'].disable();
-    } 
-    else {
-      this.myForm.controls['siret'].enable();
+
+  check() {
+    if (this.appartientGroupe == false) {
+      this.formGroupGeneralInfo.controls['siret'].disable();
+    } else {
+      this.formGroupGeneralInfo.controls['siret'].enable();
     }
-    }
+  }
 }

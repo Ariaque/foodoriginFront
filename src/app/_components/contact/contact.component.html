@@ -13,7 +13,7 @@
                 <input *ngIf="areShown" formControlName="username" [ngClass]="{'form-control': true,
                 'is-invalid': !username.valid && username.touched}"  type="email" class="form-control" id="email" placeholder="Email" name="username" [(ngModel)]="form.username">
               <small *ngIf="username.errors?.required && username.touched && areShown" class="form-text custom-invalid-feedback">Champ requis</small>
-              <small *ngIf="username.errors?.email && username.touched && areShown" class="form-text custom-invalid-feedback">Entrez l'adresse e-mail dans un format correct: nom@exemple.com</small>
+              <small *ngIf="username.errors?.pattern && username.touched && areShown" class="form-text custom-invalid-feedback">Entrez l'adresse e-mail dans un format correct: nom@exemple.com</small>
             </div>
             <div class="form-group col-md-12">
                 <label *ngIf="areShown" for="phone">Votre N° Téléphone*</label>
@@ -27,6 +27,7 @@
                 <input formControlName="objet" [ngClass]="{'form-control': true,
                 'is-invalid': !obj.valid && obj.touched}" type="text" class="form-control" id="objet" placeholder="Objet" name="objet" [(ngModel)]="objet">
               <small *ngIf="obj.errors?.required && obj.touched" class="form-text custom-invalid-feedback">Champ requis</small>
+              <small *ngIf="obj.errors?.pattern && obj.touched" class="form-text custom-invalid-feedback">Pas d'objet vide</small>
             </div>
             <div class="form-group col-md-12">
                 <label for="description">Votre message*</label>
@@ -34,6 +35,8 @@
                 'is-invalid': !desc.valid && desc.touched}" class="form-control" id="description" name="description" placeholder="Saisissez votre message" lang="fr" style="resize: none" rows="3" [(ngModel)]="description">
                </textarea>
               <small *ngIf="desc.errors?.required && desc.touched" class="form-text custom-invalid-feedback">Champ requis</small>
+              <small *ngIf="desc.errors?.pattern && desc.touched" class="form-text custom-invalid-feedback">Pas de message vide</small>
+
             </div>
             </div>
               <div fxLayoutAlign="center center">

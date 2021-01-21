@@ -6,7 +6,7 @@
   <div *ngIf="step == 1" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
       <mat-card-title class="title">Informations générales</mat-card-title>
-      <form [formGroup]="myForm" #infosForm="ngForm" name="form" >
+      <form [formGroup]="formGroupGeneralInfo" #infosForm="ngForm" name="form" >
         <div class="form-group col-md-12">
           <label for="description">Description</label>
           <textarea [(ngModel)]="description" [ngModelOptions]="{standalone:true}" class="form-control"
@@ -65,7 +65,7 @@
   </div>
   <div *ngIf="step == 2" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
-      <form #rsForm="ngForm" [formGroup]="Form2" (ngSubmit)="rsForm.resetForm()">
+      <form #rsForm="ngForm" [formGroup]="formGroupSocialLinks" (ngSubmit)="rsForm.resetForm()">
         <mat-card-title class="title">Réseaux sociaux</mat-card-title>
         <div class="input-icone">
           <i aria-hidden="true" class="fa fa-facebook-square icone-size"></i>
@@ -81,7 +81,7 @@
           'form-control':true,
           'is-invalid':!lienT.valid && lienT.touched}" [(ngModel)]="lienTwitter" [ngModelOptions]="{standalone:true}" name="lienT" class="form-control" id="twitter" placeholder="Lien Twitter"
                  type="text">
-          <small *ngIf= "lienT.errors?.pattern && lienT.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
+          <small *ngIf= "lienT.errors?.pattern && lienT.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide</small>
         </div>
         <div class="input-icone">
           <i aria-hidden="true" class="fa fa-instagram icone-size"></i>
@@ -102,7 +102,7 @@
       <h2> Images </h2>
       <div>
         <h4> Sélectionnez une ou plusieurs images : </h4>
-        <form #imagesForm="ngForm" [formGroup]="Form3" >
+        <form #imagesForm="ngForm" [formGroup]="formGroupPictures" >
           <input (change)="onFileChanged($event)" accept="image/*" multiple type="file">
           <button (click)="this.onUpload()" class="btn btn-primary ftp-valid-button">Valider</button>
         </form>
@@ -138,6 +138,7 @@
               <td class="form-group col-md-12">
                 <label for="titreV"> Titre de la vidéo: * </label>
                 <input class="form-control" formControlName="titre" id="titreV" name="titreV" type="text" [ngClass]="{'form-control':true,'is-invalid': url.get('titre').errors && url.get('titre').touched}">
+                <small *ngIf="url.get('titre').errors?.pattern && url.get('titre').touched" class="form-text custom-invalid-feedback">Pas de titre vide</small>
                 <small *ngIf="url.get('titre').errors?.required && url.get('titre').touched" class="form-text custom-invalid-feedback">Titre est requis</small>
               </td>
               <td class="center-element">
@@ -163,6 +164,7 @@
               <div class="form-group col-md-12">
                 <label for="nomF"> Nom*: </label>
                 <input [ngClass]="{'form-control':true,'is-invalid': ferme.get('nom').errors && ferme.get('nom').touched}" class="form-control" formControlName="nom" id="nomF" name="nomF" type="text" placeholder="Saisissez le nom de la ferme/l'agriculteur">
+                <small *ngIf="ferme.get('nom').errors?.pattern && ferme.get('nom').touched" class="form-text custom-invalid-feedback">Pas de nom vide</small>
                 <small *ngIf="ferme.get('nom').errors?.required && ferme.get('nom').touched" class="form-text custom-invalid-feedback">Nom est requis</small>
               </div>
               <div class="form-group col-md-12">

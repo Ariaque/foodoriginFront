@@ -37,7 +37,7 @@ export class JoinComponent implements OnInit {
       this.type = result;
     });
     this.myForm = this._fb.group({
-      username: [null, [Validators.required, Validators.email]],
+      username: [null, [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]],
       siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
       password: [null, Validators.required],
       confPassword: [null, Validators.required],
@@ -58,7 +58,7 @@ export class JoinComponent implements OnInit {
         data => {
           this.isSuccessful = true;
           this.isSignUpFailed = false;
-          Swal.fire('Compte crée. Veuillez contacter l\'administrateur pour l\'activer');
+          Swal.fire('Compte crée. L\'administrateur vous recontactera !');
           this.router.navigate(['/accueil']);
           this.sendEmailService.sendNotificationEmail(this.myForm.get('username').value, '[FoodOrigin-Demande d\'activation] Nouvelle inscription', this.numTelephone, 'Un nouvel utilisateur a créé un compte !' +  '\r\n' + '1/ Vérifiez qu\'il s\'est acquité de son paiement.' + '\r\n' + '2/ Connectez-vous à la plateforme FoodOrigin avec votre compte administrateur' + '\r\n' + '3/ Cliquez sur "Gestion des comptes" dans la barre de menu' + '\r\n' + '4/ Dans l\'interface de gestion des comptes, recherchez l\'utilisateur et cliquez sur "Activer"').subscribe();
         },
