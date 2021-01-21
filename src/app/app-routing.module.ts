@@ -13,6 +13,7 @@ import {ErrorPageComponent} from './_components/error-page/error-page.component'
 import {NotFoundComponent} from './_components/not-found/not-found.component';
 import { ProfileComponent } from './_components/profile/profile.component';
 import { ContactComponent } from './_components/contact/contact.component';
+import {PlaceholderPageComponent} from './_components/placeholder-page/placeholder-page.component';
 
 
 
@@ -30,7 +31,8 @@ const routes: Routes = [
   {path: 'profil', component: ProfileComponent},
   {path: '404', component: NotFoundComponent},
   {path: 'contact', component: ContactComponent},
-  {path: '**', redirectTo: '/404'},
+  {path: 'soon', component: PlaceholderPageComponent},
+  {path: '**', redirectTo: '/404'}
 
 
 ];

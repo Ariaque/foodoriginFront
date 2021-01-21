@@ -17,4 +17,8 @@ export class HomeComponent implements OnInit {
     this.router.navigate([route]);
   }
 
+  goToPlaceholderPage(): void {
+    this.router.navigate(['/soon'], { queryParams: { title: 'Bientôt disponible !', text: 'FoodOrigin se prépare au lancement vers la planète Androïd, restez à l\'affut !' } });
+  }
+
 }

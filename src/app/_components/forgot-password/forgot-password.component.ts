@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {SendResetPassordEmailService} from '../../_services/send-reset-passord-email.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SendEmailService} from '../../_services/send-email.service';
 import {Router} from '@angular/router';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../_services/user.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {User} from '../../_classes/user';
+
 
 @Component({
   selector: 'app-forgot-password',
@@ -24,42 +25,59 @@ export class ForgotPasswordComponent implements OnInit {
   usersname: string[] = [];
 
 
-  constructor(private userService: UserService, private _fb: FormBuilder, private router: Router, private sendResetPassordEmailService: SendResetPassordEmailService) { }
+  constructor(private userService: UserService, private _fb: FormBuilder, private router: Router, private sendResetPassordEmailService: SendEmailService) {
+  }
+
+  get mail(): AbstractControl {
+    return this.myForm.get('mail');
+  }
 
   ngOnInit(): void {
+    const reg = '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$';
     this.myForm = this._fb.group({
-      mail: [null, [Validators.required, Validators.email]]
+      mail: [null, [Validators.required, Validators.pattern(reg)]]
     });
     this.userService.findAll().subscribe(data => {
       this.usersSource = new MatTableDataSource<User>(data);
       for (let i = 0; i < this.usersSource.data.length; i++) {
-        this.usersname.push(data[i].getUsername) ;
+        this.usersname.push(data[i].getUsername);
       }
     });
 
   }
 
   onSubmit(): void {
-    this.userService.findUserByName(this.email).subscribe((res: any) => {
-      if (res === null) {
-        this.alert = true;
-        this.erreurMessage = 'Cet email ne correspond à aucun utilisateur';
-      }
-      else if (!res.isEnabled) {
-        this.alert = true;
-        this.erreurMessage = 'Votre compte est désactivé, vous ne pouvez pas changer votre mot de passe';
-      }
-      else {
-        this.sendResetPassordEmailService.sendEmail(this.email).subscribe(success => {
-          this.router.navigate(['/success'], { queryParams: { title: 'Vérifiez vos mails !', text: 'Vérifiez vos mails (et vos spams !) un mail pour réinitialiser votre  mot de passe vous a été envoyé !' } });
-        });
-      }
-    });
+    if (this.myForm.valid) {
+      this.userService.findUserByName(this.email).subscribe((res: any) => {
+        if (res === null) {
+          this.alert = true;
+          this.erreurMessage = 'Cet email ne correspond à aucun utilisateur';
+        }
+        else if (!res.isEnabled) {
+          this.alert = true;
+          this.erreurMessage = 'Votre compte est désactivé, vous ne pouvez pas changer votre mot de passe';
+        }
+        else {
+          this.sendResetPassordEmailService.sendResetEmail(this.email).subscribe(success => {
+            this.router.navigate(['/success'], { queryParams: { title: 'Vérifiez vos mails !', text: 'Vérifiez vos mails (et vos spams !) un mail pour réinitialiser votre  mot de passe vous a été envoyé !' } });
+          });
+        }
+      });
+    }
+    else {
+      this.validateAllFields(this.myForm);
+    }
   }
 
-
-  get mail(): AbstractControl {
-    return this.myForm.get('mail');
+  validateAllFields(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFields(control);
+      }
+    });
   }
 
 }
