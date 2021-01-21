@@ -58,16 +58,21 @@ export class ProfileComponent implements OnInit {
     return this.myForm.get('newPassword');
   }
   onSubmit(): void {
-    this.resetPasswordService.resetPassword(this.username, this.password, this.newPassword).subscribe(
-      success => {
-        if (success){
-          Swal.fire('Nouveau mot de passe enregistré !');
-        }},
+    if (this.newPassword !== this.password) {
+      this.resetPasswordService.resetPassword(this.username, this.password, this.newPassword).subscribe(
+        success => {
+          if (success){
+            Swal.fire('Nouveau mot de passe enregistré !');
+          }},
         err => {
           if (err){
             Swal.fire('L\' ancien mot de passe n\'est pas correct');
           }}
-    );
+      );
+    }
+    else {
+      Swal.fire('Le nouveau et l\'ancien mot de passe sont identiques');
+    }
   }
   selectUser(user): void {
     this.activeUser = user;
