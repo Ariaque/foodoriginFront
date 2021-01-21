@@ -37,7 +37,7 @@ export class JoinComponent implements OnInit {
       this.type = result;
     });
     this.myForm = this._fb.group({
-      username: [null, [Validators.required, Validators.email]],
+      username: [null, [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]],
       siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
       password: [null, Validators.required],
       confPassword: [null, Validators.required],

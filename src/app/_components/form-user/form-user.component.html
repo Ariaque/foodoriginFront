@@ -81,7 +81,7 @@
           'form-control':true,
           'is-invalid':!lienT.valid && lienT.touched}" [(ngModel)]="lienTwitter" [ngModelOptions]="{standalone:true}" name="lienT" class="form-control" id="twitter" placeholder="Lien Twitter"
                  type="text">
-          <small *ngIf= "lienT.errors?.pattern && lienT.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
+          <small *ngIf= "lienT.errors?.pattern && lienT.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide</small>
         </div>
         <div class="input-icone">
           <i aria-hidden="true" class="fa fa-instagram icone-size"></i>
@@ -138,6 +138,7 @@
               <td class="form-group col-md-12">
                 <label for="titreV"> Titre de la vidéo: * </label>
                 <input class="form-control" formControlName="titre" id="titreV" name="titreV" type="text" [ngClass]="{'form-control':true,'is-invalid': url.get('titre').errors && url.get('titre').touched}">
+                <small *ngIf="url.get('titre').errors?.pattern && url.get('titre').touched" class="form-text custom-invalid-feedback">Pas de titre vide</small>
                 <small *ngIf="url.get('titre').errors?.required && url.get('titre').touched" class="form-text custom-invalid-feedback">Titre est requis</small>
               </td>
               <td class="center-element">
@@ -163,6 +164,7 @@
               <div class="form-group col-md-12">
                 <label for="nomF"> Nom*: </label>
                 <input [ngClass]="{'form-control':true,'is-invalid': ferme.get('nom').errors && ferme.get('nom').touched}" class="form-control" formControlName="nom" id="nomF" name="nomF" type="text" placeholder="Saisissez le nom de la ferme/l'agriculteur">
+                <small *ngIf="ferme.get('nom').errors?.pattern && ferme.get('nom').touched" class="form-text custom-invalid-feedback">Pas de nom vide</small>
                 <small *ngIf="ferme.get('nom').errors?.required && ferme.get('nom').touched" class="form-text custom-invalid-feedback">Nom est requis</small>
               </div>
               <div class="form-group col-md-12">

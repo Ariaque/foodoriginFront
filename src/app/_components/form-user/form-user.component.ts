@@ -83,6 +83,7 @@ export class FormUserComponent implements OnInit {
 
   ngOnInit(): void {
     const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
+    const whiteSpace= '^(?!\\s*$).+';
     this.myForm = this.formBuilder.group({
       siteW : [null, [Validators.pattern(reg)]],
       siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
@@ -139,11 +140,11 @@ export class FormUserComponent implements OnInit {
           this.urlVideosInit = info.urls.map(url => Object.assign(new UrlVideo(), url));
 
           this.urlVideosInit.forEach(url => {
-            this.urls().push(this.formBuilder.group({libelle: [url.getLibelle(), [Validators.required, Validators.pattern(reg)]], titre: [url.getTitre(), Validators.required]}));
+            this.urls().push(this.formBuilder.group({libelle: [url.getLibelle(), [Validators.required, Validators.pattern(reg)]], titre: [url.getTitre(), [Validators.required, Validators.pattern(whiteSpace)]]}));
           });
           this.fermesPInit = info.fermesP.map(ferme => Object.assign(new FermePartenaire(), ferme));
           this.fermesPInit.forEach(ferme => {
-            this.fermes().push(this.formBuilder.group({nom: [ferme.getNom(), Validators.required], presentation: ferme.getDescription(), url: [ferme.getUrl(), Validators.pattern(reg)]}));
+            this.fermes().push(this.formBuilder.group({nom: [ferme.getNom(), [Validators.required, Validators.pattern(whiteSpace)]], presentation: ferme.getDescription(), url: [ferme.getUrl(), Validators.pattern(reg)]}));
           });
           this.denreeInit = info.denrees.map(denree => Object.assign(new DenreeAnimale(), denree));
           for (let i = 0; i < this.denreeInit.length; i++) {
@@ -305,9 +306,10 @@ export class FormUserComponent implements OnInit {
   }
   newUrl(): FormGroup {
     const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
+    const whiteSpace = '^(?!\\s*$).+';
     return this.formBuilder.group({
       libelle: [null, [Validators.required, Validators.pattern(reg)]],
-      titre: [null, Validators.required]
+      titre: [null, [Validators.required, Validators.pattern(whiteSpace)]]
     });
   }
   addUrl(): void {
@@ -321,8 +323,9 @@ export class FormUserComponent implements OnInit {
   }
   newFerme(): FormGroup {
     const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
-   return this.formBuilder.group({
-     nom: [null, Validators.required],
+    const whiteSpace = '^(?!\\s*$).+';
+    return this.formBuilder.group({
+     nom: [null, [Validators.required, Validators.pattern(whiteSpace)]],
      presentation: '',
      url: [null, [Validators.pattern(reg)]],
    });
@@ -407,6 +410,7 @@ export class FormUserComponent implements OnInit {
     window.scroll(0, 0);
     this.step = this.step + 1;
   }
+
   previous(): void {
     this.step = this.step - 1;
   }
