@@ -41,7 +41,6 @@ export class ContactComponent implements OnInit {
       this.userService.findUserByName(this.form.username).subscribe((res: any) => {
         this.phone = res.numeroTelephone;
       });
-
     }
   }
   get username(): AbstractControl {

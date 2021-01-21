@@ -22,6 +22,10 @@ describe('TokenValidityService', () => {
     expect(service).toBeTruthy();
   });
 
+  afterEach(() => {
+    httpTestingController.verify();
+  });
+
   it('checkTokenValidity() should return data', () => {
     service.checkTokenValidity('1', 'token').subscribe((res) => {
       expect(res).toEqual(true);

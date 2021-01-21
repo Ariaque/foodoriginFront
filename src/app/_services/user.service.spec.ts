@@ -4,7 +4,7 @@ import {UserService} from './user.service';
 import {User} from '../_classes/user';
 import {Role} from '../_classes/role';
 import {Transformateur} from '../_classes/transformateur';
-import {TypeTransformateurs} from '../_classes/type-transformateur';
+import {TypeTransformateur} from '../_classes/type-transformateur';
 
 describe('UserService', () => {
   let userService: UserService;
@@ -36,14 +36,14 @@ describe('UserService', () => {
     null,
     null, null);
 
-  const typeTransformateurDetails = new TypeTransformateurs(1, 'artisan');
+  const typeTransformateurDetails = new TypeTransformateur(1, 'artisan');
 
   const roleDetails = new Role(1, 'role_user');
 
   const userListResponse: Array<User> = [
-    new User(1, 'username1', 'pwd1', roleDetails, transformateurDetails, false, typeTransformateurDetails),
-    new User(2, 'username2', 'pwd2', roleDetails, transformateurDetails, true, typeTransformateurDetails),
-    new User(3, 'username3', 'pwd3', roleDetails, transformateurDetails, false, typeTransformateurDetails),
+    new User(1, 'username1', 'pwd1', roleDetails, transformateurDetails, false, typeTransformateurDetails, '0215489625'),
+    new User(2, 'username2', 'pwd2', roleDetails, transformateurDetails, true, typeTransformateurDetails, '0217489625'),
+    new User(3, 'username3', 'pwd3', roleDetails, transformateurDetails, false, typeTransformateurDetails, '0785489625'),
   ];
 
   it('findAll() should return data', () => {
