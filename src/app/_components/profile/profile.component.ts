@@ -58,6 +58,7 @@ export class ProfileComponent implements OnInit {
     return this.myForm.get('newPassword');
   }
   onSubmit(): void {
+    if (this.myForm.valid) {
     if (this.newPassword !== this.password) {
       this.resetPasswordService.resetPassword(this.username, this.password, this.newPassword).subscribe(
         success => {
@@ -74,9 +75,23 @@ export class ProfileComponent implements OnInit {
       Swal.fire('Le nouveau et l\'ancien mot de passe sont identiques');
     }
   }
+  else {
+    this.validateAllFields(this.myForm);
+  }
+  }
   selectUser(user): void {
     this.activeUser = user;
     console.log(this.activeUser);
+  }
+  validateAllFields(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFields(control);
+      }
+    });
   }
 
 }
