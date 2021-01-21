@@ -488,28 +488,28 @@ export class FormUserComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.step == 1) {
+    if (this.step === 1) {
       if (this.formGroupGeneralInfo.valid) {
         this.step = this.step + 1;
         window.scroll(0, 0);
       } else {
         this.validateAllFields(this.formGroupGeneralInfo);
       }
-    } else if (this.step == 2) {
+    } else if (this.step === 2) {
       if (this.formGroupSocialLinks.valid) {
         this.step = this.step + 1;
         window.scroll(0, 0);
       } else {
         this.validateAllFields(this.formGroupSocialLinks);
       }
-    } else if (this.step == 3) {
+    } else if (this.step === 3) {
       if (this.formGroupPictures.valid) {
         this.step = this.step + 1;
         window.scroll(0, 0);
       } else {
         this.validateAllFields(this.formGroupPictures);
       }
-    } else if (this.step == 4) {
+    } else if (this.step === 4) {
       if (this.urlVideoForm.valid) {
         this.step = this.step + 1;
         window.scroll(0, 0);
@@ -517,7 +517,7 @@ export class FormUserComponent implements OnInit {
         this.validateAllFieldsDynamicForm(this.urls());
 
       }
-    } else if (this.step == 5) {
+    } else if (this.step === 5) {
       if (this.fermeForm.valid) {
         this.step = this.step + 1;
         window.scroll(0, 0);
@@ -528,36 +528,14 @@ export class FormUserComponent implements OnInit {
       if (this.denreeForm.valid) {
         this.step = this.step + 1;
         window.scroll(0, 0);
-        console.log("denreeForm testtt 1")
       } else {
         this.validateAllFieldsDynamicForm(this.denrees());
-        console.log("denreeForm testtt 2")
       }
     }
   }
 
   previous(): void {
     this.step = this.step - 1;
-  }
-
-  get siteW(): AbstractControl {
-    return this.myForm.get('siteW');
-  }
-  get lienF(): AbstractControl {
-    return this.myForm.get('lienF');
-  }
-  get lienT(): AbstractControl {
-    return this.myForm.get('lienT');
-  }
-  get lienI(): AbstractControl {
-    return this.myForm.get('lienI');
-  }
-    get titre(): AbstractControl {
-    return this.myForm.get('titre');
-  }
-  get numSiret(): FormGroup{
-    const  temp = this.myForm.controls.siret as FormGroup;
-    return temp;
   }
 
   fillEspece(i): void {
