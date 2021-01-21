@@ -35,7 +35,6 @@ export class ContactComponent implements OnInit {
       description: [null, Validators.required]
     });
     if (!this.areShown) {
-      console.log(this.tokenService.getUser());
       this.form.username = this.tokenService.getUser().username;
       this.myForm.controls.username.disable();
       this.myForm.controls.phone.disable();
