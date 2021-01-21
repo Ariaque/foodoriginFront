@@ -36,8 +36,8 @@ export class ContactComponent implements OnInit {
     });
     if (!this.areShown) {
       this.form.username = this.tokenService.getUser().username;
-      this.myForm.controls['username'].disable();
-      this.myForm.controls['phone'].disable();
+      this.myForm.controls.username.disable();
+      this.myForm.controls.phone.disable();
       this.userService.findUserByName(this.form.username).subscribe((res: any) => {
         this.phone = res.numeroTelephone;
       });
