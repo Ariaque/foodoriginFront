@@ -35,11 +35,13 @@ export class ContactComponent implements OnInit {
       description: [null, Validators.required]
     });
     if (!this.areShown) {
-      console.log(this.tokenService.getUser());
       this.form.username = this.tokenService.getUser().username;
-      this.userService.findUserByName(this.form.userName).subscribe((res: any) => {
+      this.myForm.controls['username'].disable();
+      this.myForm.controls['phone'].disable();
+      this.userService.findUserByName(this.form.username).subscribe((res: any) => {
         this.phone = res.numeroTelephone;
       });
+
     }
   }
   get username(): AbstractControl {
