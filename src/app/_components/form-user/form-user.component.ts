@@ -171,9 +171,9 @@ export class FormUserComponent implements OnInit {
               this.typeOrigineRegion[i] = pays;
             });
             this.denrees().push(this.formBuilder.group(
-              {nom: typeD.getNom(),
-                espece: typeD.getEspece(),
-                animal: typeD.getAnimal(),
+              {nom: [typeD.getNom(), Validators.required],
+                espece: [typeD.getEspece(), Validators.required],
+                animal: [typeD.getAnimal(),Validators.required],
                 pays: origineD.getPays(),
                 region: origineD.getRegion(),
                 infosT: denree.getInfosTypeDenree(),
@@ -196,7 +196,18 @@ export class FormUserComponent implements OnInit {
     this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
        this.lienFacebook, this.lienTwitter, this.lienInsta, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
        this.listCertif.value, this.urlVideos, this.fermesP, this.denreeSelected);
-    this.step = 1;
+    
+      if (this.step == 6 && this.denreeForm.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+        console.log("denreeForm testtt 1")
+      }
+      else{
+        this.validateAllFieldsDynamicForm(this.denrees());
+        console.log(this.denreeForm.valid)
+        console.log("denreeForm testtt 2")
+      }
+       this.step = 1;
     this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
       res => {
         Swal.fire({title: 'Informations sauvegardées'});
@@ -206,7 +217,9 @@ export class FormUserComponent implements OnInit {
         Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
 
       }
+      
     );
+
   }
   isAddDenree(type, origine, infosT, infosO): boolean {
     let ret = false;
@@ -348,11 +361,11 @@ export class FormUserComponent implements OnInit {
   }
   newDenree(): FormGroup {
     return this.formBuilder.group({
-      nom: '',
-      espece: '',
-      animal: '',
-      pays: '',
-      region: '',
+      nom: [null, Validators.required],
+      espece: [null, Validators.required],
+      animal: [null, Validators.required],
+      pays: [null, Validators.required],
+      region: [null, Validators.required],
       infosT: '',
       infosO: ''
     });
@@ -446,7 +459,7 @@ export class FormUserComponent implements OnInit {
         window.scroll(0, 0);
       }
       else{
-        this.validateAllFields(this.urlVideoForm);
+        this.validateAllFieldsDynamicForm(this.urls());
         
       }
     }
@@ -456,16 +469,19 @@ export class FormUserComponent implements OnInit {
         window.scroll(0, 0);
       }
       else{
-        this.validateAllFields(this.fermeForm);
+        this.validateAllFieldsDynamicForm(this.fermes());
       }
     }
-    else{
+    
+    else {
       if(this.denreeForm.valid){
         this.step =  this.step + 1;
         window.scroll(0, 0);
+        console.log("denreeForm testtt 1")
       }
       else{
-        this.validateAllFields(this.denreeForm);
+        this.validateAllFieldsDynamicForm(this.denrees());
+        console.log("denreeForm testtt 2")
       }
     }
   }
@@ -522,7 +538,11 @@ export class FormUserComponent implements OnInit {
     });
   }
 
-  
+  validateAllFieldsDynamicForm(formArray: FormArray){
+    for(const c of formArray.controls){
+      this.validateAllFields(c as FormGroup);
+    }
+  }
     check(){
     if(this.appartientGroupe == false) {
       this.myForm.controls['siret'].disable();
