@@ -13,7 +13,7 @@ import {UrlVideo} from '../../_classes/url-video';
 import {FermePartenaire} from '../../_classes/ferme-partenaire';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators, AbstractControl} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators, AbstractControl, FormArrayName} from '@angular/forms';
 import {TypeDenree} from '../../_classes/type-denree';
 import {OrigineDenree} from '../../_classes/origine-denree';
 import {DenreeService} from '../../_services/denree.service';
@@ -63,7 +63,11 @@ export class FormUserComponent implements OnInit {
   step: any = 1;
   @Input()
   myForm: FormGroup;
+  formG: FormGroup;
   form: any = {};
+  Form2 : FormGroup;
+  Form3 : FormGroup;
+  row : FormGroup;
 
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
@@ -82,14 +86,20 @@ export class FormUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.formG = this.formBuilder.group({});
     const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
     this.myForm = this.formBuilder.group({
       siteW : [null, [Validators.pattern(reg)]],
       siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
+    });
+    this.myForm.controls['siret'].disable();
+    this.Form2 = this.formBuilder.group({
       lienF : [null, [Validators.pattern(reg)]],
       lienT : [null, [Validators.pattern(reg)]],
       lienI : [null, [Validators.pattern(reg)]],
     });
+    this.Form3 = this.formBuilder.group({});
+    this.row = this.formBuilder.group({});
     this.nbEmployes = '1';
     this.labelService.findAll().subscribe((result) => {
       this.labels = result;
@@ -401,8 +411,61 @@ export class FormUserComponent implements OnInit {
       });
   }
   submit(): void {
-    window.scroll(0, 0);
-    this.step = this.step + 1;
+    if(this.step == 1){
+      if(this.myForm.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+      }
+      else{
+        this.validateAllFields(this.myForm);
+      }
+    }
+    else if(this.step == 2){
+      if(this.Form2.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+      }
+      else{
+        this.validateAllFields(this.Form2);
+      }
+    }
+    else if(this.step == 3){
+      if(this.Form3.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+      }
+      else{
+        this.validateAllFields(this.Form3);
+      }
+    }
+    else if(this.step == 4){
+      if(this.urlVideoForm.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+      }
+      else{
+        this.validateAllFields(this.urlVideoForm);
+        
+      }
+    }
+    else if(this.step == 5){
+      if(this.fermeForm.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+      }
+      else{
+        this.validateAllFields(this.fermeForm);
+      }
+    }
+    else{
+      if(this.denreeForm.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+      }
+      else{
+        this.validateAllFields(this.denreeForm);
+      }
+    }
   }
   previous(): void {
     this.step = this.step - 1;
@@ -446,4 +509,24 @@ export class FormUserComponent implements OnInit {
       this.typeOrigineRegion[i] = res.sort();
     });
   }
+  validateAllFields(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFields(control);
+      }
+    });
+  }
+
+  
+    check(){
+    if(this.appartientGroupe == false) {
+      this.myForm.controls['siret'].disable();
+    } 
+    else {
+      this.myForm.controls['siret'].enable();
+    }
+    }
 }
