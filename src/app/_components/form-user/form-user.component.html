@@ -6,7 +6,7 @@
   <div *ngIf="step == 1" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
       <mat-card-title class="title">Informations générales</mat-card-title>
-      <form [formGroup]="myForm" #infosForm="ngForm" name="form" >
+      <form [formGroup]="formGroupGeneralInfo" #infosForm="ngForm" name="form" >
         <div class="form-group col-md-12">
           <label for="description">Description</label>
           <textarea [(ngModel)]="description" [ngModelOptions]="{standalone:true}" class="form-control"
@@ -65,7 +65,7 @@
   </div>
   <div *ngIf="step == 2" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
-      <form #rsForm="ngForm" [formGroup]="Form2" (ngSubmit)="rsForm.resetForm()">
+      <form #rsForm="ngForm" [formGroup]="formGroupSocialLinks" (ngSubmit)="rsForm.resetForm()">
         <mat-card-title class="title">Réseaux sociaux</mat-card-title>
         <div class="input-icone">
           <i aria-hidden="true" class="fa fa-facebook-square icone-size"></i>
@@ -102,7 +102,7 @@
       <h2> Images </h2>
       <div>
         <h4> Sélectionnez une ou plusieurs images : </h4>
-        <form #imagesForm="ngForm" [formGroup]="Form3" >
+        <form #imagesForm="ngForm" [formGroup]="formGroupPictures" >
           <input (change)="onFileChanged($event)" accept="image/*" multiple type="file">
           <button (click)="this.onUpload()" class="btn btn-primary ftp-valid-button">Valider</button>
         </form>
