@@ -109,9 +109,9 @@
       </div>
       <div>
         <h2 *ngIf="imagesLink.length > 0"> Images sauvegardées : </h2>
-        <div *ngFor="let link of imagesLink">
+        <div class="div-img" *ngFor="let link of imagesLink">
           <img [src]="link" height="200" width="300">
-          <button (click)="deleteImage(link)" class="btn btn-danger btn-del-image">Supprimer</button>
+          <button (click)="deleteImage(link)" type="button" class="btn btn-danger btn-del-image">Supprimer</button>
         </div>
       </div>
     </mat-card>
@@ -141,7 +141,7 @@
                 <small *ngIf="url.get('titre').errors?.required && url.get('titre').touched" class="form-text custom-invalid-feedback">Titre est requis</small>
               </td>
               <td class="center-element">
-                <button (click)="removeUrl(i)" class="btn btn-danger btn-url"> Supprimer</button>
+                <button (click)="removeUrl(i)" class="btn btn-danger btn-url" type="button">Supprimer</button>
               </td>
             </tr>
           </table>
@@ -177,7 +177,7 @@
               'is-invalid':!ferme.get('url').valid && ferme.get('url').touched}" class="form-control" formControlName="url" id="urlF" name="urlF" type="text" placeholder="Ex. http://www.expl.com/">
                 <small *ngIf= "ferme.get('url').errors?.pattern && ferme.get('url').touched" class="form-text custom-invalid-feedback" >Saisir un lien valide</small>
               </div>
-              <button (click)="removeFerme(i)" class="btn btn-danger position-bouton">Supprimer</button>
+              <button (click)="removeFerme(i)" class="btn btn-danger position-bouton" type="button">Supprimer</button>
             </td>
           </tr>
         </table>
@@ -193,7 +193,7 @@
       <form [formGroup]="denreeForm">
         <button (click)="addDenree()" class="btn btn-primary" style="float: right" type="button"> Ajouter</button>
         <table class="table borderless" formArrayName="denrees">
-          <tr *ngFor="let denree of denrees().controls; let i = index" [formGroupName]="i">
+          <tr *ngFor="let denree of denrees().controls | slice:0:10; let i = index " [formGroupName]="i">
             <td>
               <div class="form-group">
                 <label for="typeD"> Type de denrée *</label>
@@ -242,7 +242,7 @@
               </div>
             </td>
             <td class="center-element">
-              <button (click)="removeDenree(i)" class="btn btn-danger btn-url"> Supprimer</button>
+              <button (click)="removeDenree(i)" class="btn btn-remove-denree btn-danger btn-url">Supprimer</button>
             </td>
           </tr>
         </table>

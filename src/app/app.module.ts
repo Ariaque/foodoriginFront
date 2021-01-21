@@ -37,6 +37,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './_components/confirmation-dialog/confirmation-dialog.component';
 import { FooterBarComponent } from './_components/footer-bar/footer-bar.component';
 import { ContactComponent } from './_components/contact/contact.component';
+import { PlaceholderPageComponent } from './_components/placeholder-page/placeholder-page.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ContactComponent } from './_components/contact/contact.component';
     ConfirmationDialogComponent,
     FooterBarComponent,
     ContactComponent,
+    PlaceholderPageComponent,
   ],
     imports: [
         FormsModule,
