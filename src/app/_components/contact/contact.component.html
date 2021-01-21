@@ -12,15 +12,15 @@
                 <label *ngIf="areShown" for="email">Votre adresse mail*</label>
                 <input *ngIf="areShown" formControlName="username" [ngClass]="{'form-control': true,
                 'is-invalid': !username.valid && username.touched}"  type="email" class="form-control" id="email" placeholder="Email" name="username" [(ngModel)]="form.username">
-              <small *ngIf="username.errors?.required && username.touched" class="form-text custom-invalid-feedback">Champ requis</small>
-              <small *ngIf="username.errors?.email && username.touched" class="form-text custom-invalid-feedback">Entrez l'adresse e-mail dans un format correct: nom@exemple.com</small>
+              <small *ngIf="username.errors?.required && username.touched && areShown" class="form-text custom-invalid-feedback">Champ requis</small>
+              <small *ngIf="username.errors?.email && username.touched && areShown" class="form-text custom-invalid-feedback">Entrez l'adresse e-mail dans un format correct: nom@exemple.com</small>
             </div>
             <div class="form-group col-md-12">
                 <label *ngIf="areShown" for="phone">Votre N° Téléphone*</label>
                 <input *ngIf="areShown" formControlName="phone" [ngClass]="{'form-control': true,
-                'is-invalid': !numPhone.valid && numPhone.touched}" type="tel" class="form-control" id="phone" placeholder="" name="phone" [(ngModel)]="phone">
-              <small *ngIf="numPhone.errors?.required && numPhone.touched" class="form-text custom-invalid-feedback">Champ requis</small>
-              <small *ngIf="numPhone.errors?.pattern && numPhone.touched" class="form-text custom-invalid-feedback">Entrez le numéro téléphone dans un format correct: 0xxxxxxxxx</small>
+                'is-invalid': !numPhone.valid && numPhone.touched}" type="tel" class="form-control" id="phone" placeholder="Numéro de téléphone" name="phone" [(ngModel)]="phone">
+              <small *ngIf="numPhone.errors?.required && numPhone.touched && areShown" class="form-text custom-invalid-feedback">Champ requis</small>
+              <small *ngIf="numPhone.errors?.pattern && numPhone.touched && areShown" class="form-text custom-invalid-feedback">Entrez le numéro téléphone dans un format correct: 0xxxxxxxxx</small>
             </div>
             <div class="form-group col-md-12">
                 <label for="objet">Objet*</label><br>
