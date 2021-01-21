@@ -37,29 +37,37 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.userService.findUserByName(this.form.username).subscribe((res: any) => {
-      if (res.isEnabled) {
-        this.authService.login(this.form).subscribe(
-          data => {
-            this.tokenStorage.saveToken(data.accessToken);
-            this.tokenStorage.saveUser(data);
+      if (res != null) {
+        if (res.isEnabled) {
+          this.authService.login(this.form).subscribe(
+            data => {
+              this.tokenStorage.saveToken(data.accessToken);
+              this.tokenStorage.saveUser(data);
 
-            this.isLoginFailed = false;
-            this.isLoggedIn = true;
-            this.roles = this.tokenStorage.getUser().roles;
-            this.topBarService.updateStatus();
-            this.router.navigate(['/accueil']);
-            this.alert = false;
+              this.isLoginFailed = false;
+              this.isLoggedIn = true;
+              this.roles = this.tokenStorage.getUser().roles;
+              this.topBarService.updateStatus();
+              this.router.navigate(['/accueil']);
+              this.alert = false;
 
-          },
-          err => {
-            this.errorMessage = 'Nom d\'utilisateur ou mot de passe incorrect !';
-            this.isLoginFailed = true;
-            this.alert = true;
-          });
-      }else {
-        this.errorMessage = 'Le compte n\'est pas activé !';
-        this.isLoginFailed = true;
-        this.alert = true;
+            },
+            err => {
+              this.errorMessage = 'Nom d\'utilisateur ou mot de passe incorrect !';
+              this.isLoginFailed = true;
+              this.alert = true;
+            });
+        }
+        else {
+          this.errorMessage = 'Le compte n\'est pas activé !';
+          this.isLoginFailed = true;
+          this.alert = true;
+        }
+      }
+      else {
+          this.errorMessage = 'Ce compte n\'existe pas !';
+          this.isLoginFailed = true;
+          this.alert = true;
       }
     });
   }

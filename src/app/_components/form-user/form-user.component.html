@@ -6,7 +6,7 @@
   <div *ngIf="step == 1" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
       <mat-card-title class="title">Informations générales</mat-card-title>
-      <form [formGroup]="myForm" #infosForm="ngForm" name="form" (ngSubmit)="infosForm.resetForm()">
+      <form [formGroup]="myForm" #infosForm="ngForm" name="form" >
         <div class="form-group col-md-12">
           <label for="description">Description</label>
           <textarea [(ngModel)]="description" [ngModelOptions]="{standalone:true}" class="form-control"
@@ -31,7 +31,7 @@
           <small *ngIf= "siteW.errors?.pattern && siteW.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
         </div>
         <div class="form-group col-md-12">
-          <mat-checkbox [(ngModel)]="appartientGroupe" [ngModelOptions]="{standalone:true}" class="example-margin">
+          <mat-checkbox  (change) = "check()" [(ngModel)]="appartientGroupe" [ngModelOptions]="{standalone:true}" class="example-margin">
             Appartient à un groupe
           </mat-checkbox>
         </div>
@@ -40,8 +40,8 @@
           <input formControlName= "siret" [ngClass]="{
           'form-control':true,
           'is-invalid':!numSiret.valid &&  numSiret.touched}" [(ngModel)]="siretGroupe" [maxLength]="14" [ngModelOptions]="{standalone:true}" class="form-control"
-                 id="siret_groupe" placeholder="Siret du groupe" type="text">
-          <small *ngIf="this.siretGroupe.length < 14 && this.siretGroupe.length > 0 && numSiret.touched" class="form-text custom-invalid-feedback">Le numéro siret doit
+                 id="siret_groupe" name ="siret" placeholder="Siret du groupe" type="text">
+          <small *ngIf="this.siretGroupe.length < 14 && this.siretGroupe.length > 0 && numSiret.touched" class="form-text custom-invalid-feedback" >Le numéro siret doit
             comporter 14 chiffres</small>
           <small *ngIf="this.siretGroupe.length == 0 && numSiret.touched" class="form-text custom-invalid-feedback">Le numéro siret est requis</small>
         </div>
@@ -65,7 +65,7 @@
   </div>
   <div *ngIf="step == 2" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
-      <form #rsForm="ngForm" [formGroup]="myForm" (ngSubmit)="rsForm.resetForm()">
+      <form #rsForm="ngForm" [formGroup]="Form2" (ngSubmit)="rsForm.resetForm()">
         <mat-card-title class="title">Réseaux sociaux</mat-card-title>
         <div class="input-icone">
           <i aria-hidden="true" class="fa fa-facebook-square icone-size"></i>
@@ -96,13 +96,13 @@
     <img src="assets/images/enSavoirPlusExplicationP2.png" class="knowMoreImg"/>
   </div>
 
-  <div *ngIf="step == 3" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
+  <div *ngIf="step == 3"   class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
       <mat-card-title class="title">Gestion des médias (images) </mat-card-title>
       <h2> Images </h2>
       <div>
         <h4> Sélectionnez une ou plusieurs images : </h4>
-        <form #imagesForm="ngForm">
+        <form #imagesForm="ngForm" [formGroup]="Form3" >
           <input (change)="onFileChanged($event)" accept="image/*" multiple type="file">
           <button (click)="this.onUpload()" class="btn btn-primary ftp-valid-button">Valider</button>
         </form>
@@ -193,7 +193,7 @@
       <form [formGroup]="denreeForm">
         <button (click)="addDenree()" class="btn btn-primary" style="float: right" type="button"> Ajouter</button>
         <table class="table borderless" formArrayName="denrees">
-          <tr *ngFor="let denree of denrees().controls; let i = index" [formGroupName]="i">
+          <tr *ngFor="let denree of denrees().controls | slice:0:10; let i = index " [formGroupName]="i">
             <td>
               <div class="form-group">
                 <label for="typeD"> Type de denrée *</label>
@@ -255,7 +255,7 @@
   <div class="btn" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card class="button-mat-card" fxFlex="20">
       <a (click)="previous()" *ngIf="step != 1" class="btn btn-primary mx-2">< Précédent</a>
-      <button *ngIf="step != 6" class=" btn btn-primary mx-2" type="submit">Suivant ></button>
+      <button *ngIf="step != 6" class=" btn btn-primary mx-2">Suivant ></button>
       <button class="btn btn-validate" (click)="saveInfos()" *ngIf="step == 6" color="warn" mat-raised-button mat-stroked-button type="submit">
         Valider
       </button>

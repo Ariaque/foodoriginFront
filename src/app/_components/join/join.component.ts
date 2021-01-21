@@ -42,7 +42,7 @@ export class JoinComponent implements OnInit {
       password: [null, Validators.required],
       confPassword: [null, Validators.required],
       selectedType: [null, Validators.required],
-      numTelephone: [null, [Validators.required, Validators.pattern('^[0-9]{10}$')]]
+      numTelephone: [null, [Validators.required, Validators.pattern('(0)[1-9][0-9]{8}')]]
     }, {
       validator: this.customValidator.passwordMatchValidator('password', 'confPassword')
     });
