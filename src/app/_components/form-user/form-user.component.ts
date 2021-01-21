@@ -198,27 +198,26 @@ export class FormUserComponent implements OnInit {
        this.listCertif.value, this.urlVideos, this.fermesP, this.denreeSelected);
     
       if (this.step == 6 && this.denreeForm.valid){
-        this.step =  this.step + 1;
         window.scroll(0, 0);
+        this.step = 1;
+        this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
+          res => {
+            Swal.fire({title: 'Informations sauvegardées'});
+            this.router.navigate(['/accueil']);
+          },
+          err => {
+            Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
+    
+          }
+          
+        );
         console.log("denreeForm testtt 1")
       }
       else{
         this.validateAllFieldsDynamicForm(this.denrees());
-        console.log(this.denreeForm.valid)
-        console.log("denreeForm testtt 2")
+        console.log(this.denreeForm.valid);
       }
-       this.step = 1;
-    this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
-      res => {
-        Swal.fire({title: 'Informations sauvegardées'});
-        this.router.navigate(['/accueil']);
-      },
-      err => {
-        Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
-
-      }
-      
-    );
+     
 
   }
   isAddDenree(type, origine, infosT, infosO): boolean {
@@ -493,13 +492,13 @@ export class FormUserComponent implements OnInit {
     return this.myForm.get('siteW');
   }
   get lienF(): AbstractControl {
-    return this.myForm.get('lienF');
+    return this.Form2.get('lienF');
   }
   get lienT(): AbstractControl {
-    return this.myForm.get('lienT');
+    return this.Form2.get('lienT');
   }
   get lienI(): AbstractControl {
-    return this.myForm.get('lienI');
+    return this.Form2.get('lienI');
   }
     get titre(): AbstractControl {
     return this.myForm.get('titre');
