@@ -7,7 +7,7 @@
             <label for="email">Email*</label>
             <input formControlName="username" [ngClass]="{'form-control': true,
             'is-invalid': !username.valid && username.touched,
-            'is-valid': username.valid}"  type="email" class="form-control" id="email" placeholder="Email" name="username" [(ngModel)]="form.username">
+            'is-valid': username.valid}"  type="email" class="form-control" id="email" placeholder="Email" name="username" [(ngModel)]="form.username" required>
             <small *ngIf="username.errors?.required && username.touched" class="form-text custom-invalid-feedback">Champ requis</small>
             <small *ngIf="username.errors?.email && username.touched" class="form-text custom-invalid-feedback">Entrez l'adresse e-mail dans un format correct: nom@exemple.com</small>
           </div>

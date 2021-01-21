@@ -193,7 +193,7 @@
       <form [formGroup]="denreeForm">
         <button (click)="addDenree()" class="btn btn-primary" style="float: right" type="button"> Ajouter</button>
         <table class="table borderless" formArrayName="denrees">
-          <tr *ngFor="let denree of denrees().controls; let i = index" [formGroupName]="i">
+          <tr *ngFor="let denree of denrees().controls | slice:0:10; let i = index " [formGroupName]="i">
             <td>
               <div class="form-group">
                 <label for="typeD"> Type de denrée *</label>
