@@ -16,11 +16,12 @@ describe('CertificationService', () => {
     service = TestBed.inject(CertificationService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
   afterEach(() => {
     httpTestingController.verify();
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
   });
 
   describe('#findAll', () => {

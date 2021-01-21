@@ -6,7 +6,7 @@
   <div *ngIf="step == 1" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
       <mat-card-title class="title">Informations générales</mat-card-title>
-      <form [formGroup]="myForm" #infosForm="ngForm" name="form" (ngSubmit)="infosForm.resetForm()">
+      <form [formGroup]="myForm" #infosForm="ngForm" name="form" >
         <div class="form-group col-md-12">
           <label for="description">Description</label>
           <textarea [(ngModel)]="description" [ngModelOptions]="{standalone:true}" class="form-control"
@@ -31,7 +31,7 @@
           <small *ngIf= "siteW.errors?.pattern && siteW.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
         </div>
         <div class="form-group col-md-12">
-          <mat-checkbox [(ngModel)]="appartientGroupe" [ngModelOptions]="{standalone:true}" class="example-margin">
+          <mat-checkbox  (change) = "check()" [(ngModel)]="appartientGroupe" [ngModelOptions]="{standalone:true}" class="example-margin">
             Appartient à un groupe
           </mat-checkbox>
         </div>
@@ -40,8 +40,8 @@
           <input formControlName= "siret" [ngClass]="{
           'form-control':true,
           'is-invalid':!numSiret.valid &&  numSiret.touched}" [(ngModel)]="siretGroupe" [maxLength]="14" [ngModelOptions]="{standalone:true}" class="form-control"
-                 id="siret_groupe" placeholder="Siret du groupe" type="text">
-          <small *ngIf="this.siretGroupe.length < 14 && this.siretGroupe.length > 0 && numSiret.touched" class="form-text custom-invalid-feedback">Le numéro siret doit
+                 id="siret_groupe" name ="siret" placeholder="Siret du groupe" type="text">
+          <small *ngIf="this.siretGroupe.length < 14 && this.siretGroupe.length > 0 && numSiret.touched" class="form-text custom-invalid-feedback" >Le numéro siret doit
             comporter 14 chiffres</small>
           <small *ngIf="this.siretGroupe.length == 0 && numSiret.touched" class="form-text custom-invalid-feedback">Le numéro siret est requis</small>
         </div>
@@ -65,7 +65,7 @@
   </div>
   <div *ngIf="step == 2" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
-      <form #rsForm="ngForm" [formGroup]="myForm" (ngSubmit)="rsForm.resetForm()">
+      <form #rsForm="ngForm" [formGroup]="Form2" (ngSubmit)="rsForm.resetForm()">
         <mat-card-title class="title">Réseaux sociaux</mat-card-title>
         <div class="input-icone">
           <i aria-hidden="true" class="fa fa-facebook-square icone-size"></i>
@@ -96,22 +96,22 @@
     <img src="assets/images/enSavoirPlusExplicationP2.png" class="knowMoreImg"/>
   </div>
 
-  <div *ngIf="step == 3" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
+  <div *ngIf="step == 3"   class="main-div" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card fxFlex="50">
       <mat-card-title class="title">Gestion des médias (images) </mat-card-title>
       <h2> Images </h2>
       <div>
         <h4> Sélectionnez une ou plusieurs images : </h4>
-        <form #imagesForm="ngForm">
+        <form #imagesForm="ngForm" [formGroup]="Form3" >
           <input (change)="onFileChanged($event)" accept="image/*" multiple type="file">
           <button (click)="this.onUpload()" class="btn btn-primary ftp-valid-button">Valider</button>
         </form>
       </div>
       <div>
         <h2 *ngIf="imagesLink.length > 0"> Images sauvegardées : </h2>
-        <div class="div-img" *ngFor="let link of imagesLink">
+        <div *ngFor="let link of imagesLink">
           <img [src]="link" height="200" width="300">
-          <button (click)="deleteImage(link)" type="button" class="btn btn-danger btn-del-image">Supprimer</button>
+          <button (click)="deleteImage(link)" class="btn btn-danger btn-del-image">Supprimer</button>
         </div>
       </div>
     </mat-card>
@@ -142,7 +142,7 @@
                 <small *ngIf="url.get('titre').errors?.required && url.get('titre').touched" class="form-text custom-invalid-feedback">Titre est requis</small>
               </td>
               <td class="center-element">
-                <button (click)="removeUrl(i)" class="btn btn-danger btn-url" type="button">Supprimer</button>
+                <button (click)="removeUrl(i)" class="btn btn-danger btn-url"> Supprimer</button>
               </td>
             </tr>
           </table>
@@ -179,7 +179,7 @@
               'is-invalid':!ferme.get('url').valid && ferme.get('url').touched}" class="form-control" formControlName="url" id="urlF" name="urlF" type="text" placeholder="Ex. http://www.expl.com/">
                 <small *ngIf= "ferme.get('url').errors?.pattern && ferme.get('url').touched" class="form-text custom-invalid-feedback" >Saisir un lien valide</small>
               </div>
-              <button (click)="removeFerme(i)" class="btn btn-danger position-bouton" type="button">Supprimer</button>
+              <button (click)="removeFerme(i)" class="btn btn-danger position-bouton">Supprimer</button>
             </td>
           </tr>
         </table>
@@ -192,21 +192,21 @@
     <mat-card fxFlex="60">
       <mat-card-title class="title"> Denrées animales utilisées</mat-card-title>
       <h4> Saisissez les denrées animales utilisées et leurs origines </h4>
-      <form [formGroup]="denreeForm">
+      <form [formGroup]="denreeForm" >
         <button (click)="addDenree()" class="btn btn-primary" style="float: right" type="button"> Ajouter</button>
         <table class="table borderless" formArrayName="denrees">
-          <tr *ngFor="let denree of denrees().controls | slice:0:10; let i = index " [formGroupName]="i">
+          <tr *ngFor="let denree of denrees().controls; let i = index" [formGroupName]="i">
             <td>
               <div class="form-group">
                 <label for="typeD"> Type de denrée *</label>
-                <mat-select class="form-control" formControlName="nom" (selectionChange)="fillEspece(i)" id="typeD" name="typeD">
+                <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('nom').errors && denree.get('nom').touched}" class="form-control" formControlName="nom" (selectionChange)="fillEspece(i)" id="typeD" name="typeD">
                   <mat-option *ngFor="let nom of this.typeDenreeNom.sort()" [value]="nom"> {{nom}}</mat-option>
                 </mat-select>
               </div>
 
               <div class="form-group">
                 <label for="origineD"> Origine de la denrée * </label>
-                <mat-select class="form-control" formControlName="pays" (selectionChange)="fillRegion(i)" id="origineD" name="origineD">
+                <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('pays').errors && denree.get('pays').touched}" class="form-control" formControlName="pays" (selectionChange)="fillRegion(i)" id="origineD" name="origineD">
                   <mat-option *ngFor="let pays of this.typeOrigineNom.sort()" [value]="pays"> {{pays}}</mat-option>
                 </mat-select>
               </div>
@@ -214,13 +214,13 @@
             <td>
               <div class="form-group">
                 <label for="typeE"> Espèce * </label>
-                <mat-select class="form-control" formControlName="espece" (selectionChange)="fillAnimal(i)" id="typeE" name="typeE">
+                <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('espece').errors && denree.get('espece').touched}" class="form-control" formControlName="espece" (selectionChange)="fillAnimal(i)" id="typeE" name="typeE">
                   <mat-option *ngFor="let espece of this.typeDenreeEspece[i]" [value]="espece"> {{espece}}</mat-option>
                 </mat-select>
               </div>
               <div>
                 <label for="origineR"> Région *</label>
-                <mat-select class="form-control" formControlName="region" id="origineR" name="origineR">
+                <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('region').errors && denree.get('region').touched}"class="form-control" formControlName="region" id="origineR" name="origineR">
                   <mat-option *ngFor="let region of this.typeOrigineRegion[i]" [value]="region"> {{region}}</mat-option>
                 </mat-select>
               </div>
@@ -228,7 +228,7 @@
             <td>
               <div class="form-group">
                 <label for="typeA"> Animal *</label>
-                <mat-select class="form-control" formControlName="animal" id="typeA" name="typeA">
+                <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('animal').errors && denree.get('animal').touched}" class="form-control" formControlName="animal" id="typeA" name="typeA">
                   <mat-option *ngFor="let animal of this.typeDenreeAnimal[i]" [value]="animal" > {{animal}}</mat-option>
                 </mat-select>
               </div>
@@ -244,7 +244,7 @@
               </div>
             </td>
             <td class="center-element">
-              <button (click)="removeDenree(i)" class="btn btn-remove-denree btn-danger btn-url">Supprimer</button>
+              <button (click)="removeDenree(i)" class="btn btn-danger btn-url"> Supprimer</button>
             </td>
           </tr>
         </table>
@@ -257,7 +257,7 @@
   <div class="btn" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card class="button-mat-card" fxFlex="20">
       <a (click)="previous()" *ngIf="step != 1" class="btn btn-primary mx-2">< Précédent</a>
-      <button *ngIf="step != 6" class=" btn btn-primary mx-2" type="submit">Suivant ></button>
+      <button *ngIf="step != 6" class=" btn btn-primary mx-2">Suivant ></button>
       <button class="btn btn-validate" (click)="saveInfos()" *ngIf="step == 6" color="warn" mat-raised-button mat-stroked-button type="submit">
         Valider
       </button>

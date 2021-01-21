@@ -13,7 +13,7 @@ import {UrlVideo} from '../../_classes/url-video';
 import {FermePartenaire} from '../../_classes/ferme-partenaire';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators, AbstractControl} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators, AbstractControl, FormArrayName} from '@angular/forms';
 import {TypeDenree} from '../../_classes/type-denree';
 import {OrigineDenree} from '../../_classes/origine-denree';
 import {DenreeService} from '../../_services/denree.service';
@@ -63,7 +63,11 @@ export class FormUserComponent implements OnInit {
   step: any = 1;
   @Input()
   myForm: FormGroup;
+  formG: FormGroup;
   form: any = {};
+  Form2 : FormGroup;
+  Form3 : FormGroup;
+  row : FormGroup;
 
 
   constructor(private labelService: LabelService, private certifService: CertificationService,
@@ -82,15 +86,21 @@ export class FormUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.formG = this.formBuilder.group({});
     const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
     const whiteSpace= '^(?!\\s*$).+';
     this.myForm = this.formBuilder.group({
       siteW : [null, [Validators.pattern(reg)]],
       siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
+    });
+    this.myForm.controls['siret'].disable();
+    this.Form2 = this.formBuilder.group({
       lienF : [null, [Validators.pattern(reg)]],
       lienT : [null, [Validators.pattern(reg)]],
       lienI : [null, [Validators.pattern(reg)]],
     });
+    this.Form3 = this.formBuilder.group({});
+    this.row = this.formBuilder.group({});
     this.nbEmployes = '1';
     this.labelService.findAll().subscribe((result) => {
       this.labels = result;
@@ -162,9 +172,9 @@ export class FormUserComponent implements OnInit {
               this.typeOrigineRegion[i] = pays;
             });
             this.denrees().push(this.formBuilder.group(
-              {nom: typeD.getNom(),
-                espece: typeD.getEspece(),
-                animal: typeD.getAnimal(),
+              {nom: [typeD.getNom(), Validators.required],
+                espece: [typeD.getEspece(), Validators.required],
+                animal: [typeD.getAnimal(),Validators.required],
                 pays: origineD.getPays(),
                 region: origineD.getRegion(),
                 infosT: denree.getInfosTypeDenree(),
@@ -187,7 +197,18 @@ export class FormUserComponent implements OnInit {
     this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
        this.lienFacebook, this.lienTwitter, this.lienInsta, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
        this.listCertif.value, this.urlVideos, this.fermesP, this.denreeSelected);
-    this.step = 1;
+    
+      if (this.step == 6 && this.denreeForm.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+        console.log("denreeForm testtt 1")
+      }
+      else{
+        this.validateAllFieldsDynamicForm(this.denrees());
+        console.log(this.denreeForm.valid)
+        console.log("denreeForm testtt 2")
+      }
+       this.step = 1;
     this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
       res => {
         Swal.fire({title: 'Informations sauvegardées'});
@@ -197,7 +218,9 @@ export class FormUserComponent implements OnInit {
         Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
 
       }
+      
     );
+
   }
   isAddDenree(type, origine, infosT, infosO): boolean {
     let ret = false;
@@ -341,11 +364,11 @@ export class FormUserComponent implements OnInit {
   }
   newDenree(): FormGroup {
     return this.formBuilder.group({
-      nom: '',
-      espece: '',
-      animal: '',
-      pays: '',
-      region: '',
+      nom: [null, Validators.required],
+      espece: [null, Validators.required],
+      animal: [null, Validators.required],
+      pays: [null, Validators.required],
+      region: [null, Validators.required],
       infosT: '',
       infosO: ''
     });
@@ -406,9 +429,64 @@ export class FormUserComponent implements OnInit {
       });
   }
   submit(): void {
-    console.log('here');
-    window.scroll(0, 0);
-    this.step = this.step + 1;
+    if(this.step == 1){
+      if(this.myForm.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+      }
+      else{
+        this.validateAllFields(this.myForm);
+      }
+    }
+    else if(this.step == 2){
+      if(this.Form2.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+      }
+      else{
+        this.validateAllFields(this.Form2);
+      }
+    }
+    else if(this.step == 3){
+      if(this.Form3.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+      }
+      else{
+        this.validateAllFields(this.Form3);
+      }
+    }
+    else if(this.step == 4){
+      if(this.urlVideoForm.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+      }
+      else{
+        this.validateAllFieldsDynamicForm(this.urls());
+        
+      }
+    }
+    else if(this.step == 5){
+      if(this.fermeForm.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+      }
+      else{
+        this.validateAllFieldsDynamicForm(this.fermes());
+      }
+    }
+    
+    else {
+      if(this.denreeForm.valid){
+        this.step =  this.step + 1;
+        window.scroll(0, 0);
+        console.log("denreeForm testtt 1")
+      }
+      else{
+        this.validateAllFieldsDynamicForm(this.denrees());
+        console.log("denreeForm testtt 2")
+      }
+    }
   }
 
   previous(): void {
@@ -453,4 +531,28 @@ export class FormUserComponent implements OnInit {
       this.typeOrigineRegion[i] = res.sort();
     });
   }
+  validateAllFields(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFields(control);
+      }
+    });
+  }
+
+  validateAllFieldsDynamicForm(formArray: FormArray){
+    for(const c of formArray.controls){
+      this.validateAllFields(c as FormGroup);
+    }
+  }
+    check(){
+    if(this.appartientGroupe == false) {
+      this.myForm.controls['siret'].disable();
+    } 
+    else {
+      this.myForm.controls['siret'].enable();
+    }
+    }
 }
