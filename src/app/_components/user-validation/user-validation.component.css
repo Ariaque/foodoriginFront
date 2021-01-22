@@ -44,19 +44,24 @@ mat-cell {
 .btn-enable {
   color: green;
   width: 98px;
-  transition: 0.5s;
+  transition: 0.5s!important;
+  outline: none!important;
+  box-shadow: none!important;
 }
 
 .btn-enable:hover {
   background: #EBFFE6;
-  transition: 0.5s;
+  transition: 0.5s!important;
 }
 
 .btn-disable {
+  outline: none!important;
+  box-shadow: none!important;
   transition: 0.5s!important;
 }
 
 .btn-disable:hover {
+  background-color: #ffc2c2;
   transition: 0.5s!important;
 }
 
