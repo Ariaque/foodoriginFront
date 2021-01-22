@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {soon_text, soon_title} from "../../../global";
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit {
   }
 
   goToPlaceholderPage(): void {
-    this.router.navigate(['/soon'], { queryParams: { title: 'Bientôt disponible !', text: 'FoodOrigin se prépare au lancement vers la planète Androïd, restez à l\'affut !' } });
+    this.router.navigate(['/soon'], { queryParams: { title: soon_title, text: soon_text } });
   }
 
 }

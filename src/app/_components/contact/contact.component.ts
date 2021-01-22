@@ -5,6 +5,8 @@ import {SendEmailService} from '../../_services/send-email.service';
 import {Router} from '@angular/router';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
+import {contact_text, contact_title, regex_email, regex_phone_number, regex_white_space} from '../../../global';
+
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -27,14 +29,12 @@ export class ContactComponent implements OnInit {
     if (this.tokenService.getToken() == null || this.tokenService.getToken() === undefined || this.tokenService.getToken().length === 0) {
       this.areShown = true;
     }
-    const reg = '(0)[1-9][0-9]{8}';
-    const whiteSpace = '^(?!\\s*$).+';
     const email = '';
     this.myForm = this._fb.group({
-      username: [null, [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]],
-      phone: [null, [Validators.required, Validators.pattern(reg)]],
-      objet: [null, [Validators.required, Validators.pattern(whiteSpace)]],
-      description: [null, [Validators.required, Validators.pattern(whiteSpace)]]
+      username: [null, [Validators.required, Validators.pattern(regex_email)]],
+      phone: [null, [Validators.required, Validators.pattern(regex_phone_number)]],
+      objet: [null, [Validators.required, Validators.pattern(regex_white_space)]],
+      description: [null, [Validators.required, Validators.pattern(regex_white_space)]]
     });
     if (!this.areShown) {
       this.form.username = this.tokenService.getUser().username;
@@ -61,8 +61,8 @@ export class ContactComponent implements OnInit {
           if (success) {
             this.router.navigate(['/success'], {
               queryParams: {
-                title: 'Envoi réussi !',
-                text: 'Votre message a bien été pris en compte, nous reviendrons vers vous dès que possible !'
+                title: contact_title,
+                text: contact_text
               }
             });
           }

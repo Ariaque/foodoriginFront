@@ -4,6 +4,7 @@ import {CustomValidationService} from '../../_services/custom-validation.service
 import {TokenValidityService} from '../../_services/token-validity.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ResetPasswordService} from '../../_services/reset-password.service';
+import {reset_password_confirmed_text, reset_password_confirmed_title} from "../../../global";
 
 
 @Component({
@@ -46,7 +47,7 @@ export class ResetPasswordComponent implements OnInit {
   onSubmit(): void {
     this.resetPasswordService.saveNewPassword(this.token, this.newPassword).subscribe(success => {
       if (success){
-        this.router.navigate(['/success'], { queryParams: { title: 'Nouveau mot de passe enregistré !', text: 'Votre nouveau mot de passe a bien été sauvegardé, vous pouvez dès à présent vous connecter !' } });
+        this.router.navigate(['/success'], { queryParams: { title: reset_password_confirmed_title, text: reset_password_confirmed_text } });
       }});
   }
 
