@@ -254,11 +254,11 @@
     <img src="assets/images/enSavoirPlusExplicationP6.png" class="knowMoreImg"/>
   </div>
   </div>
-  <div class="btn" fxFlexFill fxLayoutAlign="space-around center">
-    <mat-card class="button-mat-card" fxFlex="20">
-      <a (click)="previous()" *ngIf="step != 1" class="btn btn-primary mx-2">< Précédent</a>
-      <button *ngIf="step != 6" class=" btn btn-primary mx-2">Suivant ></button>
-      <button class="btn btn-validate" (click)="saveInfos()" *ngIf="step == 6" color="warn" mat-raised-button mat-stroked-button type="submit">
+  <div class="div-btn" fxFlexFill fxLayoutAlign="space-around center">
+    <mat-card class="button-mat-card">
+      <a (click)="previous()" *ngIf="step != 1" class="btn btn-primary ml-2">< Précédent</a>
+      <button *ngIf="step != 6" class="btn btn-primary ml-2 mr-2">Suivant ></button>
+      <button class="btn btn-validate ml-2 mr-2" (click)="saveInfos()" *ngIf="step == 6" color="warn" mat-raised-button mat-stroked-button type="submit">
         Valider
       </button>
     </mat-card>

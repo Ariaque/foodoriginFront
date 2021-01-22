@@ -156,4 +156,8 @@ body.swal2-shown {
   margin-top: 1%;
 }
 
+.div-btn {
+  cursor: default!important;
+}
+
 
