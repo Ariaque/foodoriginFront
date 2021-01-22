@@ -3,9 +3,9 @@ import {AuthService} from '../../_services/auth.service';
 import {TokenStorageService} from '../../_services/token-storage.service';
 import {TopbarService} from '../../_services/topbar.service';
 import {Router} from '@angular/router';
-import {UserService} from "../../_services/user.service";
+import {UserService} from '../../_services/user.service';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {bad_login, inactive_account} from "../../../global";
+import {bad_login, inactive_account, regex_email} from '../../../global';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.FormLogin = this._fb.group({
-      username: [null, [Validators.required, Validators.email]],
+      username: [null, [Validators.required, Validators.pattern(regex_email)]],
       password: [null, Validators.required]
     })
     if (this.tokenStorage.getToken()) {
