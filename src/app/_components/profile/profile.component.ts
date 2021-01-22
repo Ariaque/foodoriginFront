@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
   constructor(private _fb: FormBuilder, private userService: UserService, private tokenStorage: TokenStorageService, private resetPasswordService: ResetPasswordService,private router: Router) { }
 
   ngOnInit(): void {
-    this.user = this.tokenStorage.getUser()
+    this.user = this.tokenStorage.getUser();
     this.username = this.user.username;
     this.typeTransformateur = this.user.getTypeTransformateur;
     this.userService.findUserByName(this.tokenStorage.getUser().username).subscribe((res: any) => {

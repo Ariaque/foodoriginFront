@@ -109,7 +109,7 @@
       </div>
       <div>
         <h2 *ngIf="imagesLink.length > 0"> Images sauvegardées : </h2>
-        <div *ngFor="let link of imagesLink">
+        <div *ngFor="let link of imagesLink" class="div-img">
           <img [src]="link" height="200" width="300">
           <button (click)="deleteImage(link)" class="btn btn-danger btn-del-image">Supprimer</button>
         </div>

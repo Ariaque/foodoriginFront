@@ -4,8 +4,6 @@ import {TokenStorageService} from '../../_services/token-storage.service';
 import {TopbarService} from '../../_services/topbar.service';
 import {Router} from '@angular/router';
 import {UserService} from "../../_services/user.service";
-import {OrigineDenree} from "../../_classes/origine-denree";
-import {User} from "../../_classes/user";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -32,7 +30,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.FormLogin = this._fb.group({
       username: [null, [Validators.required, Validators.email]],
-      password: [null, Validators.required],
+      password: [null, Validators.required]
     })
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
