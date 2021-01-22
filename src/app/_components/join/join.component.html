@@ -6,8 +6,7 @@
           <div class="form-group col-md-6">
             <label for="email">Email*</label>
             <input formControlName="username" [ngClass]="{'form-control': true,
-            'is-invalid': !username.valid && username.touched,
-            'is-valid': username.valid}"  type="email" class="form-control" id="email" placeholder="Email" name="username" [(ngModel)]="form.username" required>
+            'is-invalid': !username.valid && username.touched}"  type="email" class="form-control" id="email" placeholder="Email" name="username" [(ngModel)]="form.username" required>
             <small *ngIf="username.errors?.required && username.touched" class="form-text custom-invalid-feedback">Champ requis</small>
             <small *ngIf="username.errors?.pattern && username.touched" class="form-text custom-invalid-feedback">Entrez l'adresse e-mail dans un format correct: nom@exemple.com</small>
           </div>
@@ -34,8 +33,7 @@
             <label for="numT">Numéro de téléphone *</label>
             <input formControlName="numTelephone" [ngClass]="{
             'form-control':true,
-            'is-invalid':!numTel.valid &&  numTel.touched,
-            'is-valid': numTel.valid }"
+            'is-invalid':!numTel.valid &&  numTel.touched}"
                    type="text" class="form-control" [maxLength]="10" id="numT" placeholder="Numéro de téléphone" name="numT" [(ngModel)]="numTelephone">
             <small *ngIf= "numTel.errors?.required && numTel.touched" class="form-text custom-invalid-feedback" >Champ requis</small>
             <small *ngIf= "numTel.errors?.pattern && numTel.touched" class="form-text custom-invalid-feedback" >Le numéro de télephone doit comporter 10 chiffres </small>
@@ -45,8 +43,7 @@
             <input formControlName= "siret"
             [ngClass]="{
             'form-control':true,
-            'is-invalid':!numSiret.valid &&  numSiret.touched,
-            'is-valid': numSiret.valid }"
+            'is-invalid':!numSiret.valid &&  numSiret.touched}"
             type="text" class="form-control" [maxLength]="14" id="siret" placeholder="Siret" name="siret" [(ngModel)]="siret">
           <small *ngIf= "numSiret.errors?.required && numSiret.touched" class="form-text custom-invalid-feedback" >Champ requis</small>
           <small *ngIf= "numSiret.errors?.pattern && numSiret.touched" class="form-text custom-invalid-feedback" >Le numéro siret doit comporter 14 chiffres  </small>

@@ -5,6 +5,7 @@ import {TopbarService} from '../../_services/topbar.service';
 import {Router} from '@angular/router';
 import {UserService} from "../../_services/user.service";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {bad_login, inactive_account} from "../../../global";
 
 @Component({
   selector: 'app-login',
@@ -58,19 +59,19 @@ export class LoginComponent implements OnInit {
 
             },
             err => {
-              this.errorMessage = 'Nom d\'utilisateur ou mot de passe incorrect !';
+              this.errorMessage = bad_login;
               this.isLoginFailed = true;
               this.alert = true;
             });
         }
         else {
-          this.errorMessage = 'Le compte n\'est pas activé !';
+          this.errorMessage = inactive_account;
           this.isLoginFailed = true;
           this.alert = true;
         }
       }
       else {
-          this.errorMessage = 'Ce compte n\'existe pas !';
+          this.errorMessage = bad_login;
           this.isLoginFailed = true;
           this.alert = true;
       }

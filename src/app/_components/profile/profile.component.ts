@@ -8,6 +8,7 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '
 import {ResetPasswordService} from '../../_services/reset-password.service';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
+import {bad_old_password, new_pass_changed, new_pass_is_old_pass} from "../../../global";
 
 
 @Component({
@@ -63,16 +64,16 @@ export class ProfileComponent implements OnInit {
       this.resetPasswordService.resetPassword(this.username, this.password, this.newPassword).subscribe(
         success => {
           if (success){
-            Swal.fire('Nouveau mot de passe enregistré !');
+            Swal.fire(new_pass_changed);
           }},
         err => {
           if (err){
-            Swal.fire('L\' ancien mot de passe n\'est pas correct');
+            Swal.fire(bad_old_password);
           }}
       );
     }
     else {
-      Swal.fire('Le nouveau et l\'ancien mot de passe sont identiques');
+      Swal.fire(new_pass_is_old_pass);
     }
   }
   else {

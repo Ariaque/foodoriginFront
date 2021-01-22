@@ -9,6 +9,15 @@ import {UserService} from '../../_services/user.service';
 import {Router} from '@angular/router';
 import Swal from 'sweetalert2'
 import {SendEmailService} from '../../_services/send-email.service';
+import {
+  account_created,
+  mail_to_admin_obj,
+  mail_to_admin_text,
+  regex_email,
+  regex_phone_number,
+  regex_siret
+} from "../../../global";
+
 
 @Component({
   selector: 'app-join',
@@ -37,12 +46,12 @@ export class JoinComponent implements OnInit {
       this.type = result;
     });
     this.myForm = this._fb.group({
-      username: [null, [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]],
-      siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
+      username: [null, [Validators.required, Validators.pattern(regex_email)]],
+      siret: [null, [Validators.required, Validators.pattern(regex_siret)]],
       password: [null, Validators.required],
       confPassword: [null, Validators.required],
       selectedType: [null, Validators.required],
-      numTelephone: [null, [Validators.required, Validators.pattern('(0)[1-9][0-9]{8}')]]
+      numTelephone: [null, [Validators.required, Validators.pattern(regex_phone_number)]]
     }, {
       validator: this.customValidator.passwordMatchValidator('password', 'confPassword')
     });
@@ -58,9 +67,9 @@ export class JoinComponent implements OnInit {
         data => {
           this.isSuccessful = true;
           this.isSignUpFailed = false;
-          Swal.fire('Compte crée. L\'administrateur vous recontactera !');
+          Swal.fire(account_created);
           this.router.navigate(['/accueil']);
-          this.sendEmailService.sendNotificationEmail(this.myForm.get('username').value, '[FoodOrigin-Demande d\'activation] Nouvelle inscription', this.numTelephone, 'Un nouvel utilisateur a créé un compte !' +  '\r\n' + '1/ Vérifiez qu\'il s\'est acquité de son paiement.' + '\r\n' + '2/ Connectez-vous à la plateforme FoodOrigin avec votre compte administrateur' + '\r\n' + '3/ Cliquez sur "Gestion des comptes" dans la barre de menu' + '\r\n' + '4/ Dans l\'interface de gestion des comptes, recherchez l\'utilisateur et cliquez sur "Activer"').subscribe();
+          this.sendEmailService.sendNotificationEmail(this.myForm.get('username').value, mail_to_admin_obj, this.numTelephone, mail_to_admin_text).subscribe();
         },
         err => {
           this.errorMessage = err.error.message;

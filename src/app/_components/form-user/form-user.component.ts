@@ -18,6 +18,15 @@ import {TypeDenree} from '../../_classes/type-denree';
 import {OrigineDenree} from '../../_classes/origine-denree';
 import {DenreeService} from '../../_services/denree.service';
 import {DenreeAnimale} from '../../_classes/denree-animale';
+import {
+  error_while_saving_img,
+  error_while_saving_info,
+  incorrect_img_format,
+  info_saved,
+  regex_siret,
+  regex_website,
+  regex_white_space
+} from "../../../global";
 
 
 @Component({
@@ -112,11 +121,11 @@ export class FormUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.globalForm = this.formBuilder.group({});
-    const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
-    const whiteSpace = '^(?!\\s*$).+';
+    const reg = regex_website;
+    const whiteSpace = regex_white_space;
     this.formGroupGeneralInfo = this.formBuilder.group({
       siteW: [null, [Validators.pattern(reg)]],
-      siret: [null, [Validators.required, Validators.pattern('^[0-9]{14}$')]],
+      siret: [null, [Validators.required, Validators.pattern(regex_siret)]],
     });
     this.formGroupGeneralInfo.controls['siret'].disable();
     this.formGroupSocialLinks = this.formBuilder.group({
@@ -237,11 +246,11 @@ export class FormUserComponent implements OnInit {
         this.step = 1;
         this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
           res => {
-            Swal.fire({title: 'Informations sauvegardées'});
+            Swal.fire({title: info_saved});
             this.router.navigate(['/accueil']);
           },
           err => {
-            Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
+            Swal.fire(error_while_saving_info);
 
           }
 
@@ -374,11 +383,9 @@ export class FormUserComponent implements OnInit {
   }
 
   newUrl(): FormGroup {
-    const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
-    const whiteSpace = '^(?!\\s*$).+';
     return this.formBuilder.group({
-      libelle: [null, [Validators.required, Validators.pattern(reg)]],
-      titre: [null, [Validators.required, Validators.pattern(whiteSpace)]]
+      libelle: [null, [Validators.required, Validators.pattern(regex_website)]],
+      titre: [null, [Validators.required, Validators.pattern(regex_white_space)]]
     });
   }
 
@@ -395,12 +402,10 @@ export class FormUserComponent implements OnInit {
   }
 
   newFerme(): FormGroup {
-    const reg = '(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)';
-    const whiteSpace = '^(?!\\s*$).+';
     return this.formBuilder.group({
-      nom: [null, [Validators.required, Validators.pattern(whiteSpace)]],
+      nom: [null, [Validators.required, Validators.pattern(regex_white_space)]],
       presentation: '',
-      url: [null, [Validators.pattern(reg)]],
+      url: [null, [Validators.pattern(regex_website)]],
     });
   }
 
@@ -445,7 +450,7 @@ export class FormUserComponent implements OnInit {
 
       } else {
         isImage = false;
-        Swal.fire('Une image transmise a un format incorrect');
+        Swal.fire(incorrect_img_format);
         break;
       }
     }
@@ -468,7 +473,7 @@ export class FormUserComponent implements OnInit {
             this.selectedFile = undefined;
           },
           err => {
-            Swal.fire('Une erreur s\'est produite lors de l\'enregistrement, la taille de l\'image ne doit pas dépasser 500KB');
+            Swal.fire(error_while_saving_img);
           }
         );
       }
@@ -483,7 +488,7 @@ export class FormUserComponent implements OnInit {
         this.imagesLink.splice(index, 1);
       },
       err => {
-        Swal.fire('Une erreur s\'est produite lors de l\'enregistrement des informations saisies');
+        Swal.fire(error_while_saving_info);
       });
   }
 

@@ -6,6 +6,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
+import {delete_accout_confirmation} from "../../../global";
 
 @Component({
   selector: 'app-user-validation',
@@ -46,7 +47,7 @@ export class UserValidationComponent implements OnInit {
   deleteUser(user: User): void {
     const dialogRef = this.dialog.open (ConfirmationDialogComponent, {
       width: '350px',
-      data: 'Voulez-vous vraiment supprimer l\'utilisateur: ' + user.getUsername +  '?'
+      data: delete_accout_confirmation + user.getUsername +  '?'
     });
 
     dialogRef.afterClosed().subscribe(res => {
