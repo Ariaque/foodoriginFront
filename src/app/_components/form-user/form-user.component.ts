@@ -493,6 +493,7 @@ export class FormUserComponent implements OnInit {
   }
 
   submit(): void {
+    console.log('test');
     if (this.step === 1) {
       if (this.formGroupGeneralInfo.valid) {
         this.step = this.step + 1;
