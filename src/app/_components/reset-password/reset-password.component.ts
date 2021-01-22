@@ -45,10 +45,15 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.myForm.valid) {
     this.resetPasswordService.saveNewPassword(this.token, this.newPassword).subscribe(success => {
       if (success){
         this.router.navigate(['/success'], { queryParams: { title: reset_password_confirmed_title, text: reset_password_confirmed_text } });
       }});
+    }
+    else {
+      this.validateAllFields(this.myForm);
+    }
   }
 
   get password(): AbstractControl {
@@ -57,5 +62,14 @@ export class ResetPasswordComponent implements OnInit {
   get confiPassword(): AbstractControl {
     return this.myForm.get('newPasswordConfirmation');
   }
-
+  validateAllFields(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFields(control);
+      }
+    });
+  }
 }
