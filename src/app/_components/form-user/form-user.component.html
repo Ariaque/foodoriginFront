@@ -3,265 +3,265 @@
 
 <form (ngSubmit)="submit()">
   <div class="fields-div">
-  <div *ngIf="step == 1" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
-    <mat-card fxFlex="50">
-      <mat-card-title class="title">Informations générales</mat-card-title>
-      <form [formGroup]="formGroupGeneralInfo" #infosForm="ngForm" name="form" >
-        <div class="form-group col-md-12">
-          <label for="description">Description</label>
-          <textarea [(ngModel)]="description" [ngModelOptions]="{standalone:true}" class="form-control"
-                    id="description" lang="fr" placeholder="Saisissez la présentation de votre entreprise" lang="fr" rows="3"
-                    style="resize: none">
+    <div *ngIf="step == 1" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
+      <mat-card fxFlex="50">
+        <mat-card-title class="title">Informations générales</mat-card-title>
+        <form [formGroup]="formGroupGeneralInfo" #infosForm="ngForm" name="form" >
+          <div class="form-group col-md-12">
+            <label for="description">Description</label>
+            <textarea [(ngModel)]="description" [ngModelOptions]="{standalone:true}" class="form-control"
+                      id="description" lang="fr" placeholder="Saisissez la présentation de votre entreprise" lang="fr" rows="3"
+                      style="resize: none">
         {{this.description}}</textarea>
-        </div>
-        <div class="form-group col-md-8">
-          <label for="nombre_employes">Nombre d'employés </label>
-          <input type="number" (keypress)="validate($event)" [(ngModel)]="nbEmployes" [min]="1" [ngModelOptions]="{standalone:true}" class="form-control"
-                 id="nombre_employes" type="number">
-        </div>
-        <div>
-          <label for="siteW" class="padding-block" for="siteW">Site web </label>
-        </div>
-        <div class="input-icone padding-block no-padding">
-          <i aria-hidden="true" class="fa fa-globe icone-size"></i>
-          <input formControlName="siteW" [ngClass]="{
+          </div>
+          <div class="form-group col-md-8">
+            <label for="nombre_employes">Nombre d'employés </label>
+            <input type="number" (keypress)="validate($event)" [(ngModel)]="nbEmployes" [min]="1" [ngModelOptions]="{standalone:true}" class="form-control"
+                   id="nombre_employes" type="number">
+          </div>
+          <div>
+            <label for="siteW" class="padding-block" for="siteW">Site web </label>
+          </div>
+          <div class="input-icone padding-block no-padding">
+            <i aria-hidden="true" class="fa fa-globe icone-size"></i>
+            <input formControlName="siteW" [ngClass]="{
           'form-control':true,
           'is-invalid':!siteW.valid && siteW.touched}" [(ngModel)]="lienSite" [ngModelOptions]="{standalone:true}" name="siteW" class="form-control" id="siteW" placeholder="Url du site web"
-                 type="text">
-          <small *ngIf= "siteW.errors?.pattern && siteW.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
-        </div>
-        <div class="form-group col-md-12">
-          <mat-checkbox  (change) = "check()" [(ngModel)]="appartientGroupe" [ngModelOptions]="{standalone:true}" class="example-margin">
-            Appartient à un groupe
-          </mat-checkbox>
-        </div>
-        <div *ngIf="appartientGroupe" class="form-group col-md-12">
-          <label for="siret_groupe">Siret du groupe*</label>
-          <input formControlName= "siret" [ngClass]="{
+                   type="text">
+            <small *ngIf= "siteW.errors?.pattern && siteW.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
+          </div>
+          <div class="form-group col-md-12">
+            <mat-checkbox  (change) = "check()" [(ngModel)]="appartientGroupe" [ngModelOptions]="{standalone:true}" class="example-margin">
+              Appartient à un groupe
+            </mat-checkbox>
+          </div>
+          <div *ngIf="appartientGroupe" class="form-group col-md-12">
+            <label for="siret_groupe">Siret du groupe*</label>
+            <input formControlName= "siret" [ngClass]="{
           'form-control':true,
           'is-invalid':!numSiret.valid &&  numSiret.touched}" [(ngModel)]="siretGroupe" [maxLength]="14" [ngModelOptions]="{standalone:true}" class="form-control"
-                 id="siret_groupe" name ="siret" placeholder="Siret du groupe" type="text">
-          <small *ngIf="this.siretGroupe.length < 14 && this.siretGroupe.length > 0 && numSiret.touched" class="form-text custom-invalid-feedback" >Le numéro siret doit
-            comporter 14 chiffres</small>
-          <small *ngIf="this.siretGroupe.length == 0 && numSiret.touched" class="form-text custom-invalid-feedback">Le numéro siret est requis</small>
-        </div>
-        <div class="form-group col-md-12">
-          <label for="labels"> Labels </label>
-          <mat-select [formControl]="listLabel" class="form-control" id="labels" multiple name="labels"
-                      placeholder="Selectionnez vos labels">
-            <mat-option *ngFor="let label of this.labels" [value]="label">{{label.libelle}}</mat-option>
-          </mat-select>
-        </div>
-        <div class="form-group col-md-12">
-          <label for="certificat">Certifications </label>
-          <mat-select [formControl]="listCertif" class="form-control" id="certificat"
-                      multiple name="certificat" placeholder="Selectionnez vos certifications">
-            <mat-option *ngFor="let certif of this.certifications" [value]="certif">{{certif.libelle}}</mat-option>
-          </mat-select>
-        </div>
-      </form>
-    </mat-card>
-    <img src="assets/images/enSavoirPlusExplicationP1.png" class="knowMoreImg"/>
-  </div>
-  <div *ngIf="step == 2" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
-    <mat-card fxFlex="50">
-      <form #rsForm="ngForm" [formGroup]="formGroupSocialLinks" (ngSubmit)="rsForm.resetForm()">
-        <mat-card-title class="title">Réseaux sociaux</mat-card-title>
-        <div class="input-icone">
-          <i aria-hidden="true" class="fa fa-facebook-square icone-size"></i>
-          <input formControlName="lienF" [ngClass]="{
+                   id="siret_groupe" name ="siret" placeholder="Siret du groupe" type="text">
+            <small *ngIf="this.siretGroupe.length < 14 && this.siretGroupe.length > 0 && numSiret.touched" class="form-text custom-invalid-feedback" >Le numéro siret doit
+              comporter 14 chiffres</small>
+            <small *ngIf="this.siretGroupe.length == 0 && numSiret.touched" class="form-text custom-invalid-feedback">Le numéro siret est requis</small>
+          </div>
+          <div class="form-group col-md-12">
+            <label for="labels"> Labels </label>
+            <mat-select [formControl]="listLabel" class="form-control" id="labels" multiple name="labels"
+                        placeholder="Selectionnez vos labels">
+              <mat-option *ngFor="let label of this.labels" [value]="label">{{label.libelle}}</mat-option>
+            </mat-select>
+          </div>
+          <div class="form-group col-md-12">
+            <label for="certificat">Certifications </label>
+            <mat-select [formControl]="listCertif" class="form-control" id="certificat"
+                        multiple name="certificat" placeholder="Selectionnez vos certifications">
+              <mat-option *ngFor="let certif of this.certifications" [value]="certif">{{certif.libelle}}</mat-option>
+            </mat-select>
+          </div>
+        </form>
+      </mat-card>
+      <img src="assets/images/enSavoirPlusExplicationP1.png" class="knowMoreImg"/>
+    </div>
+    <div *ngIf="step == 2" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
+      <mat-card fxFlex="50">
+        <form #rsForm="ngForm" [formGroup]="formGroupSocialLinks" (ngSubmit)="rsForm.resetForm()">
+          <mat-card-title class="title">Réseaux sociaux</mat-card-title>
+          <div class="input-icone">
+            <i aria-hidden="true" class="fa fa-facebook-square icone-size"></i>
+            <input formControlName="lienF" [ngClass]="{
           'form-control':true,
           'is-invalid':!lienF.valid && lienF.touched}" [(ngModel)]="lienFacebook" [ngModelOptions]="{standalone:true}" name="lienF" class="form-control" id="facebook" placeholder="Lien Facebook"
-                 type="text">
-          <small *ngIf= "lienF.errors?.pattern && lienF.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
-        </div>
-        <div class="input-icone">
-          <i aria-hidden="true" class="fa fa-twitter-square icone-size"></i>
-          <input formControlName="lienT" [ngClass]="{
+                   type="text">
+            <small *ngIf= "lienF.errors?.pattern && lienF.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
+          </div>
+          <div class="input-icone">
+            <i aria-hidden="true" class="fa fa-twitter-square icone-size"></i>
+            <input formControlName="lienT" [ngClass]="{
           'form-control':true,
           'is-invalid':!lienT.valid && lienT.touched}" [(ngModel)]="lienTwitter" [ngModelOptions]="{standalone:true}" name="lienT" class="form-control" id="twitter" placeholder="Lien Twitter"
-                 type="text">
-          <small *ngIf= "lienT.errors?.pattern && lienT.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide</small>
-        </div>
-        <div class="input-icone">
-          <i aria-hidden="true" class="fa fa-instagram icone-size"></i>
-          <input formControlName="lienI" [ngClass]="{
+                   type="text">
+            <small *ngIf= "lienT.errors?.pattern && lienT.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide</small>
+          </div>
+          <div class="input-icone">
+            <i aria-hidden="true" class="fa fa-instagram icone-size"></i>
+            <input formControlName="lienI" [ngClass]="{
           'form-control':true,
           'is-invalid':!lienI.valid && lienI.touched}" [(ngModel)]="lienInsta" [ngModelOptions]="{standalone:true}" name="lienI" class="form-control" id="instagram" placeholder="Lien Instagram"
-                 type="text">
-          <small *ngIf= "lienI.errors?.pattern && lienI.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
-        </div>
-      </form>
-    </mat-card>
-    <img src="assets/images/enSavoirPlusExplicationP2.png" class="knowMoreImg"/>
-  </div>
-
-  <div *ngIf="step == 3"   class="main-div" fxFlexFill fxLayoutAlign="space-around center">
-    <mat-card fxFlex="50">
-      <mat-card-title class="title">Gestion des médias (images) </mat-card-title>
-      <h2> Images </h2>
-      <div>
-        <h4> Sélectionnez une ou plusieurs images : </h4>
-        <form #imagesForm="ngForm" [formGroup]="formGroupPictures" >
-          <input (change)="onFileChanged($event)" accept="image/*" multiple type="file">
-          <button (click)="this.onUpload()" class="btn btn-primary ftp-valid-button">Valider</button>
+                   type="text">
+            <small *ngIf= "lienI.errors?.pattern && lienI.touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
+          </div>
         </form>
-      </div>
-      <div>
-        <h2 *ngIf="imagesLink.length > 0"> Images sauvegardées : </h2>
-        <div *ngFor="let link of imagesLink" class="div-img">
-          <img [src]="link" height="200" width="300">
-          <button type="button" (click)="deleteImage(link)" class="btn btn-danger btn-del-image">Supprimer</button>
+      </mat-card>
+      <img src="assets/images/enSavoirPlusExplicationP2.png" class="knowMoreImg"/>
+    </div>
+
+    <div *ngIf="step == 3"   class="main-div" fxFlexFill fxLayoutAlign="space-around center">
+      <mat-card fxFlex="50">
+        <mat-card-title class="title">Gestion des médias (images) </mat-card-title>
+        <h2> Images </h2>
+        <div>
+          <h4> Sélectionnez une ou plusieurs images : </h4>
+          <form #imagesForm="ngForm" [formGroup]="formGroupPictures" >
+            <input (change)="onFileChanged($event)" accept="image/*" multiple type="file">
+            <button (click)="this.onUpload()" class="btn btn-primary ftp-valid-button">Valider</button>
+          </form>
         </div>
-      </div>
-    </mat-card>
-    <img src="assets/images/enSavoirPlusExplicationP3.png" class="knowMoreImg knowMoreImg-align"/>
-  </div>
-  <div *ngIf="step == 4" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
-    <mat-card fxFlex="50">
-      <mat-card-title class="title">Gestion des médias (vidéos)</mat-card-title>
-      <div>
-        <h2> Vidéos </h2>
-        <h4> Saisissez le(s) lien(s) des vidéos que vous souhaitez renseigner: </h4>
-        <form [formGroup]="urlVideoForm">
-          <table class="table borderless" formArrayName="urls">
-            <tr *ngFor="let url of urls().controls |slice:0:10; let i = index" [formGroupName]="i">
-              <table class="table-fields-chromium-fix">
-                <tr>
-                  <td class="form-group col-md-6">
-                    <label for="urlV"> Lien vers la vidéo*: </label>
-                    <input [ngClass]="{
+        <div>
+          <h2 *ngIf="imagesLink.length > 0"> Images sauvegardées : </h2>
+          <div *ngFor="let link of imagesLink" class="div-img">
+            <img [src]="link" height="200" width="300">
+            <button type="button" (click)="deleteImage(link)" class="btn btn-danger btn-del-image">Supprimer</button>
+          </div>
+        </div>
+      </mat-card>
+      <img src="assets/images/enSavoirPlusExplicationP3.png" class="knowMoreImg knowMoreImg-align"/>
+    </div>
+    <div *ngIf="step == 4" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
+      <mat-card fxFlex="50">
+        <mat-card-title class="title">Gestion des médias (vidéos)</mat-card-title>
+        <div>
+          <h2> Vidéos </h2>
+          <h4> Saisissez le(s) lien(s) des vidéos que vous souhaitez renseigner: </h4>
+          <form [formGroup]="urlVideoForm">
+            <table class="table borderless" formArrayName="urls">
+              <tr *ngFor="let url of urls().controls |slice:0:10; let i = index" [formGroupName]="i">
+                <table class="table-fields-chromium-fix">
+                  <tr>
+                    <td class="form-group col-md-6">
+                      <label for="urlV"> Lien vers la vidéo*: </label>
+                      <input [ngClass]="{
                 'form-control':true,
                 'is-invalid':!url.get('libelle').valid && url.get('libelle').touched}" class="form-control" formControlName="libelle" id="urlV" type="text" name="libelle">
-                    <small *ngIf= "url.get('libelle').errors?.required && url.get('libelle').touched" class="form-text custom-invalid-feedback" >Le lien est requis</small>
-                    <small *ngIf= "url.get('libelle').errors?.pattern && url.get('libelle').touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
-                  </td>
-                  <td class="form-group col-md-6">
-                    <label for="titreV"> Titre de la vidéo: * </label>
-                    <input class="form-control" formControlName="titre" id="titreV" name="titreV" type="text" [ngClass]="{'form-control':true,'is-invalid': url.get('titre').errors && url.get('titre').touched}">
-                    <small *ngIf="url.get('titre').errors?.pattern && url.get('titre').touched" class="form-text custom-invalid-feedback">Pas de titre vide</small>
-                    <small *ngIf="url.get('titre').errors?.required && url.get('titre').touched" class="form-text custom-invalid-feedback">Titre est requis</small>
-                  </td>
-                </tr>
-              </table>
-              <td class="center-element">
-                <button type="button" (click)="removeUrl(i)" class="btn btn-danger btn-url">Supprimer</button>
+                      <small *ngIf= "url.get('libelle').errors?.required && url.get('libelle').touched" class="form-text custom-invalid-feedback" >Le lien est requis</small>
+                      <small *ngIf= "url.get('libelle').errors?.pattern && url.get('libelle').touched" class="form-text custom-invalid-feedback" >Saisir un lien valide </small>
+                    </td>
+                    <td class="form-group col-md-6">
+                      <label for="titreV"> Titre de la vidéo: * </label>
+                      <input class="form-control" formControlName="titre" id="titreV" name="titreV" type="text" [ngClass]="{'form-control':true,'is-invalid': url.get('titre').errors && url.get('titre').touched}">
+                      <small *ngIf="url.get('titre').errors?.pattern && url.get('titre').touched" class="form-text custom-invalid-feedback">Pas de titre vide</small>
+                      <small *ngIf="url.get('titre').errors?.required && url.get('titre').touched" class="form-text custom-invalid-feedback">Titre est requis</small>
+                    </td>
+                  </tr>
+                </table>
+                <td class="center-element">
+                  <button type="button" (click)="removeUrl(i)" class="btn btn-danger btn-url">Supprimer</button>
+                </td>
+              </tr>
+            </table>
+            <button (click)="addUrl()" class="btn btn-primary position-bouton" type="button">Ajouter lien</button>
+          </form>
+          *Champ obligatoire
+        </div>
+      </mat-card>
+      <img src="assets/images/enSavoirPlusExplicationP4.png" class="knowMoreImg"/>
+    </div>
+    <div *ngIf="step == 5" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
+      <mat-card fxFlex="50">
+        <mat-card-title class="title"> Agriculteurs/Fermes Partenaires</mat-card-title>
+        <h4> Saisissez le(s) ferme(s)/agriculteur(s) partenaires que vous souhaitez renseigner: </h4>
+        <form [formGroup]="fermeForm">
+          <table class="table borderless" formArrayName="fermes">
+            <tr *ngFor="let ferme of fermes().controls |slice:0:5; let i = index" [formGroupName]="i">
+              <td>
+                <div class="form-group col-md-12">
+                  <label for="nomF"> Nom*: </label>
+                  <input [ngClass]="{'form-control':true,'is-invalid': ferme.get('nom').errors && ferme.get('nom').touched}" class="form-control" formControlName="nom" id="nomF" name="nomF" type="text" placeholder="Saisissez le nom de la ferme/l'agriculteur">
+                  <small *ngIf="ferme.get('nom').errors?.pattern && ferme.get('nom').touched" class="form-text custom-invalid-feedback">Pas de nom vide</small>
+                  <small *ngIf="ferme.get('nom').errors?.required && ferme.get('nom').touched" class="form-text custom-invalid-feedback">Nom est requis</small>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="presentationF"> Presentation: </label>
+                  <textarea class="form-control" cols="45"
+                            formControlName="presentation" id="presentationF" lang="fr" name="presentationF" placeholder="Saisissez la description de la ferme/l'agriculteur" rows="2"
+                            style="resize: none" type="text"></textarea>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="urlF"> Lien vers le site web de la ferme: </label>
+                  <input [ngClass]="{'form-control':true,
+              'is-invalid':!ferme.get('url').valid && ferme.get('url').touched}" class="form-control" formControlName="url" id="urlF" name="urlF" type="text" placeholder="Ex. http://www.expl.com/">
+                  <small *ngIf= "ferme.get('url').errors?.pattern && ferme.get('url').touched" class="form-text custom-invalid-feedback" >Saisir un lien valide</small>
+                </div>
+                <button type="button" (click)="removeFerme(i)" class="btn btn-danger position-bouton">Supprimer</button>
               </td>
             </tr>
           </table>
-          <button (click)="addUrl()" class="btn btn-primary position-bouton" type="button">Ajouter lien</button>
+          <button (click)="addFerme()" class="btn btn-primary" style="float: right" type="button">Ajouter</button>
         </form>
         *Champ obligatoire
-      </div>
-    </mat-card>
-      <img src="assets/images/enSavoirPlusExplicationP4.png" class="knowMoreImg"/>
-  </div>
-  <div *ngIf="step == 5" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
-    <mat-card fxFlex="50">
-      <mat-card-title class="title"> Agriculteurs/Fermes Partenaires</mat-card-title>
-      <h4> Saisissez le(s) ferme(s)/agriculteur(s) partenaires que vous souhaitez renseigner: </h4>
-      <form [formGroup]="fermeForm">
-        <table class="table borderless" formArrayName="fermes">
-          <tr *ngFor="let ferme of fermes().controls |slice:0:5; let i = index" [formGroupName]="i">
-            <td>
-              <div class="form-group col-md-12">
-                <label for="nomF"> Nom*: </label>
-                <input [ngClass]="{'form-control':true,'is-invalid': ferme.get('nom').errors && ferme.get('nom').touched}" class="form-control" formControlName="nom" id="nomF" name="nomF" type="text" placeholder="Saisissez le nom de la ferme/l'agriculteur">
-                <small *ngIf="ferme.get('nom').errors?.pattern && ferme.get('nom').touched" class="form-text custom-invalid-feedback">Pas de nom vide</small>
-                <small *ngIf="ferme.get('nom').errors?.required && ferme.get('nom').touched" class="form-text custom-invalid-feedback">Nom est requis</small>
-              </div>
-              <div class="form-group col-md-12">
-                <label for="presentationF"> Presentation: </label>
-                <textarea class="form-control" cols="45"
-                          formControlName="presentation" id="presentationF" lang="fr" name="presentationF" placeholder="Saisissez la description de la ferme/l'agriculteur" rows="2"
-                          style="resize: none" type="text"></textarea>
-              </div>
-              <div class="form-group col-md-12">
-                <label for="urlF"> Lien vers le site web de la ferme: </label>
-                <input [ngClass]="{'form-control':true,
-              'is-invalid':!ferme.get('url').valid && ferme.get('url').touched}" class="form-control" formControlName="url" id="urlF" name="urlF" type="text" placeholder="Ex. http://www.expl.com/">
-                <small *ngIf= "ferme.get('url').errors?.pattern && ferme.get('url').touched" class="form-text custom-invalid-feedback" >Saisir un lien valide</small>
-              </div>
-              <button type="button" (click)="removeFerme(i)" class="btn btn-danger position-bouton">Supprimer</button>
-            </td>
-          </tr>
-        </table>
-        <button (click)="addFerme()" class="btn btn-primary" style="float: right" type="button">Ajouter</button>
-      </form>
-      *Champ obligatoire
-    </mat-card>
-    <img src="assets/images/enSavoirPlusExplicationP5.png" class="knowMoreImg"/>
-  </div>
-  <div *ngIf="step == 6" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
-    <mat-card fxFlex="60">
-      <mat-card-title class="title"> Denrées animales utilisées</mat-card-title>
-      <h4> Saisissez les denrées animales utilisées et leurs origines </h4>
-      <form [formGroup]="denreeForm" >
-        <table class="table borderless" formArrayName="denrees">
-          <tr *ngFor="let denree of denrees().controls; let i = index" [formGroupName]="i">
-            <td>
-              <div class="form-group">
-                <label for="typeD">Type de denrée *</label>
-                <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('nom').errors && denree.get('nom').touched}" class="form-control" formControlName="nom" (selectionChange)="fillEspece(i)" id="typeD" name="typeD">
-                  <mat-option *ngFor="let nom of this.typeDenreeNom.sort()" [value]="nom"> {{nom}}</mat-option>
-                </mat-select>
-                <small *ngIf= "denree.get('nom').errors?.required && denree.get('nom').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
-              </div>
+      </mat-card>
+      <img src="assets/images/enSavoirPlusExplicationP5.png" class="knowMoreImg"/>
+    </div>
+    <div *ngIf="step == 6" class="main-div" fxFlexFill fxLayoutAlign="space-around center">
+      <mat-card fxFlex="60">
+        <mat-card-title class="title"> Denrées animales utilisées</mat-card-title>
+        <h4> Saisissez les denrées animales utilisées et leurs origines </h4>
+        <form [formGroup]="denreeForm" >
+          <table class="table borderless" formArrayName="denrees">
+            <tr *ngFor="let denree of denrees().controls; let i = index" [formGroupName]="i">
+              <td>
+                <div class="form-group">
+                  <label for="typeD">Type de denrée *</label>
+                  <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('nom').errors && denree.get('nom').touched}" class="form-control" formControlName="nom" (selectionChange)="fillEspece(i)" id="typeD" name="typeD">
+                    <mat-option *ngFor="let nom of this.typeDenreeNom.sort()" [value]="nom"> {{nom}}</mat-option>
+                  </mat-select>
+                  <small *ngIf= "denree.get('nom').errors?.required && denree.get('nom').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
+                </div>
 
-              <div class="form-group">
-                <label for="origineD">Origine de la denrée *</label>
-                <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('pays').errors && denree.get('pays').touched}" class="form-control" formControlName="pays" (selectionChange)="fillRegion(i);" id="origineD" name="origineD">
-                  <mat-option *ngFor="let pays of this.typeOrigineNom.sort()" [value]="pays"> {{pays}}</mat-option>
-                </mat-select>
-                <small *ngIf= "denree.get('pays').errors?.required && denree.get('pays').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
-              </div>
-            </td>
-            <td>
-              <div class="form-group">
-                <label for="typeE">Espèce *</label>
-                <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('espece').errors && denree.get('espece').touched}" class="form-control" formControlName="espece" (selectionChange)="fillAnimal(i)" id="typeE" name="typeE">
-                  <mat-option *ngFor="let espece of this.typeDenreeEspece[i]" [value]="espece"> {{espece}}</mat-option>
-                </mat-select>
-                <small *ngIf= "denree.get('espece').errors?.required && denree.get('espece').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
-              </div>
-              <div>
-                <label for="origineR">Région *</label>
-                <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('region').errors && denree.get('region').touched}"class="form-control" formControlName="region" id="origineR" name="origineR">
-                  <mat-option *ngFor="let region of this.typeOrigineRegion[i]" [value]="region"> {{region}}</mat-option>
-                </mat-select>
-                <small *ngIf= "denree.get('region').errors?.required && denree.get('region').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
-              </div>
-            </td>
-            <td>
-              <div class="form-group">
-                <label for="typeA">Animal *</label>
-                <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('animal').errors && denree.get('animal').touched}" class="form-control" formControlName="animal" id="typeA" name="typeA">
-                  <mat-option *ngFor="let animal of this.typeDenreeAnimal[i]" [value]="animal" > {{animal}}</mat-option>
-                </mat-select>
-                <small *ngIf= "denree.get('animal').errors?.required && denree.get('animal').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
-              </div>
-            </td>
-            <td>
-              <div class="form-group">
-                <label for="infosT">Infos complémentaires</label>
-                <input type="text" id="infosT" name="infosT" class="form-control" formControlName="infosT">
-              </div>
-              <div>
-                <label for="infosO">Infos complémentaires</label>
-                <input type="text" id="infosO" name="infosO" class="form-control" formControlName="infosO">
-              </div>
-            </td>
-            <td class="center-element">
-              <button type="button" (click)="removeDenree(i)" class="btn btn-danger btn-url">Supprimer</button>
-            </td>
-          </tr>
-        </table>
-        <button (click)="addDenree()" class="btn btn-primary" style="float: right; margin-right: 2.5%" type="button">Ajouter</button>
-        *Champ obligatoire
-      </form>
-    </mat-card>
-    <img src="assets/images/enSavoirPlusExplicationP6.png" class="knowMoreImg"/>
-  </div>
+                <div class="form-group">
+                  <label for="origineD">Origine de la denrée *</label>
+                  <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('pays').errors && denree.get('pays').touched}" class="form-control" formControlName="pays" (selectionChange)="fillRegion(i);" id="origineD" name="origineD">
+                    <mat-option *ngFor="let pays of this.typeOrigineNom.sort()" [value]="pays"> {{pays}}</mat-option>
+                  </mat-select>
+                  <small *ngIf= "denree.get('pays').errors?.required && denree.get('pays').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <label for="typeE">Espèce *</label>
+                  <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('espece').errors && denree.get('espece').touched}" class="form-control" formControlName="espece" (selectionChange)="fillAnimal(i)" id="typeE" name="typeE">
+                    <mat-option *ngFor="let espece of this.typeDenreeEspece[i]" [value]="espece"> {{espece}}</mat-option>
+                  </mat-select>
+                  <small *ngIf= "denree.get('espece').errors?.required && denree.get('espece').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
+                </div>
+                <div>
+                  <label for="origineR">Région *</label>
+                  <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('region').errors && denree.get('region').touched}"class="form-control" formControlName="region" id="origineR" name="origineR">
+                    <mat-option *ngFor="let region of this.typeOrigineRegion[i]" [value]="region"> {{region}}</mat-option>
+                  </mat-select>
+                  <small *ngIf= "denree.get('region').errors?.required && denree.get('region').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <label for="typeA">Animal *</label>
+                  <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('animal').errors && denree.get('animal').touched}" class="form-control" formControlName="animal" id="typeA" name="typeA">
+                    <mat-option *ngFor="let animal of this.typeDenreeAnimal[i]" [value]="animal" > {{animal}}</mat-option>
+                  </mat-select>
+                  <small *ngIf= "denree.get('animal').errors?.required && denree.get('animal').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <label for="infosT">Infos complémentaires</label>
+                  <input type="text" id="infosT" name="infosT" class="form-control" formControlName="infosT">
+                </div>
+                <div>
+                  <label for="infosO">Infos complémentaires</label>
+                  <input type="text" id="infosO" name="infosO" class="form-control" formControlName="infosO">
+                </div>
+              </td>
+              <td class="center-element">
+                <button type="button" (click)="removeDenree(i)" class="btn btn-danger btn-url">Supprimer</button>
+              </td>
+            </tr>
+          </table>
+          <button (click)="addDenree()" class="btn btn-primary" style="float: right; margin-right: 2.5%" type="button">Ajouter</button>
+          *Champ obligatoire
+        </form>
+      </mat-card>
+      <img src="assets/images/enSavoirPlusExplicationP6.png" class="knowMoreImg"/>
+    </div>
   </div>
   <div class="div-btn" fxFlexFill fxLayoutAlign="space-around center">
     <mat-card class="button-mat-card">

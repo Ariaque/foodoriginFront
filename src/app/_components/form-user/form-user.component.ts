@@ -152,10 +152,6 @@ export class FormUserComponent implements OnInit {
     this.globalForm = this.formBuilder.group({});
     const reg = regex_website;
     const whiteSpace = regex_white_space;
-    this.nbEmployes = '1';
-    this.formGroupGeneralInfo.controls.siret.disable();
-
-    // Initializes form group
     this.formGroupGeneralInfo = this.formBuilder.group({
       siteW: [null, [Validators.pattern(reg)]],
       siret: [null, [Validators.required, Validators.pattern(regex_siret)]],
@@ -168,6 +164,7 @@ export class FormUserComponent implements OnInit {
     });
     this.formGroupPictures = this.formBuilder.group({});
     this.row = this.formBuilder.group({});
+    this.nbEmployes = '1';
 
     // Initializes label's list
     this.labelService.findAll().subscribe((result) => {
@@ -279,48 +276,32 @@ export class FormUserComponent implements OnInit {
   }
 
   /**
-   * Saves informations entered by the user
+   * Saves information entered by the user
    */
   saveInfos(): void {
     this.createFermeList(this.fermeForm.value.fermes);
     this.createUrlList(this.urlVideoForm.value.urls);
     this.createDenreeList(this.denreeForm.value.denrees);
     this.infos = new InfosTransformateur(this.transformateur, this.description, this.nbEmployes, this.lienSite,
-       this.lienFacebook, this.lienTwitter, this.lienInsta, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
-       this.listCertif.value, this.urlVideos, this.fermesP, this.denreeSelected);
+      this.lienFacebook, this.lienTwitter, this.lienInsta, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
+      this.listCertif.value, this.urlVideos, this.fermesP, this.denreeSelected);
 
-    if (this.step === 6 && this.denreeForm.valid){
+    if (this.step === 6 && this.denreeForm.valid) {
       window.scroll(0, 0);
       this.step = 1;
       this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
         res => {
-      if (this.step == 6 && this.denreeForm.valid){
-        window.scroll(0, 0);
-        this.step = 1;
-        this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
-          res => {
-            this.step = 6;
-            Swal.fire({title: info_saved});
-            this.router.navigate(['/user']);
-          },
-          err => {
-            this.step = 6;
-            Swal.fire(error_while_saving_info);
+          this.step = 6;
+          Swal.fire({title: info_saved});
+          this.router.navigate(['/accueil']);
+        },
+        err => {
+          this.step = 6;
+          Swal.fire(error_while_saving_info);
         });
-    }
-    else{
+    } else {
       this.validateAllFieldsDynamicForm(this.denrees());
     }
-
-          },
-
-        );
-      }
-      else{
-        this.validateAllFieldsDynamicForm(this.denrees());
-      }
-
-
   }
 
   /**
@@ -351,8 +332,10 @@ export class FormUserComponent implements OnInit {
    */
   equalityType(type1: TypeDenree, type2: TypeDenree): boolean {
     let ret = false;
-    if (type1.getId() === type2.getId() && type1.getEspece() === type2.getEspece() && type1.getNom() === type2.getNom() && type1.getAnimal() === type2.getAnimal()) {
-      ret = true;
+    if (type1 != null) {
+      if (type1.getId() === type2.getId() && type1.getEspece() === type2.getEspece() && type1.getNom() === type2.getNom() && type1.getAnimal() === type2.getAnimal()) {
+        ret = true;
+      }
     }
     return ret;
   }
@@ -364,8 +347,10 @@ export class FormUserComponent implements OnInit {
    */
   equalityOrigine(origine1: OrigineDenree, origine2: OrigineDenree): boolean {
     let ret = false;
-    if (origine1.getId() === origine2.getId() && origine1.getPays() === origine2.getPays() && origine1.getRegion() === origine2.getRegion()) {
-      ret = true;
+    if (origine1 != null) {
+      if (origine1.getId() === origine2.getId() && origine1.getPays() === origine2.getPays() && origine1.getRegion() === origine2.getRegion()) {
+        ret = true;
+      }
     }
     return ret;
   }
@@ -568,10 +553,10 @@ export class FormUserComponent implements OnInit {
   newDenree(): FormGroup {
     return this.formBuilder.group({
       nom: [null, Validators.required],
-      espece: [null, Validators.required],
-      animal: [null, Validators.required],
+      espece: [{value: null, disabled: true}, Validators.required],
+      animal: [{value: null, disabled: true}, Validators.required],
       pays: [null, Validators.required],
-      region: [null, Validators.required],
+      region: [{value: null, disabled: true}, Validators.required],
       infosT: '',
       infosO: ''
     });
@@ -581,6 +566,8 @@ export class FormUserComponent implements OnInit {
    * Adds a new line in the "Denrées animales utilisées" form
    */
   addDenree(): void {
+    const newDenree = this.newDenree();
+    newDenree.controls.espece.disable();
     this.denrees().push(this.newDenree());
   }
 
@@ -713,6 +700,10 @@ export class FormUserComponent implements OnInit {
    * @param i
    */
   fillEspece(i): void {
+    const formArray = this.denrees();
+    const formGroup = formArray.at(i) as FormGroup;
+    const item = formGroup.controls.espece;
+    item.enable();
     this.denreeService.findEspeceByNom(this.denreeForm.value.denrees[i].nom).subscribe(res => {
       this.typeDenreeEspece[i] = res.sort();
       this.typeDenreeAnimal[i] = [];
@@ -724,6 +715,10 @@ export class FormUserComponent implements OnInit {
    * @param i
    */
   fillAnimal(i): void {
+    const formArray = this.denrees();
+    const formGroup = formArray.at(i) as FormGroup;
+    const item = formGroup.controls.animal;
+    item.enable();
     this.denreeService.findAnimalByEspece(this.denreeForm.value.denrees[i].espece).subscribe(res => {
       this.typeDenreeAnimal[i] = res.sort();
     });
@@ -734,6 +729,10 @@ export class FormUserComponent implements OnInit {
    * @param i
    */
   fillRegion(i): void {
+    const formArray = this.denrees();
+    const formGroup = formArray.at(i) as FormGroup;
+    const item = formGroup.controls.region;
+    item.enable();
     this.denreeService.findRegionByPays(this.denreeForm.value.denrees[i].pays).subscribe(res => {
       this.typeOrigineRegion[i] = res.sort();
     });
@@ -769,7 +768,7 @@ export class FormUserComponent implements OnInit {
    */
   check(): void {
     if (!this.appartientGroupe) {
-      this.formGroupGeneralInfo.controls.siret.disable();
+      this.formGroupGeneralInfo.controls['siret'].disable();
     } else {
       this.formGroupGeneralInfo.controls['siret'].enable();
     }
