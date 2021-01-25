@@ -26,7 +26,7 @@ import {
   regex_siret,
   regex_website,
   regex_white_space
-} from "../../../global";
+} from '../../../global';
 
 
 @Component({
@@ -78,7 +78,18 @@ export class FormUserComponent implements OnInit {
   formGroupPictures: FormGroup;
   row: FormGroup;
 
-
+  /**
+   * Do service imports and initializes forms group
+   * @param labelService
+   * @param certifService
+   * @param infosTService
+   * @param transformateurService
+   * @param tokenService
+   * @param userService
+   * @param formBuilder
+   * @param router
+   * @param denreeService
+   */
   constructor(private labelService: LabelService, private certifService: CertificationService,
               private infosTService: InfosTransformateurService, private transformateurService: TransformateurService,
               private tokenService: TokenStorageService, private userService: UserService, private formBuilder: FormBuilder,
@@ -94,40 +105,61 @@ export class FormUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Get value in "Site internet" field
+   */
   get siteW(): AbstractControl {
     return this.formGroupGeneralInfo.get('siteW');
   }
 
+  /**
+   * Get value in "Lien Facebook" field
+   */
   get lienF(): AbstractControl {
     return this.formGroupSocialLinks.get('lienF');
   }
 
+  /**
+   * Get value in "Lien Twitter" field
+   */
   get lienT(): AbstractControl {
     return this.formGroupSocialLinks.get('lienT');
   }
 
+  /**
+   * Get value in "Lien Instagram" field
+   */
   get lienI(): AbstractControl {
     return this.formGroupSocialLinks.get('lienI');
   }
 
+  /**
+   * Get value in "Titre de la vidéo" field
+   */
   get titre(): AbstractControl {
     return this.formGroupGeneralInfo.get('titre');
   }
 
+  /**
+   * Get value in "Siret du groupe" field
+   */
   get numSiret(): FormGroup {
     const temp = this.formGroupGeneralInfo.controls.siret as FormGroup;
     return temp;
   }
 
   ngOnInit(): void {
-    this.globalForm = this.formBuilder.group({});
     const reg = regex_website;
     const whiteSpace = regex_white_space;
+    this.nbEmployes = '1';
+    this.formGroupGeneralInfo.controls.siret.disable();
+
+    // Initializes form group
     this.formGroupGeneralInfo = this.formBuilder.group({
       siteW: [null, [Validators.pattern(reg)]],
       siret: [null, [Validators.required, Validators.pattern(regex_siret)]],
     });
-    this.formGroupGeneralInfo.controls['siret'].disable();
+    this.globalForm = this.formBuilder.group({});
     this.formGroupSocialLinks = this.formBuilder.group({
       lienF: [null, [Validators.pattern(reg)]],
       lienT: [null, [Validators.pattern(reg)]],
@@ -135,13 +167,16 @@ export class FormUserComponent implements OnInit {
     });
     this.formGroupPictures = this.formBuilder.group({});
     this.row = this.formBuilder.group({});
-    this.nbEmployes = '1';
+
+    // Initializes label's list
     this.labelService.findAll().subscribe((result) => {
       this.labels = result;
     });
+    // Initializes certification's list
     this.certifService.findAll().subscribe((result) => {
       this.certifications = result;
     });
+    // Initializes list in "Denree Animale utilisées"
     this.denreeService.findAllOrgineDenree().subscribe((result) => {
       this.origineDenree = result.map(origine => Object.assign(new OrigineDenree(), origine));
     });
@@ -154,6 +189,7 @@ export class FormUserComponent implements OnInit {
     this.denreeService.findAllPaysOrigine().subscribe((result) => {
       this.typeOrigineNom = result;
     });
+    // Recover user information user's data if he has already entered it
     this.userService.findUserByName(this.tokenService.getUser().username).subscribe((res: any) => {
       this.transformateur = res.transformateur;
       this.infosTService.findById(this.transformateur.id).subscribe((info: InfosTransformateur) => {
@@ -168,12 +204,14 @@ export class FormUserComponent implements OnInit {
           this.lienFacebook = info.url_facebook;
           this.lienTwitter = info.url_twitter;
           const listL: Label[] = [];
+          // Recover user's labels
           for (let i = 0; i < info.labels.length; i++) {
             const index = this.labels.findIndex(obj => obj.libelle === info.labels[i].libelle);
             listL.push(this.labels[index]);
           }
           this.listLabel.setValue(listL);
 
+          // Recover user's certification
           const listC: Certification[] = [];
           for (let i = 0; i < info.certifications.length; i++) {
             const index = this.certifications.findIndex(obj => obj.libelle === info.certifications[i].libelle);
@@ -181,14 +219,16 @@ export class FormUserComponent implements OnInit {
           }
           this.listCertif.setValue(listC);
 
+          // Recover user's video urls
           this.urlVideosInit = info.urls.map(url => Object.assign(new UrlVideo(), url));
-
           this.urlVideosInit.forEach(url => {
             this.urls().push(this.formBuilder.group({
               libelle: [url.getLibelle(), [Validators.required, Validators.pattern(reg)]],
               titre: [url.getTitre(), [Validators.required, Validators.pattern(whiteSpace)]]
             }));
           });
+
+          // Recover user's partnership farm
           this.fermesPInit = info.fermesP.map(ferme => Object.assign(new FermePartenaire(), ferme));
           this.fermesPInit.forEach(ferme => {
             this.fermes().push(this.formBuilder.group({
@@ -197,6 +237,8 @@ export class FormUserComponent implements OnInit {
               url: [ferme.getUrl(), Validators.pattern(reg)]
             }));
           });
+
+          // Recover user's food product
           this.denreeInit = info.denrees.map(denree => Object.assign(new DenreeAnimale(), denree));
           for (let i = 0; i < this.denreeInit.length; i++) {
             const denree = this.denreeInit[i];
@@ -224,6 +266,7 @@ export class FormUserComponent implements OnInit {
               }));
           }
         }
+        // Recover user's link images
         this.infosTService.getImageTransformateur(this.transformateur.id).subscribe(image => {
           image.map(link => {
             this.imagesLink.push('http://foodorigin.projetetudiant.fr/images/' + this.transformateur.id + '/' + link);
@@ -233,6 +276,9 @@ export class FormUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Saves informations entered by the user
+   */
   saveInfos(): void {
     this.createFermeList(this.fermeForm.value.fermes);
     this.createUrlList(this.urlVideoForm.value.urls);
@@ -241,30 +287,30 @@ export class FormUserComponent implements OnInit {
        this.lienFacebook, this.lienTwitter, this.lienInsta, this.appartientGroupe, this.siretGroupe, this.listLabel.value,
        this.listCertif.value, this.urlVideos, this.fermesP, this.denreeSelected);
 
-      if (this.step == 6 && this.denreeForm.valid){
-        window.scroll(0, 0);
-        this.step = 1;
-        this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
-          res => {
+    if (this.step === 6 && this.denreeForm.valid){
+      window.scroll(0, 0);
+      this.step = 1;
+      this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
+        res => {
             Swal.fire({title: info_saved});
             this.router.navigate(['/accueil']);
           },
           err => {
             Swal.fire(error_while_saving_info);
-
-          }
-
-        );
-        console.log("denreeForm testtt 1")
-      }
-      else{
-        this.validateAllFieldsDynamicForm(this.denrees());
-        console.log(this.denreeForm.valid);
-      }
-
-
+        });
+    }
+    else{
+      this.validateAllFieldsDynamicForm(this.denrees());
+    }
   }
 
+  /**
+   * Checks if food product information are already present in the database
+   * @param type
+   * @param origine
+   * @param infosT
+   * @param infosO
+   */
   isAddDenree(type, origine, infosT, infosO): boolean {
     let ret = false;
     for (let i = 0; i < this.denreeInit.length; i++) {
@@ -279,6 +325,11 @@ export class FormUserComponent implements OnInit {
     return ret;
   }
 
+  /**
+   * Checks if two 'TypeDenree' object are equals
+   * @param type1
+   * @param type2
+   */
   equalityType(type1: TypeDenree, type2: TypeDenree): boolean {
     let ret = false;
     if (type1.getId() === type2.getId() && type1.getEspece() === type2.getEspece() && type1.getNom() === type2.getNom() && type1.getAnimal() === type2.getAnimal()) {
@@ -287,6 +338,11 @@ export class FormUserComponent implements OnInit {
     return ret;
   }
 
+  /**
+   * Checks if two 'OrigineDenree' object are equals
+   * @param origine1
+   * @param origine2
+   */
   equalityOrigine(origine1: OrigineDenree, origine2: OrigineDenree): boolean {
     let ret = false;
     if (origine1.getId() === origine2.getId() && origine1.getPays() === origine2.getPays() && origine1.getRegion() === origine2.getRegion()) {
@@ -295,6 +351,10 @@ export class FormUserComponent implements OnInit {
     return ret;
   }
 
+  /**
+   * Creates the list of food product entered
+   * @param denreeList
+   */
   createDenreeList(denreeList): void {
     for (let i = 0; i < denreeList.length; i++) {
       const denree = denreeList[i];
@@ -307,6 +367,12 @@ export class FormUserComponent implements OnInit {
     }
   }
 
+  /**
+   * Finds in the database's line which corresponds to food product type entered information
+   * @param type
+   * @param espece
+   * @param animal
+   */
   findTypeDenree(type, espece, animal): TypeDenree {
     let ret = null;
     for (let i = 0; i < this.typeDenree.length; i++) {
@@ -318,6 +384,11 @@ export class FormUserComponent implements OnInit {
     return ret;
   }
 
+  /**
+   * Finds in the database's line which corresponds to food product origin entered information
+   * @param pays
+   * @param region
+   */
   findOrigineDenree(pays, region): OrigineDenree {
     let ret = null;
     for (let i = 0; i < this.origineDenree.length; i++) {
@@ -329,6 +400,10 @@ export class FormUserComponent implements OnInit {
     return ret;
   }
 
+  /**
+   * Creates the list of partner farm entered
+   * @param fermeList
+   */
   createFermeList(fermeList): void {
     for (let i = 0; i < fermeList.length; i++) {
       const ferme = fermeList[i];
@@ -339,6 +414,12 @@ export class FormUserComponent implements OnInit {
     }
   }
 
+  /**
+   * Checks if partnership farm information are already present in the database
+   * @param nom
+   * @param presentation
+   * @param url
+   */
   isAddFerme(nom, presentation, url): boolean {
     let ret = false;
     for (let i = 0; i < this.fermesPInit.length; i++) {
@@ -350,6 +431,10 @@ export class FormUserComponent implements OnInit {
     return ret;
   }
 
+  /**
+   * Creates the list of video url entered
+   * @param urlList
+   */
   createUrlList(urlList): void {
     for (let i = 0; i < urlList.length; i++) {
       if (urlList[i].libelle != null && urlList[i].libelle !== '' && !this.isAddUrl(urlList[i].libelle, urlList[i].titre)) {
@@ -359,6 +444,11 @@ export class FormUserComponent implements OnInit {
     }
   }
 
+  /**
+   * Checks if url video information are already present in the database
+   * @param libelle
+   * @param titre
+   */
   isAddUrl(libelle, titre): boolean {
     let ret = false;
     for (let i = 0; i < this.urlVideosInit.length; i++) {
@@ -370,6 +460,10 @@ export class FormUserComponent implements OnInit {
     return ret;
   }
 
+  /**
+   * Checks if the entered caracter is a digit in "Nombre d'employés" field
+   * @param ev
+   */
   validate(ev: KeyboardEvent): void {
     const digits: Array<string> = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const saisie = ev.key;
@@ -378,10 +472,16 @@ export class FormUserComponent implements OnInit {
     }
   }
 
+  /**
+   * Returns entered video urls
+   */
   urls(): FormArray {
     return this.urlVideoForm.get('urls') as FormArray;
   }
 
+  /**
+   * Defines fields in the "Gestion des médias (videos)" form
+   */
   newUrl(): FormGroup {
     return this.formBuilder.group({
       libelle: [null, [Validators.required, Validators.pattern(regex_website)]],
@@ -389,18 +489,30 @@ export class FormUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Adds a new line in the "Gestion des médias (videos)" form
+   */
   addUrl(): void {
     this.urls().push(this.newUrl());
   }
-
+  /**
+   * Removes the i line in the "Gestion des médias (videos)" form
+   * @param i
+   */
   removeUrl(i: number): void {
     this.urls().removeAt(i);
   }
 
+  /**
+   * Returns entered partnership farm
+   */
   fermes(): FormArray {
     return this.fermeForm.get('fermes') as FormArray;
   }
 
+  /**
+   * Defines fields in the "Fermes/agriculteurs partenaires" form
+   */
   newFerme(): FormGroup {
     return this.formBuilder.group({
       nom: [null, [Validators.required, Validators.pattern(regex_white_space)]],
@@ -409,18 +521,31 @@ export class FormUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Adds a new line in the "Fermes/agriculteurs partenaires" form
+   */
   addFerme(): void {
     this.fermes().push(this.newFerme());
   }
 
+  /**
+   * Removes the i line in the "Fermes/agriculteurs partenaires" form
+   * @param i
+   */
   removeFerme(i: number): void {
     this.fermes().removeAt(i);
   }
 
+  /**
+   * Returns entered food product form
+   */
   denrees(): FormArray {
     return this.denreeForm.get('denrees') as FormArray;
   }
 
+  /**
+   * Defines fields in the "Denrées animales utilisées" form
+   */
   newDenree(): FormGroup {
     return this.formBuilder.group({
       nom: [null, Validators.required],
@@ -433,34 +558,44 @@ export class FormUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Adds a new line in the "Denrées animales utilisées" form
+   */
   addDenree(): void {
     this.denrees().push(this.newDenree());
   }
 
+  /**
+   * Removes the i line in the "Denrées animales utilisées" form
+   * @param i
+   */
   removeDenree(i: number): void {
     this.denrees().removeAt(i);
   }
 
+  /**
+   * Detects selected files and checks if it is an image
+   * @param event
+   */
   onFileChanged(event): void {
     const files = event.target.files;
     let isImage = true;
 
     for (let i = 0; i < files.length; i++) {
       if (files.item(i).type.match('image.*')) {
-
+        this.selectedFile = files;
       } else {
         isImage = false;
         Swal.fire(incorrect_img_format);
+        this.selectedFile = undefined;
         break;
       }
     }
-    if (isImage) {
-      this.selectedFile = files;
-    } else {
-      this.selectedFile = undefined;
-    }
   }
 
+  /**
+   * Saves the selected file in the FTP server
+   */
   onUpload(): void {
     const selectedFileCopy = this.selectedFile;
     if (selectedFileCopy !== undefined) {
@@ -469,7 +604,10 @@ export class FormUserComponent implements OnInit {
         uploadData.append('myFile', selectedFileCopy[i], selectedFileCopy[i].name);
         this.infosTService.addImageTransformateur(uploadData, this.transformateur.id).subscribe(
           res => {
-            this.imagesLink.push('http://foodorigin.projetetudiant.fr/images/' + this.transformateur.id + '/' + selectedFileCopy[i].name);
+            const fileName = 'http://foodorigin.projetetudiant.fr/images/' + this.transformateur.id + '/' + selectedFileCopy[i].name;
+            if (this.imagesLink.indexOf(fileName) === -1) {
+              this.imagesLink.push('http://foodorigin.projetetudiant.fr/images/' + this.transformateur.id + '/' + selectedFileCopy[i].name);
+            }
             this.selectedFile = undefined;
           },
           err => {
@@ -480,8 +618,11 @@ export class FormUserComponent implements OnInit {
     }
   }
 
+  /**
+   * Deletes a choosen image
+   * @param fileName
+   */
   deleteImage(fileName): void {
-    console.log(fileName);
     this.infosTService.deleteImageTransformateur(fileName, this.transformateur.id).subscribe(
       res => {
         const index = this.imagesLink.indexOf(fileName);
@@ -492,6 +633,9 @@ export class FormUserComponent implements OnInit {
       });
   }
 
+  /**
+   * Checks if entered information correspond are valid
+   */
   submit(): void {
     if (this.step === 1) {
       if (this.formGroupGeneralInfo.valid) {
@@ -520,7 +664,6 @@ export class FormUserComponent implements OnInit {
         window.scroll(0, 0);
       } else {
         this.validateAllFieldsDynamicForm(this.urls());
-
       }
     } else if (this.step === 5) {
       if (this.fermeForm.valid) {
@@ -539,10 +682,17 @@ export class FormUserComponent implements OnInit {
     }
   }
 
+  /**
+   * Decreases the step of the form if the user clicks on "Précédent" button
+   */
   previous(): void {
     this.step = this.step - 1;
   }
 
+  /**
+   * Fills "Espece" list in function of entered name
+   * @param i
+   */
   fillEspece(i): void {
     this.denreeService.findEspeceByNom(this.denreeForm.value.denrees[i].nom).subscribe(res => {
       this.typeDenreeEspece[i] = res.sort();
@@ -550,18 +700,30 @@ export class FormUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Fills "Animal" list in function of entered espece
+   * @param i
+   */
   fillAnimal(i): void {
     this.denreeService.findAnimalByEspece(this.denreeForm.value.denrees[i].espece).subscribe(res => {
       this.typeDenreeAnimal[i] = res.sort();
     });
   }
 
+  /**
+   * Fills "Region" list in function of entered country
+   * @param i
+   */
   fillRegion(i): void {
     this.denreeService.findRegionByPays(this.denreeForm.value.denrees[i].pays).subscribe(res => {
       this.typeOrigineRegion[i] = res.sort();
     });
   }
 
+  /**
+   * Checks if all fields in a form are validated
+   * @param formGroup
+   */
   validateAllFields(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
@@ -573,17 +735,24 @@ export class FormUserComponent implements OnInit {
     });
   }
 
-  validateAllFieldsDynamicForm(formArray: FormArray) {
+  /**
+   * Checks if all fields in a dynamic form are validated
+   * @param formArray
+   */
+  validateAllFieldsDynamicForm(formArray: FormArray): void {
     for (const c of formArray.controls) {
       this.validateAllFields(c as FormGroup);
     }
   }
 
-  check() {
-    if (this.appartientGroupe == false) {
-      this.formGroupGeneralInfo.controls['siret'].disable();
+  /**
+   * Disables siret field if "Appartient groupe" is not checked
+   */
+  check(): void {
+    if (!this.appartientGroupe) {
+      this.formGroupGeneralInfo.controls.siret.disable();
     } else {
-      this.formGroupGeneralInfo.controls['siret'].enable();
+      this.formGroupGeneralInfo.controls.siret.enable();
     }
   }
 }
