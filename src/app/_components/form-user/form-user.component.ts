@@ -246,20 +246,20 @@ export class FormUserComponent implements OnInit {
         this.step = 1;
         this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
           res => {
+            this.step = 6;
             Swal.fire({title: info_saved});
-            this.router.navigate(['/accueil']);
+            this.router.navigate(['/user']);
           },
           err => {
+            this.step = 6;
             Swal.fire(error_while_saving_info);
 
-          }
+          },
 
         );
-        console.log("denreeForm testtt 1")
       }
       else{
         this.validateAllFieldsDynamicForm(this.denrees());
-        console.log(this.denreeForm.valid);
       }
 
 
@@ -281,21 +281,16 @@ export class FormUserComponent implements OnInit {
 
   equalityType(type1: TypeDenree, type2: TypeDenree): boolean {
     let ret = false;
-    if (type1 != null) {
-      if (type1.getId() === type2.getId() && type1.getEspece() === type2.getEspece() && type1.getNom() === type2.getNom() && type1.getAnimal() === type2.getAnimal()) {
-        ret = true;
-      }
+    if (type1.getId() === type2.getId() && type1.getEspece() === type2.getEspece() && type1.getNom() === type2.getNom() && type1.getAnimal() === type2.getAnimal()) {
+      ret = true;
     }
-
     return ret;
   }
 
   equalityOrigine(origine1: OrigineDenree, origine2: OrigineDenree): boolean {
     let ret = false;
-    if (origine1 != null) {
-      if (origine1.getId() === origine2.getId() && origine1.getPays() === origine2.getPays() && origine1.getRegion() === origine2.getRegion()) {
-        ret = true;
-      }
+    if (origine1.getId() === origine2.getId() && origine1.getPays() === origine2.getPays() && origine1.getRegion() === origine2.getRegion()) {
+      ret = true;
     }
     return ret;
   }
@@ -429,18 +424,16 @@ export class FormUserComponent implements OnInit {
   newDenree(): FormGroup {
     return this.formBuilder.group({
       nom: [null, Validators.required],
-      espece: [{value: null, disabled: true}, Validators.required],
-      animal: [{value: null, disabled: true}, Validators.required],
+      espece: [null, Validators.required],
+      animal: [null, Validators.required],
       pays: [null, Validators.required],
-      region: [{value: null, disabled: true}, Validators.required],
+      region: [null, Validators.required],
       infosT: '',
       infosO: ''
     });
   }
 
   addDenree(): void {
-    const newDenree = this.newDenree();
-    newDenree.controls.espece.disable();
     this.denrees().push(this.newDenree());
   }
 
@@ -488,7 +481,6 @@ export class FormUserComponent implements OnInit {
   }
 
   deleteImage(fileName): void {
-    console.log(fileName);
     this.infosTService.deleteImageTransformateur(fileName, this.transformateur.id).subscribe(
       res => {
         const index = this.imagesLink.indexOf(fileName);
@@ -500,7 +492,6 @@ export class FormUserComponent implements OnInit {
   }
 
   submit(): void {
-    console.log('test');
     if (this.step === 1) {
       if (this.formGroupGeneralInfo.valid) {
         this.step = this.step + 1;
@@ -552,10 +543,6 @@ export class FormUserComponent implements OnInit {
   }
 
   fillEspece(i): void {
-    const formArray = this.denrees();
-    const formGroup = formArray.at(i) as FormGroup;
-    const item = formGroup.controls.espece;
-    item.enable();
     this.denreeService.findEspeceByNom(this.denreeForm.value.denrees[i].nom).subscribe(res => {
       this.typeDenreeEspece[i] = res.sort();
       this.typeDenreeAnimal[i] = [];
@@ -563,27 +550,18 @@ export class FormUserComponent implements OnInit {
   }
 
   fillAnimal(i): void {
-    const formArray = this.denrees();
-    const formGroup = formArray.at(i) as FormGroup;
-    const item = formGroup.controls.animal;
-    item.enable();
     this.denreeService.findAnimalByEspece(this.denreeForm.value.denrees[i].espece).subscribe(res => {
       this.typeDenreeAnimal[i] = res.sort();
     });
   }
 
   fillRegion(i): void {
-    const formArray = this.denrees();
-    const formGroup = formArray.at(i) as FormGroup;
-    const item = formGroup.controls.region;
-    item.enable();
     this.denreeService.findRegionByPays(this.denreeForm.value.denrees[i].pays).subscribe(res => {
       this.typeOrigineRegion[i] = res.sort();
     });
   }
 
   validateAllFields(formGroup: FormGroup): void {
-    console.log('here');
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
@@ -594,17 +572,17 @@ export class FormUserComponent implements OnInit {
     });
   }
 
-  validateAllFieldsDynamicForm(formArray: FormArray): void {
+  validateAllFieldsDynamicForm(formArray: FormArray) {
     for (const c of formArray.controls) {
       this.validateAllFields(c as FormGroup);
     }
   }
 
-  check(): void {
-    if (this.appartientGroupe === false) {
-      this.formGroupGeneralInfo.controls.siret.disable();
+  check() {
+    if (this.appartientGroupe == false) {
+      this.formGroupGeneralInfo.controls['siret'].disable();
     } else {
-      this.formGroupGeneralInfo.controls.siret.enable();
+      this.formGroupGeneralInfo.controls['siret'].enable();
     }
   }
 }
