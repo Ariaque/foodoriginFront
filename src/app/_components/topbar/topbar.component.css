@@ -69,6 +69,7 @@ p {
   display: inline-block;
   height: 60px;
   vertical-align: middle;
+  outline: none!important;
 }
 
 .nav-link:hover {
