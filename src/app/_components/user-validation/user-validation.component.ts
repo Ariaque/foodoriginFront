@@ -17,7 +17,7 @@ export class UserValidationComponent implements OnInit {
 
   usersSource: MatTableDataSource<User>;
   dialogRef: MatDialogRef<UserValidationComponent, string>;
-  displayedColumns: string[] = ['username', 'transformateur.raison_sociale', 'typeTransformateur.libelle', 'isEnabled', 'delete'];
+  displayedColumns: string[] = ['username', 'transformateur.raison_sociale', 'typeTransformateur.libelle', 'status', 'isEnabled', 'delete'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 

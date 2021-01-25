@@ -149,6 +149,7 @@ export class FormUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.globalForm = this.formBuilder.group({});
     const reg = regex_website;
     const whiteSpace = regex_white_space;
     this.nbEmployes = '1';
@@ -159,7 +160,7 @@ export class FormUserComponent implements OnInit {
       siteW: [null, [Validators.pattern(reg)]],
       siret: [null, [Validators.required, Validators.pattern(regex_siret)]],
     });
-    this.globalForm = this.formBuilder.group({});
+    this.formGroupGeneralInfo.controls['siret'].disable();
     this.formGroupSocialLinks = this.formBuilder.group({
       lienF: [null, [Validators.pattern(reg)]],
       lienT: [null, [Validators.pattern(reg)]],
@@ -221,6 +222,7 @@ export class FormUserComponent implements OnInit {
 
           // Recover user's video urls
           this.urlVideosInit = info.urls.map(url => Object.assign(new UrlVideo(), url));
+
           this.urlVideosInit.forEach(url => {
             this.urls().push(this.formBuilder.group({
               libelle: [url.getLibelle(), [Validators.required, Validators.pattern(reg)]],
@@ -292,16 +294,33 @@ export class FormUserComponent implements OnInit {
       this.step = 1;
       this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
         res => {
+      if (this.step == 6 && this.denreeForm.valid){
+        window.scroll(0, 0);
+        this.step = 1;
+        this.infosTService.saveInfosTransformateur(this.idInfo, this.infos).subscribe(
+          res => {
+            this.step = 6;
             Swal.fire({title: info_saved});
-            this.router.navigate(['/accueil']);
+            this.router.navigate(['/user']);
           },
           err => {
+            this.step = 6;
             Swal.fire(error_while_saving_info);
         });
     }
     else{
       this.validateAllFieldsDynamicForm(this.denrees());
     }
+
+          },
+
+        );
+      }
+      else{
+        this.validateAllFieldsDynamicForm(this.denrees());
+      }
+
+
   }
 
   /**
@@ -752,7 +771,7 @@ export class FormUserComponent implements OnInit {
     if (!this.appartientGroupe) {
       this.formGroupGeneralInfo.controls.siret.disable();
     } else {
-      this.formGroupGeneralInfo.controls.siret.enable();
+      this.formGroupGeneralInfo.controls['siret'].enable();
     }
   }
 }

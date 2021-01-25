@@ -156,4 +156,21 @@ body.swal2-shown {
   margin-top: 1%;
 }
 
+.div-btn {
+  cursor: default!important;
+}
+
+.table-fields-chromium-fix {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.mat-select-disabled {
+  background: lightgray!important;
+  outline: none!important;
+  box-shadow: none!important;
+  border: #CED4DA;
+}
+
 

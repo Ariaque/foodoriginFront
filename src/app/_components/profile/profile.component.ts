@@ -82,7 +82,6 @@ export class ProfileComponent implements OnInit {
   }
   selectUser(user): void {
     this.activeUser = user;
-    console.log(this.activeUser);
   }
   validateAllFields(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(field => {

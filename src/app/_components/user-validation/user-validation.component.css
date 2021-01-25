@@ -72,3 +72,11 @@ mat-cell {
 mat-header-row {
   z-index: 1!important;
 }
+
+.span-disabled {
+  color: #F44336;
+}
+
+.span-enabled {
+  color: green;
+}

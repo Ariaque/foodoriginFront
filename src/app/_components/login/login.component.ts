@@ -13,7 +13,7 @@ import {bad_login, inactive_account, regex_email} from '../../../global';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  alert:boolean = false;
+  alert: boolean = false;
   form: any = {};
   isLoggedIn = false;
   isLoginFailed = false;
@@ -28,6 +28,14 @@ export class LoginComponent implements OnInit {
               public userService: UserService) {
   }
 
+  get username(): AbstractControl {
+    return this.FormLogin.get('username');
+  }
+
+  get password(): AbstractControl {
+    return this.FormLogin.get('password');
+  }
+
   ngOnInit(): void {
     this.FormLogin = this._fb.group({
       username: [null, [Validators.required, Validators.pattern(regex_email)]],
@@ -37,51 +45,51 @@ export class LoginComponent implements OnInit {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
     }
+    if (this.isLoggedIn) {
+      this.router.navigate(['/accueil']);
+    }
   }
-
 
   onSubmit(): void {
     if (this.FormLogin.valid) {
-    this.userService.findUserByName(this.form.username).subscribe((res: any) => {
-      if (res != null) {
-        if (res.isEnabled) {
-          this.authService.login(this.form).subscribe(
-            data => {
-              this.tokenStorage.saveToken(data.accessToken);
-              this.tokenStorage.saveUser(data);
+      this.userService.findUserByName(this.form.username).subscribe((res: any) => {
+        if (res != null) {
+          if (res.isEnabled) {
+            this.authService.login(this.form).subscribe(
+              data => {
+                this.tokenStorage.saveToken(data.accessToken);
+                this.tokenStorage.saveUser(data);
 
-              this.isLoginFailed = false;
-              this.isLoggedIn = true;
-              this.roles = this.tokenStorage.getUser().roles;
-              this.topBarService.updateStatus();
-              this.router.navigate(['/accueil']);
-              this.alert = false;
+                this.isLoginFailed = false;
+                this.isLoggedIn = true;
+                this.roles = this.tokenStorage.getUser().roles;
+                this.topBarService.updateStatus();
+                this.router.navigate(['/accueil']);
+                this.alert = false;
 
-            },
-            err => {
-              this.errorMessage = bad_login;
-              this.isLoginFailed = true;
-              this.alert = true;
-            });
-        }
-        else {
-          this.errorMessage = inactive_account;
-          this.isLoginFailed = true;
-          this.alert = true;
-        }
-      }
-      else {
+              },
+              err => {
+                this.errorMessage = bad_login;
+                this.isLoginFailed = true;
+                this.alert = true;
+              });
+          } else {
+            this.errorMessage = inactive_account;
+            this.isLoginFailed = true;
+            this.alert = true;
+          }
+        } else {
           this.errorMessage = bad_login;
           this.isLoginFailed = true;
           this.alert = true;
-      }
-    });
-   }
-   else {
-    this.validateAllFields(this.FormLogin);
+        }
+      });
+    } else {
+      this.validateAllFields(this.FormLogin);
+    }
   }
-  }
-  closeAlert(){
+
+  closeAlert() {
     this.alert = false;
   }
 
@@ -93,18 +101,11 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/forgotPassword']);
   }
 
-  get username(): AbstractControl {
-    return this.FormLogin.get('username');
-  }
-
-  get password(): AbstractControl {
-    return this.FormLogin.get('password');
-  }
   validateAllFields(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
-        control.markAsTouched({ onlySelf: true });
+        control.markAsTouched({onlySelf: true});
       } else if (control instanceof FormGroup) {
         this.validateAllFields(control);
       }
