@@ -281,16 +281,21 @@ export class FormUserComponent implements OnInit {
 
   equalityType(type1: TypeDenree, type2: TypeDenree): boolean {
     let ret = false;
-    if (type1.getId() === type2.getId() && type1.getEspece() === type2.getEspece() && type1.getNom() === type2.getNom() && type1.getAnimal() === type2.getAnimal()) {
-      ret = true;
+    if (type1 != null) {
+      if (type1.getId() === type2.getId() && type1.getEspece() === type2.getEspece() && type1.getNom() === type2.getNom() && type1.getAnimal() === type2.getAnimal()) {
+        ret = true;
+      }
     }
+
     return ret;
   }
 
   equalityOrigine(origine1: OrigineDenree, origine2: OrigineDenree): boolean {
     let ret = false;
-    if (origine1.getId() === origine2.getId() && origine1.getPays() === origine2.getPays() && origine1.getRegion() === origine2.getRegion()) {
-      ret = true;
+    if (origine1 != null) {
+      if (origine1.getId() === origine2.getId() && origine1.getPays() === origine2.getPays() && origine1.getRegion() === origine2.getRegion()) {
+        ret = true;
+      }
     }
     return ret;
   }
@@ -424,16 +429,18 @@ export class FormUserComponent implements OnInit {
   newDenree(): FormGroup {
     return this.formBuilder.group({
       nom: [null, Validators.required],
-      espece: [null, Validators.required],
-      animal: [null, Validators.required],
+      espece: [{value: null, disabled: true}, Validators.required],
+      animal: [{value: null, disabled: true}, Validators.required],
       pays: [null, Validators.required],
-      region: [null, Validators.required],
+      region: [{value: null, disabled: true}, Validators.required],
       infosT: '',
       infosO: ''
     });
   }
 
   addDenree(): void {
+    const newDenree = this.newDenree();
+    newDenree.controls.espece.disable();
     this.denrees().push(this.newDenree());
   }
 
@@ -545,6 +552,10 @@ export class FormUserComponent implements OnInit {
   }
 
   fillEspece(i): void {
+    const formArray = this.denrees();
+    const formGroup = formArray.at(i) as FormGroup;
+    const item = formGroup.controls.espece;
+    item.enable();
     this.denreeService.findEspeceByNom(this.denreeForm.value.denrees[i].nom).subscribe(res => {
       this.typeDenreeEspece[i] = res.sort();
       this.typeDenreeAnimal[i] = [];
@@ -552,18 +563,27 @@ export class FormUserComponent implements OnInit {
   }
 
   fillAnimal(i): void {
+    const formArray = this.denrees();
+    const formGroup = formArray.at(i) as FormGroup;
+    const item = formGroup.controls.animal;
+    item.enable();
     this.denreeService.findAnimalByEspece(this.denreeForm.value.denrees[i].espece).subscribe(res => {
       this.typeDenreeAnimal[i] = res.sort();
     });
   }
 
   fillRegion(i): void {
+    const formArray = this.denrees();
+    const formGroup = formArray.at(i) as FormGroup;
+    const item = formGroup.controls.region;
+    item.enable();
     this.denreeService.findRegionByPays(this.denreeForm.value.denrees[i].pays).subscribe(res => {
       this.typeOrigineRegion[i] = res.sort();
     });
   }
 
   validateAllFields(formGroup: FormGroup): void {
+    console.log('here');
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
@@ -574,17 +594,17 @@ export class FormUserComponent implements OnInit {
     });
   }
 
-  validateAllFieldsDynamicForm(formArray: FormArray) {
+  validateAllFieldsDynamicForm(formArray: FormArray): void {
     for (const c of formArray.controls) {
       this.validateAllFields(c as FormGroup);
     }
   }
 
-  check() {
-    if (this.appartientGroupe == false) {
-      this.formGroupGeneralInfo.controls['siret'].disable();
+  check(): void {
+    if (this.appartientGroupe === false) {
+      this.formGroupGeneralInfo.controls.siret.disable();
     } else {
-      this.formGroupGeneralInfo.controls['siret'].enable();
+      this.formGroupGeneralInfo.controls.siret.enable();
     }
   }
 }

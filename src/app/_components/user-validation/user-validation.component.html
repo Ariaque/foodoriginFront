@@ -27,6 +27,11 @@
           <mat-cell *matCellDef="let user"> {{user.typeTransformateur.libelle}} </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Statut</mat-header-cell>
+          <mat-cell *matCellDef="let user"> <span class="span-disabled" *ngIf="!(user.isEnabled)">Désactivé</span> <span class="span-enabled" *ngIf="user.isEnabled">Activé</span> </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="isEnabled">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Actions</mat-header-cell>
           <mat-cell *matCellDef="let user">
