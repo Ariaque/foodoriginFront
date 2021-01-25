@@ -205,6 +205,7 @@
                 <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('nom').errors && denree.get('nom').touched}" class="form-control" formControlName="nom" (selectionChange)="fillEspece(i)" id="typeD" name="typeD">
                   <mat-option *ngFor="let nom of this.typeDenreeNom.sort()" [value]="nom"> {{nom}}</mat-option>
                 </mat-select>
+                <small *ngIf= "denree.get('nom').errors?.required && denree.get('nom').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
               </div>
 
               <div class="form-group">
@@ -212,6 +213,7 @@
                 <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('pays').errors && denree.get('pays').touched}" class="form-control" formControlName="pays" (selectionChange)="fillRegion(i);" id="origineD" name="origineD">
                   <mat-option *ngFor="let pays of this.typeOrigineNom.sort()" [value]="pays"> {{pays}}</mat-option>
                 </mat-select>
+                <small *ngIf= "denree.get('pays').errors?.required && denree.get('pays').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
               </div>
             </td>
             <td>
@@ -220,12 +222,14 @@
                 <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('espece').errors && denree.get('espece').touched}" class="form-control" formControlName="espece" (selectionChange)="fillAnimal(i)" id="typeE" name="typeE">
                   <mat-option *ngFor="let espece of this.typeDenreeEspece[i]" [value]="espece"> {{espece}}</mat-option>
                 </mat-select>
+                <small *ngIf= "denree.get('espece').errors?.required && denree.get('espece').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
               </div>
               <div>
                 <label for="origineR">Région *</label>
                 <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('region').errors && denree.get('region').touched}"class="form-control" formControlName="region" id="origineR" name="origineR">
                   <mat-option *ngFor="let region of this.typeOrigineRegion[i]" [value]="region"> {{region}}</mat-option>
                 </mat-select>
+                <small *ngIf= "denree.get('region').errors?.required && denree.get('region').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
               </div>
             </td>
             <td>
@@ -234,6 +238,7 @@
                 <mat-select [ngClass]="{'form-control':true,'is-invalid': denree.get('animal').errors && denree.get('animal').touched}" class="form-control" formControlName="animal" id="typeA" name="typeA">
                   <mat-option *ngFor="let animal of this.typeDenreeAnimal[i]" [value]="animal" > {{animal}}</mat-option>
                 </mat-select>
+                <small *ngIf= "denree.get('animal').errors?.required && denree.get('animal').touched" class="form-text custom-invalid-feedback" >Champ requis</small>
               </div>
             </td>
             <td>
