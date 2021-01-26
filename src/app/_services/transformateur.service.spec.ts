@@ -44,7 +44,6 @@ describe('TransformateurService', () => {
 
     transformateurService.findById(1)
       .subscribe(transformateursData => {
-        console.log(transformateursData);
         expect(transformateursData[0]._id).toEqual(1);
         expect(transformateursData[0]._num_agrement).toEqual('03.005.007');
         expect(transformateursData[0]._siret).toEqual('12345698745896');

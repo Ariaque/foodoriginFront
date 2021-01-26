@@ -15,10 +15,8 @@ export class TopbarComponent implements OnInit {
   }
 
   onClick(val: any): void {
-    console.log('here');
     if (val.target.id === 'log_out_btn') {
       this.tokenStorage.signOut();
-      console.log(this.tokenStorage.getToken());
       this.topBarService.updateStatus();
       this.router.navigate(['/accueil']);
     }

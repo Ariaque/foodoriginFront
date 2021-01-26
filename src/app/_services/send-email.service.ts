@@ -27,7 +27,6 @@ export class SendEmailService {
     return this.http.post<string>(this.resetUrl + '/resetPassword/sendEmail', {email: mail}, this.httpOptions)
       .pipe(
         catchError(err => {
-          console.log('error on email sending', err);
           if (err.status === 400) {
             this.router.navigate(['/error'], { queryParams: { title: 'Erreur', text: 'Votre email n\'est associé à aucun compte !' } });
           }
@@ -43,7 +42,6 @@ export class SendEmailService {
     return this.http.post<string>(this.contactUrl + '/sendEmail', {emailAdress: emailAdr, subjet: obj, phoneNumber: phoneN, message: mess}, this.httpOptions)
       .pipe(
         catchError(err => {
-          console.log('error on email sending', err);
           if (err.status === 400) {
             this.router.navigate(['/error'], { queryParams: { title: 'Erreur', text: 'Votre email n\'est associé à aucun compte !' } });
           }
@@ -59,7 +57,6 @@ export class SendEmailService {
     return this.http.post<string>(this.contactUrl + '/notify', {emailAdress: emailAdr, subjet: obj, phoneNumber: phoneN, message: mess}, this.httpOptions)
       .pipe(
         catchError(err => {
-          console.log('error on email sending', err);
           this.router.navigate(['/error'], { queryParams: { title: 'Erreur', text: 'L\'envoi de votre message a échoué !' } });
           return throwError(err);
         })

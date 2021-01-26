@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {InfosTransformateur} from '../_classes/infosTransformateur';
+import {TokenStorageService} from './token-storage.service';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+let httpOptions;
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +13,22 @@ const httpOptions = {
 export class InfosTransformateurService {
 
   private infosTransformateurUrl: string;
+  private header: HttpHeaders;
 
-  constructor(private http: HttpClient) {
+
+  constructor(private http: HttpClient, private tokenService: TokenStorageService) {
     this.infosTransformateurUrl = '/api/infoTransformateur';
+    httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + tokenService.getToken()})
+    };
   }
 
   public findById(id: number): Observable<InfosTransformateur> {
-    return this.http.get<InfosTransformateur>(this.infosTransformateurUrl + '/transformateur/' + id);
+    return this.http.get<InfosTransformateur>(this.infosTransformateurUrl + '/transformateur/' + id, { headers: httpOptions.headers});
   }
 
-  public saveInfosTransformateur(idInfos: number, infosT: InfosTransformateur): Observable<InfosTransformateur>{
+  public saveInfosTransformateur(idInfos: number, infosT: InfosTransformateur): Observable<HttpEvent<InfosTransformateur>>{
     if (idInfos !== 0) {
       return this.http.post<InfosTransformateur>(this.infosTransformateurUrl, {
         id: idInfos,

@@ -21,7 +21,6 @@ export class TopbarService {
     this.token = this.tokenStorageService.getToken();
     if (this.tokenStorageService.getUser() !== null) {
       this.userRole = this.tokenStorageService.getUser().roles[0];
-      console.log(this.tokenStorageService.getUser());
       this.isAdmin = this.userRole === 'ROLE_ADMIN';
     }
     if (this.token === null || this.token === '') {
