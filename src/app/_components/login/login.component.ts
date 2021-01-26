@@ -63,9 +63,9 @@ export class LoginComponent implements OnInit {
    */
   onSubmit(): void {
     if (this.FormLogin.valid) {
-      this.userService.findUserByName(this.form.username).subscribe((res: any) => {
+      this.userService.findUserActivationByName(this.form.username).subscribe((res: any) => {
         if (res != null) {
-          if (res.isEnabled) {
+          if (res === true) {
             this.authService.login(this.form).subscribe(
               data => {
                 this.tokenStorage.saveToken(data.accessToken);

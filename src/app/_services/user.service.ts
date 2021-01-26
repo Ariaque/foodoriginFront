@@ -77,6 +77,10 @@ export class UserService {
     return this.http.get<User>(this.userUrl + '/' + name, {headers: this.httpOptions.headers});
   }
 
+  public findUserActivationByName(name): Observable<boolean> {
+    return this.http.get<boolean>(this.userUrl + '/activation/' + name, {headers: this.httpOptions.headers});
+  }
+
   public deleteUser(user): Observable<any> {
     return this.http.post(this.userUrl + '/delete', user, this.httpOptions);
   }
