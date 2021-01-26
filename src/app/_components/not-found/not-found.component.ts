@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+/**
+ * Component that represents the 404 page
+ */
 @Component({
   selector: 'app-not-found',
   templateUrl: './not-found.component.html',

@@ -11,6 +11,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 
+/**
+ * Service that calls InfosTransformateurController in the API
+ */
 export class InfosTransformateurService {
 
   private infosTransformateurUrl: string;

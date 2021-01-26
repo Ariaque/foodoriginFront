@@ -3,6 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Transformateur} from '../_classes/transformateur';
 
+/**
+ * Service that calls TransformateurController in the API
+ */
 @Injectable({
   providedIn: 'root'
 })

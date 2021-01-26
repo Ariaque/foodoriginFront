@@ -4,7 +4,9 @@ import {catchError} from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 
-
+/**
+ * Service that calls PasswordResetController in the API
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +23,6 @@ export class ResetPasswordService {
   saveNewPassword(tkn: string, pswd: string): Observable<string> {
     return this.http.post<string>(this.resetUrl + '/resetPassword/savePassword', {token: tkn, newPassword: pswd}).pipe(
       catchError(err => {
-        console.log('error userActivation', err);
         this.router.navigate(['/error'], { queryParams: { title: 'Erreur', text: 'La réinitialisation du mot de passe a échouée !' } });
         return throwError(err);
       })

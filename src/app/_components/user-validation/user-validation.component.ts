@@ -6,8 +6,11 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
-import {delete_accout_confirmation} from "../../../global";
+import {delete_account_confirmation} from '../../../global';
 
+/**
+ * Component that represents the "Gestion des comptes" page
+ */
 @Component({
   selector: 'app-user-validation',
   templateUrl: './user-validation.component.html',
@@ -29,6 +32,10 @@ export class UserValidationComponent implements OnInit {
     this.refreshDataSource();
   }
 
+  /**
+   * Defines the behavior of the filter in the account table
+   * @param event
+   */
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.usersSource.filter = filterValue.trim().toLowerCase();
@@ -37,6 +44,11 @@ export class UserValidationComponent implements OnInit {
     }
   }
 
+  /**
+   * Activates the account concerned by the action
+   * @param user
+   * @param activation
+   */
   activateUser(user: User, activation: boolean): void {
     const newUser = new User(user.getId, user.getUsername, user.getPassword, user.getRole, user.getTransformateur, activation, user.getTypeTransformateur, user.getNumeroTelephone);
     this.userService
@@ -44,10 +56,14 @@ export class UserValidationComponent implements OnInit {
       .subscribe(data => this.refreshDataSource());
   }
 
+  /**
+   * Deletes the account concerned by the action
+   * @param user
+   */
   deleteUser(user: User): void {
     const dialogRef = this.dialog.open (ConfirmationDialogComponent, {
       width: '350px',
-      data: delete_accout_confirmation + user.getUsername +  '?'
+      data: delete_account_confirmation + user.getUsername +  '?'
     });
 
     dialogRef.afterClosed().subscribe(res => {
@@ -59,6 +75,9 @@ export class UserValidationComponent implements OnInit {
     });
   }
 
+  /**
+   * Initializes account information in the table
+   */
   private refreshDataSource(): void {
     this.userService.findUsers().subscribe(data => {
       this.usersSource = new MatTableDataSource<User>(data);

@@ -7,6 +7,9 @@ import {UserService} from '../../_services/user.service';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {bad_login, inactive_account, regex_email} from '../../../global';
 
+/**
+ * Component that represents the "Connexion" page
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,7 +22,6 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
-  mail: string;
   @Input()
   signInError: string;
   FormLogin: FormGroup;
@@ -28,28 +30,37 @@ export class LoginComponent implements OnInit {
               public userService: UserService) {
   }
 
+  /**
+   * Get value in "Email" field
+   */
   get username(): AbstractControl {
     return this.FormLogin.get('username');
   }
 
+  /**
+   * Get value in "Mot de passe" field
+   */
   get password(): AbstractControl {
     return this.FormLogin.get('password');
   }
 
   ngOnInit(): void {
+    // Creates the form group
     this.FormLogin = this._fb.group({
       username: [null, [Validators.required, Validators.pattern(regex_email)]],
       password: [null, Validators.required]
-    })
+    });
+    // If a user is already logged in, he is redirected to the home page
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
-    }
-    if (this.isLoggedIn) {
       this.router.navigate(['/accueil']);
     }
   }
 
+  /**
+   * Method called at the click on the "Se connecter" button: checks the validation rules and connects the user
+   */
   onSubmit(): void {
     if (this.FormLogin.valid) {
       this.userService.findUserByName(this.form.username).subscribe((res: any) => {
@@ -89,18 +100,24 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Removes the error message
+   */
   closeAlert() {
     this.alert = false;
   }
 
-  reloadPage(): void {
-    window.location.reload();
-  }
-
+  /**
+   * Redirects the user if he clicks on "Mot de passe oublié?" button
+   */
   loadPasswordForgottenPage(): void {
     this.router.navigate(['/forgotPassword']);
   }
 
+  /**
+   * Checks if all fields in a form follow the validation rules
+   * @param formGroup
+   */
   validateAllFields(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);

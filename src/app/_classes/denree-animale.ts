@@ -1,6 +1,8 @@
 import {TypeDenree} from './type-denree';
 import {OrigineDenree} from './origine-denree';
-
+/**
+ * Class representing the DenreeAnimale entity in the API
+ */
 export class DenreeAnimale {
   private id: number;
   private typeDenree: TypeDenree;

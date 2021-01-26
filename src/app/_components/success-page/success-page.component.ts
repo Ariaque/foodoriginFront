@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './success-page.html',
   styleUrls: ['./success-page.component.css']
 })
-export class SuccessPagecomponent implements OnInit {
+export class SuccessPageComponent implements OnInit {
 
   url: URL;
   title: string;

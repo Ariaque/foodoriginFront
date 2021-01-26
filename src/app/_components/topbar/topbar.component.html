@@ -4,14 +4,6 @@
   <img src="assets/images/foodorigintransp_white.png" class="left_img" [routerLink]="['/accueil']">
 
   <nav mat-tab-nav-bar class="topnav">
-<!--    <a mat-tab-link-->
-<!--       *ngFor="let link of navLinks"-->
-<!--       [routerLink]="link.link"-->
-<!--       routerLinkActive #rla="routerLinkActive"-->
-<!--       [active]="rla.isActive">-->
-<!--      {{link.label}}-->
-<!--    </a>-->
-
     <a class="nav-link" id="home_btn" [routerLink]="['/accueil']" >Accueil</a>
     <a class="nav-link" id="contact_btn" [routerLink]="['/contact']" *ngIf="!topBarService.isAdmin">Contact</a>
     <a class="nav-link" id="company_space_btn" [routerLink]="['/user']" *ngIf="!topBarService.isAdmin && topBarService.isConnected" >Espace entreprise</a>

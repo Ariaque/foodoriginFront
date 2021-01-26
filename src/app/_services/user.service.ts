@@ -4,6 +4,10 @@ import {Observable, throwError} from 'rxjs';
 import {User} from '../_classes/user';
 import {catchError, map} from 'rxjs/operators';
 
+/**
+ * Service that calls UserController in the API
+ */
+
 @Injectable({
   providedIn: 'root'
 })

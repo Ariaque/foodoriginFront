@@ -1,3 +1,6 @@
+/**
+ * Class representing the TypeDenree entity in the API
+ */
 export class TypeDenree {
 
   private id: number;

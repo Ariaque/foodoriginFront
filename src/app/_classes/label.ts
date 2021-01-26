@@ -1,3 +1,6 @@
+/**
+ * Class representing the Label entity in the API
+ */
 export class Label {
 
   private _id: number;

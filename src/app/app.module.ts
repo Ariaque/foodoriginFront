@@ -27,12 +27,11 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ForgotPasswordComponent } from './_components/forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { SuccessPagecomponent } from './_components/success-page/success-pagecomponent';
+import { SuccessPageComponent } from './_components/success-page/success-page.component';
 import { ErrorPageComponent } from './_components/error-page/error-page.component';
 import { NotFoundComponent } from './_components/not-found/not-found.component';
-import { ProfileComponent } from './_components/profile/profile.component';
+import { ProfilComponent } from './_components/profil/profil.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './_components/confirmation-dialog/confirmation-dialog.component';
 import { FooterBarComponent } from './_components/footer-bar/footer-bar.component';
@@ -50,11 +49,10 @@ import { PlaceholderPageComponent } from './_components/placeholder-page/placeho
     FormUserComponent,
     UserValidationComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent,
-    SuccessPagecomponent,
+    SuccessPageComponent,
     ErrorPageComponent,
     NotFoundComponent,
-    ProfileComponent,
+    ProfilComponent,
     ConfirmationDialogComponent,
     FooterBarComponent,
     ContactComponent,

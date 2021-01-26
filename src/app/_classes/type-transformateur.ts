@@ -1,3 +1,6 @@
+/**
+ * Class representing the TypeTransformateur entity in the API
+ */
 export class TypeTransformateur {
 
   private _id: number;
