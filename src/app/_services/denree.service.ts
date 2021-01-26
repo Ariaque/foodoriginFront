@@ -4,6 +4,9 @@ import {Observable} from 'rxjs';
 import {TypeDenree} from '../_classes/type-denree';
 import {OrigineDenree} from '../_classes/origine-denree';
 
+/**
+ * Service that calls TypeDenreeController and OrigineDenreeController in the API
+ */
 @Injectable({
   providedIn: 'root'
 })

@@ -28,7 +28,9 @@ import {
   regex_white_space
 } from '../../../global';
 
-
+/**
+ * Component that represents the "Espace Entreprise" page
+ */
 @Component({
   selector: 'app-form-user',
   templateUrl: './form-user.component.html',
@@ -739,7 +741,7 @@ export class FormUserComponent implements OnInit {
   }
 
   /**
-   * Checks if all fields in a form are validated
+   * Checks if all fields in a form follow the validation rules
    * @param formGroup
    */
   validateAllFields(formGroup: FormGroup): void {

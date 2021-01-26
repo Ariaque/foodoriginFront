@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+/**
+ * Component that represents the page that appears after that a user click on "Téléchargement Android" button on the home page
+ */
+
 @Component({
   selector: 'app-placeholder-page',
   templateUrl: './placeholder-page.component.html',

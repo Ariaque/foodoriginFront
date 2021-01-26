@@ -3,6 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Label} from '../_classes/label';
 
+/**
+ * Service that calls LabelController in the API
+ */
 @Injectable({
   providedIn: 'root'
 })

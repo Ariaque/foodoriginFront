@@ -6,14 +6,16 @@ import {UserService} from '../../_services/user.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {User} from '../../_classes/user';
 import {
-  incative_account_change_password,
-  no_matching_email,
+  inactive_account_change_password,
   regex_email,
   reset_password_text,
-  reset_password_title
-} from "../../../global";
+  reset_password_title,
+  problem_mail
+} from '../../../global';
 
-
+/**
+ * Component that represents the "Mot de passe oublié" page when a user click on "Mot de passe oublié?" button
+ */
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -36,11 +38,15 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(private userService: UserService, private _fb: FormBuilder, private router: Router, private sendResetPassordEmailService: SendEmailService) {
   }
 
+  /**
+   * Get value in "Mail" field
+   */
   get mail(): AbstractControl {
     return this.myForm.get('mail');
   }
 
   ngOnInit(): void {
+    // Creates the form group
     this.myForm = this._fb.group({
       mail: [null, [Validators.required, Validators.pattern(regex_email)]]
     });
@@ -53,25 +59,30 @@ export class ForgotPasswordComponent implements OnInit {
 
   }
 
+  /**
+   * Method called at the click on the "Valider" button: checks the validation rules and send a mail to the user to reset his password
+   */
   onSubmit(): void {
     this.disabled = true;
     if (this.myForm.valid) {
       this.userService.findUserByName(this.email).subscribe((res: any) => {
-        if (res === null) {
-          this.alert = true;
-          this.erreurMessage = no_matching_email;
-          this.disabled = false;
-        }
-        else if (!res.isEnabled) {
-          this.alert = true;
-          this.erreurMessage = incative_account_change_password;
-          this.disabled = false;
+        if (res != null) {
+          if (!res.isEnabled) {
+            this.alert = true;
+            this.erreurMessage = inactive_account_change_password;
+            this.disabled = false;
+          }
+          else {
+            this.sendResetPassordEmailService.sendResetEmail(this.email).subscribe(success => {
+              this.router.navigate(['/success'], { queryParams: { title: reset_password_title, text: reset_password_text } });
+              this.disabled = false;
+            });
+          }
         }
         else {
-          this.sendResetPassordEmailService.sendResetEmail(this.email).subscribe(success => {
-            this.router.navigate(['/success'], { queryParams: { title: reset_password_title, text: reset_password_text } });
-            this.disabled = false;
-          });
+          this.alert = true;
+          this.erreurMessage = problem_mail;
+          this.disabled = false;
         }
       });
     }
@@ -81,6 +92,17 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
 
+  /**
+   * Removes the error message
+   */
+  closeAlert() {
+    this.alert = false;
+  }
+
+  /**
+   * Checks if all fields in a form follow the validation rules
+   * @param formGroup
+   */
   validateAllFields(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);

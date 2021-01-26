@@ -1,3 +1,6 @@
+/**
+ * Class representing the Role entity in the API
+ */
 export class Role {
 
   constructor(id: number, name: string) {

@@ -4,6 +4,9 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Router} from '@angular/router';
 
+/**
+ * Service that calls ContactController and PasswordResetController in the API
+ */
 @Injectable({
   providedIn: 'root'
 })

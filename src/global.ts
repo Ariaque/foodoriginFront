@@ -1,5 +1,5 @@
 
-// Pour utiliser les variables dans un autre fichier :
+// To use this variables in an other file:
 // import * as myGlobals from 'globals';
 
 'use strict';
@@ -16,7 +16,7 @@ export const regex_siret = '^[0-9]{14}$';
 export const contact_title = 'Envoi réussi !';
 export const contact_text = 'Votre message a bien été pris en compte, nous reviendrons vers vous dès que possible !';
 export const no_matching_email = 'Cet email ne correspond à aucun utilisateur';
-export const incative_account_change_password = 'Votre compte est désactivé, vous ne pouvez pas changer votre mot de passe !';
+export const inactive_account_change_password = 'Votre compte est désactivé, vous ne pouvez pas changer votre mot de passe !';
 export const inactive_account = 'Le compte n\'est pas activé !';
 export const reset_password_title = 'Vérifiez vos mails !';
 export const reset_password_text = 'Vérifiez vos mails (et vos spams !), un mail pour réinitialiser votre  mot de passe vous a été envoyé !';
@@ -39,4 +39,5 @@ export const bad_old_password = 'L\'ancien mot de passe n\'est pas correct !';
 export const new_pass_is_old_pass = 'Le nouveau et l\'ancien mot de passe sont identiques !';
 export const reset_password_confirmed_title = 'Nouveau mot de passe enregistré !';
 export const reset_password_confirmed_text = 'Votre nouveau mot de passe a bien été sauvegardé, vous pouvez dès à présent vous connecter !';
-export const delete_accout_confirmation = 'Voulez-vous vraiment supprimer l\'utilisateur: ';
+export const delete_account_confirmation = 'Voulez-vous vraiment supprimer l\'utilisateur: ';
+export const problem_mail = 'Un probème s\'est produit lors de l\'envoi du mail';

@@ -1,3 +1,6 @@
+/**
+ * Class representing the Certification entity in the API
+ */
 export class Certification {
 
   public _id: number;

@@ -4,7 +4,9 @@ import {Certification} from './certification';
 import {UrlVideo} from './url-video';
 import {FermePartenaire} from './ferme-partenaire';
 import {DenreeAnimale} from './denree-animale';
-
+/**
+ * Class representing the InfosTransformateur entity in the API
+ */
 export class InfosTransformateur {
 
   private _id: number;

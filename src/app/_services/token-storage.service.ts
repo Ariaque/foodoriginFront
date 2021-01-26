@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
 
+/**
+ * Service that manages user token
+ */
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
 

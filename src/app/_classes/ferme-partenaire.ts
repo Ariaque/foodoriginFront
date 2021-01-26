@@ -1,3 +1,6 @@
+/**
+ * Class representing the FermePartenaire entity in the API
+ */
 export class FermePartenaire {
 
   private id: number;

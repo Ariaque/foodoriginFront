@@ -53,14 +53,14 @@
                     <label for="password">Ancien mot de passe*</label>
                     <input formControlName="password"
                     [ngClass]="{'is-invalid': oldPsd.errors && oldPsd.touched}"
-                    type="password" class="form-control" id="password" placeholder="mot de passe" name="password" [(ngModel)]="password">
+                    type="password" class="form-control" id="password" placeholder="Mot de passe" name="password" [(ngModel)]="password">
                     <small *ngIf="oldPsd.hasError('required')" class="form-text custom-invalid-feedback">Mot de passe requis</small>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="newPassword">Nouveau mot de passe*</label>
                     <input formControlName="newPassword"
                     [ngClass]="{'is-invalid': newPsd.errors && newPsd.touched}"
-                    type="password" class="form-control" id="newPassword" placeholder="mot de passe" name="newPassword" [(ngModel)]="newPassword">
+                    type="password" class="form-control" id="newPassword" placeholder="Mot de passe" name="newPassword" [(ngModel)]="newPassword">
                     <small *ngIf="newPsd.hasError('required')" class="form-text custom-invalid-feedback">Mot de passe requis</small>
                   </div>
 

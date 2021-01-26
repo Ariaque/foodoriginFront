@@ -1,3 +1,6 @@
+/**
+ * Class representing the OrigineDenree entity in the API
+ */
 export class OrigineDenree {
 
   private id: number;

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+/**
+ * Component that represents the error page
+ */
 @Component({
   selector: 'app-error-page',
   templateUrl: './error-page.component.html',

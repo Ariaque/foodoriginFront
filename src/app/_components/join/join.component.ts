@@ -7,7 +7,7 @@ import {CustomValidationService} from '../../_services/custom-validation.service
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../_services/user.service';
 import {Router} from '@angular/router';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import {SendEmailService} from '../../_services/send-email.service';
 import {
   account_created,
@@ -16,9 +16,11 @@ import {
   regex_email,
   regex_phone_number,
   regex_siret
-} from "../../../global";
+} from '../../../global';
 
-
+/**
+ * Component that represents the "Rejoindre" page
+ */
 @Component({
   selector: 'app-join',
   templateUrl: './join.component.html',
@@ -42,9 +44,11 @@ export class JoinComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Recovers all TypeTransformateur
     this.typeTransformateurService.findAll().subscribe((result) => {
       this.type = result;
     });
+    // Creates the form group
     this.myForm = this._fb.group({
       username: [null, [Validators.required, Validators.pattern(regex_email)]],
       siret: [null, [Validators.required, Validators.pattern(regex_siret)]],
@@ -57,10 +61,16 @@ export class JoinComponent implements OnInit {
     });
   }
 
+  /**
+   * Get value in "Type Transformateur" field
+   */
   onTypeTransformateurSelected(val: any): void {
     this.selectedType = val;
   }
 
+  /**
+   * Method called at the click on the "S'inscrire" button: checks the validation rules and saves the registration in the database
+   */
   onSubmit(): void {
     if (this.myForm.valid) {
       this.authService.register(this.form, this.selectedType, this.siret, this.numTelephone).subscribe(
@@ -83,31 +93,54 @@ export class JoinComponent implements OnInit {
     }
   }
 
+  /**
+   * Get value in "Siret" field
+   */
   get numSiret(): FormGroup{
     const  temp = this.myForm.controls.siret as FormGroup;
     return temp;
   }
 
+  /**
+   * Get value in "Numéro de téléphone" field
+   */
   get numTel(): FormGroup{
     const  temp = this.myForm.controls.numTelephone as FormGroup;
     return temp;
   }
 
+  /**
+   * Get value in "Email" field
+   */
   get username(): AbstractControl {
     return this.myForm.get('username');
   }
 
+  /**
+   * Get value in "Mot de passe" field
+   */
   get password(): AbstractControl {
     return this.myForm.get('password');
   }
+
+  /**
+   * Get value in "Confirmer mot de passe" field
+   */
   get confiPassword(): AbstractControl {
     return this.myForm.get('confPassword');
   }
 
+  /**
+   * Get value in "Type transformateur" field
+   */
   get typeTransformateur(): AbstractControl {
     return this.myForm.get('selectedType');
   }
 
+  /**
+   * Checks if all fields in a form follow the validation rules
+   * @param formGroup
+   */
   validateAllFields(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);

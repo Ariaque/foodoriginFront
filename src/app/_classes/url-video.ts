@@ -1,3 +1,6 @@
+/**
+ * Class representing the UrlVideo entity in the API
+ */
 export class UrlVideo {
 
   private id: number;

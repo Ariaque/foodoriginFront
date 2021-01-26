@@ -1,3 +1,6 @@
+/**
+ * Class representing the Transformateur entity in the API
+ */
 export class Transformateur {
 
   private _id: number;

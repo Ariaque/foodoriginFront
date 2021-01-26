@@ -7,6 +7,9 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '
 
 import {contact_text, contact_title, regex_email, regex_phone_number, regex_white_space} from '../../../global';
 
+/**
+ * Component that represents the "Contact" page
+ */
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -26,16 +29,18 @@ export class ContactComponent implements OnInit {
 
   ngOnInit(): void {
     window.scroll(0, 0);
+    // Defines if the page is shown when a user is connected or not
     if (this.tokenService.getToken() == null || this.tokenService.getToken() === undefined || this.tokenService.getToken().length === 0) {
       this.areShown = true;
     }
-    const email = '';
+    // Creates the form group
     this.myForm = this._fb.group({
       username: [null, [Validators.required, Validators.pattern(regex_email)]],
       phone: [null, [Validators.required, Validators.pattern(regex_phone_number)]],
       objet: [null, [Validators.required, Validators.pattern(regex_white_space)]],
       description: [null, [Validators.required, Validators.pattern(regex_white_space)]]
     });
+    // Initializes attributes if the user is connected
     if (!this.areShown) {
       this.form.username = this.tokenService.getUser().username;
       this.myForm.controls.username.disable();
@@ -45,10 +50,10 @@ export class ContactComponent implements OnInit {
       });
     }
   }
-  get username(): AbstractControl {
-    return this.myForm.get('username');
-  }
 
+  /**
+   * Method called at the click on the "Envoyer" button: checks the validation rules and send a mail to administrator
+   */
   onSubmit(): void {
     if (this.myForm.valid) {
       const emailAdress: string = this.form.username;
@@ -74,6 +79,10 @@ export class ContactComponent implements OnInit {
     }
   }
 
+  /**
+   * Checks if all fields in a form follow the validation rules
+   * @param formGroup
+   */
   validateAllFields(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
@@ -85,12 +94,27 @@ export class ContactComponent implements OnInit {
     });
   }
 
+  /**
+   * Get value in "Votre adresse mail" field
+   */
+  get username(): AbstractControl {
+    return this.myForm.get('username');
+  }
+  /**
+   * Get value in "Votre numéro de téléphone" field
+   */
   get numPhone(): AbstractControl {
     return this.myForm.get('phone');
   }
+  /**
+   * Get value in "Objet" field
+   */
   get obj(): AbstractControl {
     return this.myForm.get('objet');
   }
+  /**
+   * Get value in "Votre message" field
+   */
   get desc(): AbstractControl {
     return this.myForm.get('description');
   }

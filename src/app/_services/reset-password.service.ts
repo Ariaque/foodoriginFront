@@ -5,7 +5,9 @@ import {HttpClient, HttpEvent, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {TokenStorageService} from './token-storage.service';
 
-
+/**
+ * Service that calls PasswordResetController in the API
+ */
 @Injectable({
   providedIn: 'root'
 })

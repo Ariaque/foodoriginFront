@@ -2,6 +2,9 @@ import {Role} from './role';
 import {Transformateur} from './transformateur';
 import {TypeTransformateur} from './type-transformateur';
 
+/**
+ * Class representing the User entity in the API
+ */
 export class User {
 
   private id: number;

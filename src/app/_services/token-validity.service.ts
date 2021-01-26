@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
-
+/**
+ * Service that calls PasswordResetController in the API to check the validity of a token
+ */
 @Injectable({
   providedIn: 'root'
 })

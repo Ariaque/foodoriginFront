@@ -12,6 +12,10 @@ import {User} from '../_classes/user';
 import {catchError, map} from 'rxjs/operators';
 import {TokenStorageService} from './token-storage.service';
 
+/**
+ * Service that calls UserController in the API
+ */
+
 @Injectable({
   providedIn: 'root'
 })
