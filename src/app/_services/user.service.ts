@@ -11,6 +11,7 @@ import {Observable, throwError} from 'rxjs';
 import {User} from '../_classes/user';
 import {catchError, map} from 'rxjs/operators';
 import {TokenStorageService} from './token-storage.service';
+import {Transformateur} from '../_classes/transformateur';
 
 /**
  * Service that calls UserController in the API
@@ -26,14 +27,10 @@ export class UserService {
 
   constructor(private http: HttpClient, private tokenService: TokenStorageService) {
     this.userUrl = '/api/user';
-    this.httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + tokenService.getToken()})
-    };
+    this.setHeader();
   }
 
   public findAll(): Observable<User[]> {
-    this.httpOptions.headers.set('Authorization', this.tokenService.getToken());
     let ret: Observable<User[]>;
     ret = this.http.get<User[]>(this.userUrl + '/all', {headers: this.httpOptions.headers}).pipe(
       map((data: any[]) => data.map((item: any) => new User(
@@ -50,7 +47,6 @@ export class UserService {
     return ret;
   }
   public findUsers(): Observable<User[]> {
-    this.httpOptions.headers.set('Authorization', this.tokenService.getToken());
     let ret: Observable<User[]>;
     ret = this.http.get<User[]>(this.userUrl + '/users', {headers: this.httpOptions.headers}).pipe(
       map((data: any[]) => data.map((item: any) => new User(
@@ -66,8 +62,12 @@ export class UserService {
     );
     return ret;
   }
+
+  public findTransformateurByUser(userName: string): Observable<Transformateur> {
+    return  this.http.get<Transformateur>(this.userUrl + '/transformateur/' + userName, {headers: this.httpOptions.headers});
+  }
+
   userActivation(user: User): Observable<HttpSentEvent | HttpHeaderResponse | HttpResponse<User> | HttpProgressEvent | HttpUserEvent<User>> {
-    this.httpOptions.headers.set('Authorization', this.tokenService.getToken());
     return this.http.post<User>(this.userUrl + '/save', user, this.httpOptions)
       .pipe(
         catchError(err => {
@@ -77,18 +77,25 @@ export class UserService {
   }
 
   public findUserByName(name): Observable<User> {
-    this.httpOptions.headers.set('Authorization', this.tokenService.getToken());
     return this.http.get<User>(this.userUrl + '/' + name, {headers: this.httpOptions.headers});
   }
 
   public findUserActivationByName(name): Observable<boolean> {
-    this.httpOptions.headers.set('Authorization', this.tokenService.getToken());
     return this.http.get<boolean>(this.userUrl + '/activation/' + name, {headers: this.httpOptions.headers});
   }
 
+  public findUserInfosByName(userName: string): Observable<any> {
+    return this.http.get<User>(this.userUrl + '/userInfos/' + userName, {headers: this.httpOptions.headers});
+  }
+
   public deleteUser(user): Observable<any> {
-    this.httpOptions.headers.set('Authorization', this.tokenService.getToken());
     return this.http.post(this.userUrl + '/delete', user, this.httpOptions);
+  }
+
+  public setHeader(): void {
+    this.httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json'})
+    };
   }
 
 }

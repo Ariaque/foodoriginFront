@@ -19,8 +19,7 @@ export class ResetPasswordService {
   constructor(private http: HttpClient, private router: Router, private tokenService: TokenStorageService) {
     this.resetUrl = 'api/reset';
     this.httpOptions = {
-      headers: new HttpHeaders({'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + tokenService.getToken()})};
+      headers: new HttpHeaders({'Content-Type': 'application/json'})};
   }
 
   saveNewPassword(tkn: string, pswd: string): Observable<string> {

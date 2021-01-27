@@ -37,6 +37,9 @@ import { ConfirmationDialogComponent } from './_components/confirmation-dialog/c
 import { FooterBarComponent } from './_components/footer-bar/footer-bar.component';
 import { ContactComponent } from './_components/contact/contact.component';
 import { PlaceholderPageComponent } from './_components/placeholder-page/placeholder-page.component';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {TokenInterceptor} from './_classes/token.interceptor';
+import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +60,7 @@ import { PlaceholderPageComponent } from './_components/placeholder-page/placeho
     FooterBarComponent,
     ContactComponent,
     PlaceholderPageComponent,
+    ResetPasswordComponent,
   ],
     imports: [
         FormsModule,
@@ -80,7 +84,11 @@ import { PlaceholderPageComponent } from './_components/placeholder-page/placeho
         MatCheckboxModule,
         ReactiveFormsModule
     ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

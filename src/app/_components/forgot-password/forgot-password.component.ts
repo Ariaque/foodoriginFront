@@ -50,12 +50,12 @@ export class ForgotPasswordComponent implements OnInit {
     this.myForm = this._fb.group({
       mail: [null, [Validators.required, Validators.pattern(regex_email)]]
     });
-    this.userService.findAll().subscribe(data => {
+    /*this.userService.findAll().subscribe(data => {
       this.usersSource = new MatTableDataSource<User>(data);
       for (let i = 0; i < this.usersSource.data.length; i++) {
         this.usersname.push(data[i].getUsername);
       }
-    });
+    });*/
 
   }
 
@@ -65,9 +65,9 @@ export class ForgotPasswordComponent implements OnInit {
   onSubmit(): void {
     this.disabled = true;
     if (this.myForm.valid) {
-      this.userService.findUserByName(this.email).subscribe((res: any) => {
+      this.userService.findUserActivationByName(this.email).subscribe((res: any) => {
         if (res != null) {
-          if (!res.isEnabled) {
+          if (res == false) {
             this.alert = true;
             this.erreurMessage = inactive_account_change_password;
             this.disabled = false;
@@ -95,7 +95,7 @@ export class ForgotPasswordComponent implements OnInit {
   /**
    * Removes the error message
    */
-  closeAlert() {
+  closeAlert(): void {
     this.alert = false;
   }
 

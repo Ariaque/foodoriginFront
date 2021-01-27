@@ -190,8 +190,8 @@ export class FormUserComponent implements OnInit {
       this.typeOrigineNom = result;
     });
     // Recover user information user's data if he has already entered it
-    this.userService.findUserByName(this.tokenService.getUser().username).subscribe((res: any) => {
-      this.transformateur = res.transformateur;
+    this.userService.findTransformateurByUser(this.tokenService.getUser().username).subscribe((res: any) => {
+      this.transformateur = res;
       this.infosTService.findById(this.transformateur.id).subscribe((info: InfosTransformateur) => {
         if (info != null) {
           this.idInfo = info.id;

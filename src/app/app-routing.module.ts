@@ -13,6 +13,7 @@ import {NotFoundComponent} from './_components/not-found/not-found.component';
 import { ProfilComponent } from './_components/profil/profil.component';
 import { ContactComponent } from './_components/contact/contact.component';
 import {PlaceholderPageComponent} from './_components/placeholder-page/placeholder-page.component';
+import {ResetPasswordComponent} from './_components/reset-password/reset-password.component';
 
 
 
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path: '404', component: NotFoundComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'soon', component: PlaceholderPageComponent},
+  {path: 'resetPassword', component: ResetPasswordComponent},
   {path: '**', redirectTo: '/404'}
 ];
 export const appRouting = RouterModule.forRoot(routes);

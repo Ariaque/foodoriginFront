@@ -15,16 +15,16 @@
             <input formControlName="password"
             [ngClass]="{'is-invalid': password.errors && password.touched}"
             type="password" class="form-control" id="password" placeholder="Mot de passe" name="password" [(ngModel)]="form.password">
-            <small *ngIf="password.hasError('required')" class="form-text custom-invalid-feedback">Mot de passe requis</small>
+            <small *ngIf="password.errors?.required && password.touched" class="form-text custom-invalid-feedback">Mot de passe requis</small>
           </div>
           <div class="form-group col-md-3">
             <label for="confpassword">Confirmer mot de passe*</label>
             <input formControlName="confPassword"
             [ngClass]="{'is-invalid': confiPassword.errors && confiPassword.touched}"
             type="password" class="form-control" id="confpassword" placeholder="Mot de passe" name="confPassword" [(ngModel)]="confPassword">
-            <small *ngIf="confiPassword.hasError('passwordMismatch')" class="form-text custom-invalid-feedback">Les mots de passe
+            <small *ngIf="confiPassword.hasError('passwordMismatch') && confiPassword.touched" class="form-text custom-invalid-feedback">Les mots de passe
               ne correspondent pas</small>
-            <small *ngIf="confiPassword.hasError('required')" class="form-text custom-invalid-feedback">La confirmation du mot
+            <small *ngIf="confiPassword.errors?.required && confiPassword.touched" class="form-text custom-invalid-feedback">La confirmation du mot
               de passe est requise</small>
           </div>
         </div>

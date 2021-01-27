@@ -72,7 +72,9 @@ export class InfosTransformateurService {
   }
 
   public addImageTransformateur(image: FormData, id: number): Observable<any> {
-   return this.http.post(this.infosTransformateurUrl + '/images/' + id, image, {responseType: 'text'});
+    const formHeaders: HttpHeaders = new HttpHeaders();
+    formHeaders.set('Content-Type', 'multipart/form-data');
+    return this.http.post(this.infosTransformateurUrl + '/images/' + id, image, {responseType: 'text', headers: formHeaders});
   }
 
   public getImageTransformateur(id: number): Observable<any> {
@@ -80,6 +82,6 @@ export class InfosTransformateurService {
   }
 
   public deleteImageTransformateur(fileName: string, id: number): Observable<any> {
-    return this.http.post(this.infosTransformateurUrl + '/images/delete/' + id, fileName);
+    return this.http.post(this.infosTransformateurUrl + '/images/delete/' + id, fileName, {headers: httpOptions.headers});
   }
 }

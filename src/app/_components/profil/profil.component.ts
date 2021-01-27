@@ -26,7 +26,7 @@ export class ProfilComponent implements OnInit {
   username: string;
   roleUser: string;
   transformateur: Transformateur;
-  typeTransformateur: TypeTransformateur;
+  typeTransformateur: string;
   newPassword: string;
   password: string;
   numTel: string;
@@ -40,13 +40,14 @@ export class ProfilComponent implements OnInit {
     this.username = this.user.username;
     this.typeTransformateur = this.user.getTypeTransformateur;
     // Retrieves the information of the logged-in user
-    this.userService.findUserByName(this.tokenStorage.getUser().username).subscribe((res: any) => {
-      this.data = res;
-      this.transformateur = res.transformateur;
-      this.typeTransformateur = res.typeTransformateur;
+    this.userService.findTransformateurByUser(this.tokenStorage.getUser().username).subscribe((res: Transformateur) => {
+      this.transformateur = res;
+    });
+    this.userService.findUserInfosByName(this.tokenStorage.getUser().username).subscribe((res: any) => {
       this.id = res.id;
-      this.roleUser = res.role.name;
-      this.numTel = res.numeroTelephone;
+      this.roleUser = res.role;
+      this.numTel = res.phoneNumber;
+      this.typeTransformateur = res.typeTransformateur;
     });
     // Creates the form group
     this.myForm = this._fb.group({

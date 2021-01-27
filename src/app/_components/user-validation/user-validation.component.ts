@@ -7,6 +7,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
 import {delete_account_confirmation} from '../../../global';
+import {Router} from '@angular/router';
+import {TokenStorageService} from '../../_services/token-storage.service';
 
 /**
  * Component that represents the "Gestion des comptes" page
@@ -25,7 +27,10 @@ export class UserValidationComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
 
-  constructor(private userService: UserService, private changeDetectorRefs: ChangeDetectorRef, private dialog: MatDialog) {
+  constructor(private userService: UserService, private changeDetectorRefs: ChangeDetectorRef, private dialog: MatDialog, router: Router, tokenService: TokenStorageService) {
+    if (tokenService.getToken() === null) {
+      router.navigate(['/accueil']);
+    }
   }
 
   ngOnInit(): void {
