@@ -45,6 +45,25 @@
                       <span>{{typeTransformateur}}</span>
                   </div>
               </div>
+              <hr class="hr">
+              <h2>Information Groupe Transformateur</h2>
+              <div class="form-row">
+                  <div class="form-group col-md-6" >
+                      <div *ngIf="groupeTransformateur">
+                            <label><i class="fa fa-user-o  prefix white-text"></i> Libellé</label><br>
+                            <span>{{groupeTransformateur.description}}</span>
+                      </div>  
+                      <div *ngIf="!groupeTransformateur">
+                           <label for="groupeTransformateur">Appartenez vous un groupe ?</label>
+                           <mat-select [formControl]="newGroupT" class="form-control" placeholder="Selectionnez votre groupe">
+                                    <mat-option (click)="openDialog()"> Nouveau groupe de transformateur</mat-option>
+                                    <mat-option *ngFor="let g of this.allGroupTransformateur" [value]="g">{{g.description}}</mat-option>
+                           </mat-select> 
+                           <p></p>
+                           <button mat-raised-button  (click)= "setTransformateurGroup()" class="style">Valider</button>
+                      </div>
+                  </div>
+              </div>
             </div>
             <hr class="hr">
             <h2>Changement du mot de passe</h2>

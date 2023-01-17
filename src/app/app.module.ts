@@ -40,6 +40,7 @@ import { PlaceholderPageComponent } from './_components/placeholder-page/placeho
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {TokenInterceptor} from './_classes/token.interceptor';
 import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
+import { GroupTransformateurComponent } from './group-transformateur/group-transformateur.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { ResetPasswordComponent } from './_components/reset-password/reset-passw
     ContactComponent,
     PlaceholderPageComponent,
     ResetPasswordComponent,
+    GroupTransformateurComponent,
   ],
     imports: [
         FormsModule,
@@ -73,6 +75,7 @@ import { ResetPasswordComponent } from './_components/reset-password/reset-passw
         MatInputModule,
         MatButtonModule,
         MatDialogModule,
+        MatFormFieldModule,
         MatCardModule,
         MatToolbarModule,
         MatIconModule,

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Transformateur} from '../_classes/transformateur';
+import { OneToOne } from '../_classes/one-to-one';
 
 /**
  * Service that calls TransformateurController in the API
@@ -19,6 +20,10 @@ export class TransformateurService {
 
   public findById(id: number): Observable<Transformateur> {
     return this.http.get<Transformateur>(this.transformateurUrl + '/' + id);
+  }
+
+  public addGroup(obj:OneToOne):Observable<any>{
+    return this.http.put(this.transformateurUrl+'/addGroup', obj);
   }
 
 }

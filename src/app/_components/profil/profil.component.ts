@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Inject } from '@angular/core';
 import {UserService} from '../../_services/user.service';
 import {Transformateur} from '../../_classes/transformateur';
 import {TokenStorageService} from '../../_services/token-storage.service';
@@ -7,7 +7,14 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '
 import {ResetPasswordService} from '../../_services/reset-password.service';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
-import {bad_old_password, new_pass_changed, new_pass_is_old_pass} from '../../../global';
+import {bad_old_password, error_while_saving_info, info_saved, new_pass_changed, new_pass_is_old_pass} from '../../../global';
+import { GroupTransformateurService } from 'src/app/_services/group-transformateur.service';
+import { GroupTransformateur } from 'src/app/_classes/group-transformateur';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Label } from 'src/app/_classes/label';
+import { GroupTransformateurComponent } from 'src/app/group-transformateur/group-transformateur.component';
+import { OneToOne } from 'src/app/_classes/one-to-one';
+import { TransformateurService } from 'src/app/_services/transformateur.service';
 
 /**
  * Component that represents the success page
@@ -27,13 +34,16 @@ export class ProfilComponent implements OnInit {
   roleUser: string;
   transformateur: Transformateur;
   typeTransformateur: string;
+  groupeTransformateur = null;
+  allGroupTransformateur:GroupTransformateur[] = [];
+  newGroupT = new FormControl();
   newPassword: string;
   password: string;
   numTel: string;
   myForm: FormGroup;
   id: number;
 
-  constructor(private _fb: FormBuilder, private userService: UserService, private tokenStorage: TokenStorageService, private resetPasswordService: ResetPasswordService,private router: Router) { }
+  constructor(private _fb: FormBuilder, private userService: UserService, private tokenStorage: TokenStorageService, private resetPasswordService: ResetPasswordService,private router: Router, private groupTransformateurService:GroupTransformateurService, public dialog:MatDialog, private transformateurService:TransformateurService) { }
 
   ngOnInit(): void {
     this.user = this.tokenStorage.getUser();
@@ -49,6 +59,25 @@ export class ProfilComponent implements OnInit {
       this.numTel = res.phoneNumber;
       this.typeTransformateur = res.typeTransformateur;
     });
+
+    //Retrieves all existant group transformateurs
+    this.groupTransformateurService.findAll().subscribe(
+      (result) =>{
+        this.allGroupTransformateur = result;
+    },
+    (error) =>{
+        this.allGroupTransformateur = [];
+    }
+    )
+
+    //Retrieves the logged-in user transformateur group
+    this.groupTransformateurService.findByTransformateur(this.tokenStorage.getUser().id).subscribe((res:GroupTransformateur) =>{
+      this.groupeTransformateur = res;
+    },
+    (error) =>{
+        this.groupeTransformateur = null;
+    })
+    console.log(this.groupeTransformateur)
     // Creates the form group
     this.myForm = this._fb.group({
       password: [null, Validators.required],
@@ -109,4 +138,39 @@ export class ProfilComponent implements OnInit {
     });
   }
 
+  openDialog(): void {
+    let dialogRef = this.dialog.open(GroupTransformateurComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+
+  /**
+   * Set a transformateur group
+   */
+  setTransformateurGroup(): void{
+    if(this.newGroupT.value == null){
+       Swal.fire("Pas d'informations transmises");
+       return;
+    }
+
+    let obj = new OneToOne(this.tokenStorage.getUser().id, this.newGroupT.value.id)
+    console.log(obj)
+    //console.log(this.allGroupTransformateur)
+    console.log(this.newGroupT.value)
+    this.transformateurService.addGroup(obj).subscribe((success) =>{
+      Swal.fire(info_saved);
+      this.groupeTransformateur = this.newGroupT.value;
+    },
+    (error) =>{
+      Swal.fire(error_while_saving_info);
+    })
+
+  }
+
+
+
 }
+

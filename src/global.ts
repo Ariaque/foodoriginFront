@@ -41,3 +41,4 @@ export const reset_password_confirmed_title = 'Nouveau mot de passe enregistré 
 export const reset_password_confirmed_text = 'Votre nouveau mot de passe a bien été sauvegardé, vous pouvez dès à présent vous connecter !';
 export const delete_account_confirmation = 'Voulez-vous vraiment supprimer l\'utilisateur: ';
 export const problem_mail = 'Un probème s\'est produit lors de l\'envoi du mail';
+export const group_success = 'Nouveau groupe enregistré avec succès'

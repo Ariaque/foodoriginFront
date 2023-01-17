@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, Inject} from '@angular/core';
 import {TypeTransformateurService} from '../../_services/type-transformateur.service';
 import {AuthService} from '../../_services/auth.service';
 import {TypeTransformateur} from '../../_classes/type-transformateur';
@@ -17,6 +17,8 @@ import {
   regex_phone_number,
   regex_siret
 } from '../../../global';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 /**
  * Component that represents the "Rejoindre" page
@@ -37,10 +39,12 @@ export class JoinComponent implements OnInit {
   numTelephone: string;
   confPassword: string;
   selectedType: TypeTransformateur;
+  animal: string;
+  name: string;
   @Input()
   myForm: FormGroup;
 
-  constructor(private _fb: FormBuilder, private customValidator: CustomValidationService, private authService: AuthService, private typeTransformateurService: TypeTransformateurService, private userService: UserService, public topBarService: TopbarService, private router: Router, private sendEmailService: SendEmailService) {
+  constructor(private _fb: FormBuilder, private customValidator: CustomValidationService, private authService: AuthService, private typeTransformateurService: TypeTransformateurService, private userService: UserService, public topBarService: TopbarService, private router: Router, private sendEmailService: SendEmailService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -72,14 +76,26 @@ export class JoinComponent implements OnInit {
    * Method called at the click on the "S'inscrire" button: checks the validation rules and saves the registration in the database
    */
   onSubmit(): void {
-    if (this.myForm.valid) {
-      this.authService.register(this.form, this.selectedType, this.siret, this.numTelephone).subscribe(
+  if (this.myForm.valid) {
+      /*const dialogRef = this.dialog.open(DialogTransformateurGroup, {
+        width: '250px',
+        data: {name: this.name, animal: this.animal},
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.animal = result;
+    });  */
+    this.authService.register(this.form, this.selectedType, this.siret, this.numTelephone).subscribe(
         data => {
           this.isSuccessful = true;
           this.isSignUpFailed = false;
           Swal.fire(account_created);
           this.router.navigate(['/accueil']);
-          this.sendEmailService.sendNotificationEmail(this.myForm.get('username').value, mail_to_admin_obj, this.numTelephone, mail_to_admin_text).subscribe();
+          this.sendEmailService.sendNotificationEmail(
+            this.myForm.get('username').value, 
+            mail_to_admin_obj, this.numTelephone, mail_to_admin_text)
+            .subscribe();
         },
         err => {
           this.errorMessage = err.error.message;
@@ -153,3 +169,25 @@ export class JoinComponent implements OnInit {
   }
 
 }
+
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
+
+@Component({
+  selector: 'dialog-transformateurgroup',
+  templateUrl: 'dialog.html',
+})
+export class DialogTransformateurGroup {
+  constructor(
+    public dialogRef: MatDialogRef<DialogTransformateurGroup>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
